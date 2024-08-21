@@ -4,7 +4,9 @@ import {
   SalesRepOverview,
   TransactionHistory,
 } from "../pages/dashboard/salesRep";
+import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
+import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
 
 const authRoutes = [
   {
@@ -32,9 +34,13 @@ const dashboardRoutes = [
         path: "transactions/transaction-detail",
       },
       {
-        element: <div>Customers</div>,
+        element: <CustomersHistory />,
         index: true,
         path: "customers",
+      },
+      {
+        element: <CustomerDetailsOverview />,
+        path: "customers/customers-detail",
       },
       {
         element: <div>Payments</div>,
@@ -67,9 +73,12 @@ const dashboardRoutes = [
         path: "transactions/transaction-detail",
       },
       {
-        element: <div>Customers</div>,
-        index: true,
+        element: <CustomersHistory />,
         path: "customers",
+      },
+      {
+        elements: <CustomerDetailsOverview />,
+        path: "customers/customers-detail",
       },
       {
         element: <div>Supliers</div>,

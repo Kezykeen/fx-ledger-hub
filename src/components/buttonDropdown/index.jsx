@@ -40,7 +40,9 @@ const StyledMenuButton = styled(MenuButton)`
   text-decoration: none;
   gap: 8px;
   align-items: center;
-  padding: 10px 16px !important;
+  padding: 10px 18px !important;
+  height: 44px;
+  width: 110px;
   border: 1px solid red;
   cursor: pointer;
   border: 1px solid ${(props) => props.theme.colors.gray200};

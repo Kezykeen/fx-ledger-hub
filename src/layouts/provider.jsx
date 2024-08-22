@@ -1,4 +1,5 @@
 "use client";
+
 import { ThemeProvider } from "styled-components";
 import "react-toastify/dist/ReactToastify.css";
 import { theme } from "../theme";

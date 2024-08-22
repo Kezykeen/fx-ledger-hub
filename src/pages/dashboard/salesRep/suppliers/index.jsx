@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { PageHeader } from "../../../../components/pageHeader";
 import { TableWidget } from "../../../../components/tableWidget";
-import Customers from "./components/customers";
 import { Button } from "../../../../components/button";
 import { PlusIcon } from "../../../../assets/svgs";
 import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
+import Customers from "../customers/components/customers";
 
-const CustomersHistory = () => {
+const SupplyHistory = () => {
   const buttonGroup = [
     {
       name: "View",
@@ -26,7 +26,7 @@ const CustomersHistory = () => {
     <Container>
       <DetailRow>
         <PageHeader
-          title={"All Customers"}
+          title={"All Suppliers"}
           subTitle={"Here is an overview of all your transactions"}
         />
 
@@ -36,7 +36,7 @@ const CustomersHistory = () => {
               buttonClass={"primary"}
               label={
                 <Flex>
-                  <span>{<PlusIcon />}</span> <span>Add Customer</span>
+                  <span>{<PlusIcon />}</span> <span>Add Supplier</span>
                 </Flex>
               }
             />
@@ -46,7 +46,7 @@ const CustomersHistory = () => {
             buttonGroup={buttonGroup}
             buttonElement={
               <Flex>
-                <span>Actions</span>
+                <span>Initiate Refund</span>
               </Flex>
             }
           />
@@ -60,9 +60,9 @@ const CustomersHistory = () => {
   );
 };
 
-export { CustomersHistory };
+export { SupplyHistory };
 
-CustomersHistory.displayName = "CustomersHistory";
+SupplyHistory.displayName = "SupplyHistory";
 
 const Container = styled.div`
   /* Add your styles here */

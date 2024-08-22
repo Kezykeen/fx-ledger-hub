@@ -5,33 +5,23 @@ import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 
 const ViewDetails = styled(Link)`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #FD853A;
+  color: #f97316;
+  font-weight: 500;
   cursor: pointer;
 `;
-const Customers = () => {
+const Suppliers = () => {
   const columns = [
     {
       Header: "Customer Name",
       accessor: "customerName",
-      Cell: ({ value }) => {
-        const valueArray = value.split(" ");
-        const firstName = valueArray[0].substring(0, 1);
-        const lastLetter = valueArray[1].substring(0, 1);
-        const abbr = firstName + lastLetter;
-        return (
-          <Flex>
-            <span>
-              <Avatar sx={{ color: "#FD853A", bgcolor: "#FFF3EB" }}>
-                {abbr}
-              </Avatar>
-            </span>
-            <span>{value}</span>
-          </Flex>
-        );
-      },
+      Cell: ({ value }) => (
+        <Flex>
+          <span>
+            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+          </span>
+          <span>{value}</span>
+        </Flex>
+      ),
     },
     {
       Header: "Phone Number",
@@ -141,7 +131,7 @@ const Customers = () => {
   return <Table columns={columns} data={data} />;
 };
 
-export default Customers;
+export default Suppliers;
 
 const Flex = styled.div`
   display: flex;
@@ -183,7 +173,7 @@ const Button = styled.div`
   padding: 4px 12px 4px 12px;
   gap: 12px;
   border-radius: 8px;
-  background-color: #6670850d;
+  background-color: ${(props) => props.theme.colors.gray100};
   display: flex;
   justify-content: center;
   align-item: center;

@@ -224,9 +224,9 @@ const TableCell = styled(motion.td)`
   max-width: 200px;
   background-color: #f2f4f799;
   padding: 16px 20px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 13.69px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
   color: ${({ theme }) => theme.colors.gray800};
 `;
 const TBody = styled(motion.tbody)``;

@@ -15,17 +15,19 @@ export const ButtonDropdown = ({ buttonGroup, buttonElement }) => {
 const ButtonContainer = ({ buttonGroup }) => {
   return (
     <>
-      {buttonGroup?.map((btn, i) => (
-        <StyledMenuItem key={i} role="button" onClick={btn?.onClick}>
-          <Text>{btn?.name}</Text>
+      {buttonGroup?.map((btn, index) => (
+        <StyledMenuItem key={index} role="button" onClick={btn.onClick}>
+          <Text>{btn.name}</Text>
         </StyledMenuItem>
       ))}
     </>
   );
 };
 
+// Styled components
+
 const StyledMenuItem = styled(MenuItem)`
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const Text = styled.div`
@@ -40,9 +42,10 @@ const StyledMenuButton = styled(MenuButton)`
   text-decoration: none;
   gap: 8px;
   align-items: center;
+  justify-content: center;
   padding: 10px 18px !important;
   height: 44px;
-  width: 110px;
+  width: auto;
   border: 1px solid red;
   cursor: pointer;
   border: 1px solid ${(props) => props.theme.colors.gray200};

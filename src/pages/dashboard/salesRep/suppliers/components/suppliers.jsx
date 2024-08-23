@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Table } from "./table/table";
-import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 const ViewDetails = styled(Link)`
   color: #f97316;
@@ -14,28 +14,36 @@ const Suppliers = () => {
     {
       Header: "Customer Name",
       accessor: "customerName",
-      Cell: ({ value }) => (
-        <Flex>
-          <span>
-            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-          </span>
-          <span>{value}</span>
-        </Flex>
-      ),
+      Cell: ({ value }) => {
+        const valueArray = value.split(" ");
+        const firstName = valueArray[0].substring(0, 1);
+        const lastLetter = valueArray[1].substring(0, 1);
+        const abbr = firstName + lastLetter;
+        return (
+          <Flex>
+            <span>
+              <Avatar sx={{ color: "#FD853A", bgcolor: "#FFF3EB" }}>
+                {abbr}
+              </Avatar>
+            </span>
+            <span>{value}</span>
+          </Flex>
+        );
+      },
     },
     {
       Header: "Phone Number",
       accessor: "phoneNumber",
     },
     {
-      Header: "Payment Status",
-      accessor: "paymentStatus",
+      Header: "Status",
+      accessor: "status",
       Cell: ({ value }) => (
         <PaymentStatus status={value}>{value}</PaymentStatus>
       ),
     },
     {
-      Header: "Date",
+      Header: "Date Added",
       accessor: "dateAdded",
     },
     {
@@ -46,7 +54,7 @@ const Suppliers = () => {
           <Flex>
             <SubTitle to={"/s/"}>Edit</SubTitle>
             <Span></Span>
-            <ViewDetails to={"/s/customers/customers-detail"}>
+            <ViewDetails to={"/s/supply-history"}>
               View Details
             </ViewDetails>
           </Flex>
@@ -58,73 +66,73 @@ const Suppliers = () => {
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Complete",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Owing",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Refund in progress",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Supply in progress",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Complete",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Owing",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Complete",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Refund in progress",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Complete",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Supply in progress",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
+      status: "Complete",
       dateAdded: "Jan 4, 2022",
     },
     {
       customerName: "John Doe",
       phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
+      status: "Owing",
       dateAdded: "Jan 4, 2022",
     },
   ];
@@ -163,8 +171,23 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.status === "Paid" ? "#059669" : "#DC2626")};
+    props.status === "Complete"
+      ? "#D1FAE5" 
+      : props.status === "Refund in progress"
+      ? "#FEDF89" 
+      : props.status === "Supply in progress"
+      ? "#FFD7BF" 
+      : "#FEE2E2"}; // light red for default or any other status
+  
+  color: ${(props) =>
+    props.status === "Complete"
+      ? "#059669"
+      : props.status === "Refund in progress"
+      ? "#B54708" 
+      : props.status === "Supply in progress"
+      ? "#DB6C27" 
+      : "#D92D20"}; // dark red for default or any other status
+  
 `;
 
 const Button = styled.div`
@@ -177,5 +200,10 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-item: center;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.Primary50};
+    cursor: pointer;
+  }
 `;

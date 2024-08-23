@@ -8,6 +8,7 @@ import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
 import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
 import { SupplyHistory } from "../pages/dashboard/salesRep/suppliers";
+import { SuppliersOverview } from "../pages/dashboard/salesRep/suppliers/supply-history";
 
 const authRoutes = [
   {
@@ -49,7 +50,7 @@ const dashboardRoutes = [
         path: "suppliers",
       },
       {
-        element: <div>Supply History</div>,
+        element: <SuppliersOverview />,
         index: true,
         path: "supply-history",
       },

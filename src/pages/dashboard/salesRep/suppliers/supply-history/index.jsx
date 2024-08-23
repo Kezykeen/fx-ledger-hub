@@ -37,18 +37,12 @@ export const SuppliersOverview = () => {
     <PageContainer>
       <DetailRow>
         <PageHeader
-          title={"Customer Details"}
-          subTitle={"You are viewing customer details below."}
+          title={"Supply History"}
+          subTitle={"You are viewing supply history details below."}
         />
         <div>
-          <ButtonDropdown
-            buttonGroup={buttonGroup}
-            buttonElement={
-              <Flex>
-                <span>Actions</span>
-              </Flex>
-            }
-          />
+          
+          
         </div>
       </DetailRow>
       <ColumnWrapper>

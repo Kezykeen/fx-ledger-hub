@@ -4,7 +4,7 @@ import { TableWidget } from "../../../../components/tableWidget";
 import { Button } from "../../../../components/button";
 import { PlusIcon } from "../../../../assets/svgs";
 import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
-import Customers from "../customers/components/customers";
+import Suppliers from "./components/suppliers";
 
 const SupplyHistory = () => {
   const buttonGroup = [
@@ -55,7 +55,7 @@ const SupplyHistory = () => {
       <WidgetWrapper>
         <TableWidget />
       </WidgetWrapper>
-      <Customers />
+      <Suppliers />
     </Container>
   );
 };

@@ -188,4 +188,9 @@ const Button = styled.div`
   justify-content: center;
   align-item: center;
   transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.Primary50};
+    cursor: pointer;
+  }
 `;

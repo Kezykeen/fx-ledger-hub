@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-
 import { BackgroundlessButton } from "../../globals/sharedStyles";
 import { Spinner } from "../spinner";
 
@@ -10,9 +8,7 @@ const Button = ({
   loading,
   disabled,
   type,
-  link,
   onClick,
-  buttonLink,
   customClass,
   ...rest
 }) => {
@@ -56,7 +52,6 @@ const StyledButton = styled(BackgroundlessButton)`
   outline: none;
   border: none;
   border-radius: 4px;
-  margin: 4px;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   background-color: ${({ $buttonClass, theme }) =>
     $buttonClass === "primary"

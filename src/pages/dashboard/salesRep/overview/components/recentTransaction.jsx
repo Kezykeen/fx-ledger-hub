@@ -1,13 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { Table } from "./table/table";
 import { InOutFlowIcon } from "../../../../../assets/svgs";
 
-const ViewDetails = styled.span`
-  color: #f97316;
-  font-weight: 500;
-  cursor: pointer;
-`;
 const RecentTransaction = () => {
   const columns = [
     {
@@ -30,24 +24,22 @@ const RecentTransaction = () => {
       Header: "Incoming",
       accessor: "incoming",
       Cell: ({ value, row }) => (
-        <>
-          {value}
-          <br />
+        <TextWrapper>
+          <p>{value}</p>
           <SmallText>{row.original.incomingCurrency}</SmallText>
-        </>
+        </TextWrapper>
       ),
     },
     {
       Header: "Outgoing",
       accessor: "outgoing",
       Cell: ({ value, row }) => (
-        <>
-          {value}
-          <br />
+        <TextWrapper>
+          <p>{value}</p>
           <SmallText style={{ color: "#6B7280" }}>
             {row.original.outgoingCurrency}
           </SmallText>
-        </>
+        </TextWrapper>
       ),
     },
     {
@@ -95,6 +87,7 @@ const RecentTransaction = () => {
       customerDetails: "John Doe",
     },
   ];
+
   return (
     <Container>
       <FlexCol>
@@ -112,7 +105,7 @@ const RecentTransaction = () => {
 export default RecentTransaction;
 
 const Container = styled.div`
-  padding: 1rem;
+  padding: 24px;
   background: ${({ theme }) => theme.colors.gray100};
   width: 100%;
   border-radius: 12px;
@@ -121,45 +114,49 @@ const Container = styled.div`
     padding: 24px 26px;
   }
 `;
+
 const FlexCol = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
   padding-bottom: 2rem;
 `;
+
 const Flex = styled.div`
   display: flex;
   gap: 0.7rem;
   color: ${({ theme }) => theme.colors.gray800};
   align-items: center;
+  font-size: 12px;
 `;
+
 const Title = styled.h3`
   font-size: 18px;
   font-weight: 600;
-  line-height: 28px;
+  line-height: 38px;
   text-align: left;
+  color: ${({ theme }) => theme.colors.gray900};
 `;
+
 const SubTitle = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   text-align: left;
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-const CurrencyIcon = styled.div`
-  width: 32px;
-  height: 32px;
-  background-color: #fef3c7;
-  border-radius: 50%;
+const TextWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
+  flex-direction: column;
+  gap: 4px;
+
+  & > p {
+    font-size: 16px;
+  }
 `;
 
 const PaymentStatus = styled.span`
-  padding: 4px 12px;
+  padding: 5px 26px;
   border-radius: 16px;
   font-size: 12px;
   font-weight: 500;
@@ -173,4 +170,11 @@ const SmallText = styled.small`
   font-size: 12px;
   font-weight: 400;
   line-height: 20px;
+`;
+
+const ViewDetails = styled.span`
+  color: #fd853a;
+  font-weight: 600;
+  line-height: 20px;
+  cursor: pointer;
 `;

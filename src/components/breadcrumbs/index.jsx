@@ -10,7 +10,7 @@ export const Breadcrumbs = ({ crumbs }) => {
           <React.Fragment key={index}>
             <BreadcrumbsItem>
               {crumb.path ? (
-                <Link href={crumb.path} passHref>
+                <Link to={crumb.path}>
                   <BreadcrumbsLink>{crumb.name}</BreadcrumbsLink>
                 </Link>
               ) : (
@@ -29,9 +29,9 @@ export const Breadcrumbs = ({ crumbs }) => {
                   <path
                     d="M1 9L5 5L1 1"
                     stroke="#D0D5DD"
-                    stroke-width="1.33333"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.33333"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </Separator>

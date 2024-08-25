@@ -3,12 +3,17 @@ import { PageHeader } from "../../../../components/pageHeader";
 import Transactions from "./components/transaction";
 import { TableWidget } from "../../../../components/tableWidget";
 import { TableTab } from "../../../../components/tableTab";
+import FilterComponent from "./components/filterComponent";
+import { useState } from "react";
 
 const TransactionHistory = () => {
+  const [filterOpen, setFilterOpen] = useState(false);
+
   const handleTabChange = (selectedTab) => {
     console.log("Selected tab:", selectedTab);
     // Perform actions based on the selected tab
   };
+
   return (
     <Container>
       <PageHeader
@@ -16,7 +21,11 @@ const TransactionHistory = () => {
         subTitle={"Here is an overview of all your transactions "}
       />
       <WidgetWrapper>
-        <TableWidget />
+        <TableWidget
+          customFilter={<FilterComponent setFilterOpen={setFilterOpen} />}
+          filterOpen={filterOpen}
+          setFilterOpen={setFilterOpen}
+        />
         <Divider />
         <TableTab
           tabs={["In Progress", "Approved", "Declined"]}
@@ -45,7 +54,7 @@ const WidgetWrapper = styled.div`
 `;
 
 export const Divider = styled.div`
-  margin: ${({ margin }) => margin ?? "20px"};
+  margin: ${({ $margin }) => $margin ?? "20px 0"};
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
 import { ChartWrapper } from "../../../../../components/charts/chart";

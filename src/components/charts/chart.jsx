@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 export const ChartWrapper = ({
@@ -209,6 +209,7 @@ export const ChartWrapper = ({
 
       chartRef.current.chart = newChart;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartData, type]);
 
   return <canvas ref={chartRef} />;

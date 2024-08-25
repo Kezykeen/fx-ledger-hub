@@ -1,5 +1,5 @@
 "use client";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import Select, { components } from "react-select";
 import { colors } from "../../theme/colors";
 import styled from "styled-components";
@@ -57,24 +57,22 @@ export const selectStyles = ({ isError }) => ({
     ...styles,
     borderRadius: "4px",
     outline: "none",
-    "&:hover": {
-      border: isError ? "1px solid red" : "1px solid #dfe1e6",
-    },
     cursor: "pointer",
-    border: `1px solid ${isError ? "red" : colors.N30}`,
+    border: `1px solid ${isError ? "red" : isFocused ? `#f4a261` : colors.N30}`,
     minHeight: "40px",
     width: `100%`,
     color: isDisabled ? "#97a0af" : "#97a0af",
     backgroundColor: isDisabled ? "#f4f5f7" : colors.white,
+    boxShadow: isFocused && `0 0 0 1px #f4a261`,
     "&:hover": {
       border: isFocused
-        ? `1px solid ${colors.primary}`
+        ? `1px solid #f4a261`
         : isError
         ? "1px solid red"
         : "1px solid #dfe1e6",
     },
   }),
-  option: (styles, { isDisabled, isFocused, isSelected }) => ({
+  option: (styles, { isDisabled, isSelected }) => ({
     ...styles,
     fontSize: "14px",
     fontWeight: 400,
@@ -121,17 +119,13 @@ export const selectStyles = ({ isError }) => ({
   }),
 });
 
+// eslint-disable-next-line react/display-name
 const SMSelectDropDown = forwardRef(
   (
     {
-      options = [
-        { label: "Un-appraised", value: "Un-appraised" },
-        { label: "In-progress", value: "In-progress" },
-        { label: "completed", value: "completed" },
-      ],
+      options = [],
       varient = "simple",
       onChange = () => {},
-      selectWidth = "100%",
       placeholder,
       disabled,
       loading,
@@ -166,7 +160,7 @@ const SMSelectDropDown = forwardRef(
         </div>
       </components.Option>
     );
-    const customSingleValue = ({ data, props }) => (
+    const customSingleValue = ({ data }) => (
       <div
         style={{
           display: "flex",

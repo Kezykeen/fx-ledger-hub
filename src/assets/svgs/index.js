@@ -19,6 +19,8 @@ import MoneyIcon from "./moneyIcon.svg";
 import InOutFlowIcon from "./inOutFlow.svg";
 import DownloadMini from "./downloadMini.svg";
 import FilterIcon from "./filterIcon.svg";
+import WalletBalanceIcon from "./walletBalance.svg";
+
 export {
   Logo,
   PlusIcon,
@@ -41,4 +43,5 @@ export {
   InOutFlowIcon,
   DownloadMini,
   FilterIcon,
+  WalletBalanceIcon,
 };

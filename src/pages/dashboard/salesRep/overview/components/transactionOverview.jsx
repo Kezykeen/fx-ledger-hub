@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import {
   DataBaseIcon,
@@ -57,6 +56,7 @@ const TransactionOverview = () => {
             <TransactionOverviewCard
               {...item}
               variant={index === 0 ? "secondary" : "primary"}
+              key={index}
             />
           ))}
         </Flex>
@@ -111,7 +111,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.Primary25};
   & > p {
     font-size: clamp(16px, 1vw, 18px);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 28px;
     color: ${({ theme }) => theme.colors.gray900};
     font-family: "Montserrat", sans-serif;
@@ -124,6 +124,7 @@ const Wrapper = styled.div`
     overflow-x: auto;
   }
 `;
+
 const Flex = styled.div`
   display: flex;
   align-items: center;
@@ -131,13 +132,14 @@ const Flex = styled.div`
   gap: 1rem;
   margin-bottom: 1rem;
 `;
+
 const TransactionOverviewCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  padding: ${({ variant }) => (variant === "primary" ? "17px" : "24px")};
   border-radius: 8px;
-  height: 160px;
+  height: 155px;
   justify-content: space-between;
   width: ${({ variant }) => (variant === "primary" ? "217px" : "317px")};
   background: ${({ variant, theme }) =>
@@ -160,9 +162,10 @@ const TransactionOverviewCardWrapper = styled.div`
         variant === "secondary" ? theme.colors.white : theme.colors.N900};
     }
     & > h4 {
-      font-size: 25px;
-      font-weight: 700;
+      font-size: ${({ variant }) => (variant === "primary" ? "24px" : "30px")};
+      font-weight: 600;
       line-height: 38px;
+      text-align: left;
     }
     & > p {
       font-size: 13px;
@@ -182,15 +185,20 @@ const IconWrapper = styled.div`
     background: ${({ iconBgColor1 }) => iconBgColor1};
     color: ${({ iconColor }) => iconColor};
     border-radius: 100%;
-    height: 24px;
-    width: 24px;
+    height: 25px;
+    width: 25px;
     z-index: 1;
+
+    & > svg {
+      width: 17.5px;
+      height: 17.5px;
+    }
   }
   &::after {
     content: "";
     position: absolute;
-    height: 32px;
-    width: 32px;
+    height: 35px;
+    width: 35px;
     border-radius: 100%;
     background: ${({ iconBgColor2 }) => iconBgColor2};
     z-index: -1;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import SideBar from "./components/sideBar";
@@ -36,7 +35,7 @@ const LayoutWrapper = styled.div`
 `;
 const OutletWrapper = styled.div`
   margin-top: 1rem;
-  padding: 24px;
+  padding: 32px 24px 24px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.colors.white};
   width: 100%;

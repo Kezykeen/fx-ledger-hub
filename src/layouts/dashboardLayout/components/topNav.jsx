@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Breadcrumbs } from "../../../components/breadcrumbs";
 import { AlertIcon, LogoutIcon } from "../../../assets/svgs";
@@ -21,6 +20,7 @@ const TopNav = () => {
     name: NavIcons[activeRoot.name.toLowerCase()],
     path: pathname,
   };
+
   return (
     <NavWrapper>
       <span>

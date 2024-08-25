@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTable, usePagination, useBlockLayout } from "react-table";
@@ -14,6 +13,7 @@ const TMTable = ({
   additionalTitleData,
   availablePages,
   setPageNumber,
+  pageNumber,
   loading,
   isServerSidePagination = true,
   controlledPageCount,
@@ -22,7 +22,6 @@ const TMTable = ({
   customEmptyStateMessage,
   additionalFooterData,
   noBottomSpace,
-  metaData,
   onRowClick,
   isStickyColumn = false,
 }) => {
@@ -31,9 +30,7 @@ const TMTable = ({
     getTableBodyProps,
     headerGroups,
     rows,
-    page,
     prepareRow,
-    gotoPage,
     pageOptions,
   } = useTable(
     {
@@ -50,7 +47,7 @@ const TMTable = ({
 
   const list = { hidden: { opacity: loading ? 0 : 1 } };
 
-  const rowData = isServerSidePagination ? rows : page;
+  const rowData = rows;
   const isPageGreaterThan1 = isServerSidePagination
     ? availablePages > 1
     : pageOptions.length > 1;
@@ -154,13 +151,9 @@ const TMTable = ({
               style={{ filter: loading ? "blur(4px)" : "none", width: "100%" }}
             >
               <PaginationElement
-                onPageChange={isServerSidePagination ? setPageNumber : gotoPage}
-                totalPages={
-                  isServerSidePagination ? availablePages : pageOptions.length
-                }
-                currentPage={
-                  isServerSidePagination ? page : pageOptions[pageIndex]
-                }
+                onPageChange={setPageNumber}
+                totalPages={availablePages}
+                currentPage={pageNumber}
               />
             </div>
           </TableFooter>
@@ -204,7 +197,7 @@ const StyledTable = styled(motion.table)`
 
 const TableHeaderCell = styled.th`
   background-color: #ffffff;
-  padding: 13px 15px;
+  padding: 18px 15px;
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
@@ -223,13 +216,15 @@ const TableRow = styled(motion.tr)`
 const TableCell = styled(motion.td)`
   max-width: 200px;
   background-color: #f2f4f799;
-  padding: 16px 20px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 16px 12px;
+  font-size: 14px;
+  font-weight: 500;
   line-height: 13.69px;
   color: ${({ theme }) => theme.colors.gray800};
 `;
+
 const TBody = styled(motion.tbody)``;
+
 const EmptyState = styled.div`
   display: flex;
   width: 100%;

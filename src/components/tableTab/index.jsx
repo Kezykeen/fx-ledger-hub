@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../../theme/colors";
 
@@ -57,7 +57,7 @@ const TabButton = styled.button`
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
 
   &:hover {
     background-color: ${(props) =>

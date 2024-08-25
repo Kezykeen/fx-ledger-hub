@@ -35,11 +35,11 @@ export const TransactionDetailsOverview = () => {
         title={"Transaction Details"}
         subTitle={"You are viewing transaction details below."}
       />
-
+      <Divider />
       <TransactionInitiatorGrid>
         <ColumnWrapper>
           <SectionTitle>Transaction Initiator</SectionTitle>
-          <Divider marginY="8px" />
+          <Divider $margin="8px 0 16px" />
           <DetailRow>
             <Label>ID</Label>
             <Value>{transaction?.initiatorId}</Value>
@@ -52,8 +52,7 @@ export const TransactionDetailsOverview = () => {
 
         <ColumnWrapper>
           <SectionTitle>Exchange Summary</SectionTitle>
-          <Divider marginY="8px" />
-
+          <Divider $margin="8px 0 16px" />
           <DetailRow>
             <Label>Incoming Amount</Label>
             <LabelTwo>
@@ -82,7 +81,7 @@ export const TransactionDetailsOverview = () => {
               <Label>Date</Label>: {transaction?.date}
             </Value>
           </DetailRow>
-          <Divider marginY="8px" />
+          <Divider $margin="12px 0 16px" />
 
           <DetailRow>
             <Label style={{ width: "100%" }}>Incoming currency</Label>
@@ -104,17 +103,17 @@ export const TransactionDetailsOverview = () => {
           <DetailRow>
             <Value>Payment Status</Value>
           </DetailRow>
-          <Divider marginY="8px" />
+          <Divider $margin="12px 0 16px" />
           <DetailRow flexWrap>
-            <FlexCol minW="300px">
+            <FlexCol>
               <Label>Amount Paid</Label>
               <Value>$1200</Value>
             </FlexCol>
-            <FlexCol minW="300px">
+            <FlexCol>
               <Label>Amount Owned</Label>
               <Value>$1200</Value>
             </FlexCol>
-            <FlexCol minW="300px">
+            <FlexCol>
               <Label>Status</Label>
               <Value>
                 <StatusBadge status={transaction?.status}>
@@ -122,24 +121,20 @@ export const TransactionDetailsOverview = () => {
                 </StatusBadge>
               </Value>
             </FlexCol>
-            <FlexCol minW="300px">
+            <FlexCol>
               <Label>Supplier Receipt</Label>
               <Value>
                 <ReceiptButton href="#">
-                  <span>
-                    <DownloadMini />
-                  </span>{" "}
+                  <DownloadMini />
                   <span>Receipt</span>
                 </ReceiptButton>
               </Value>
             </FlexCol>
-            <FlexCol minW="300px">
+            <FlexCol>
               <Label>Supplier Receipt</Label>
               <Value>
                 <ReceiptButton href="#">
-                  <span>
-                    <DownloadMini />
-                  </span>{" "}
+                  <DownloadMini />
                   <span>Receipt</span>
                 </ReceiptButton>
               </Value>
@@ -150,89 +145,94 @@ export const TransactionDetailsOverview = () => {
         <TransactionAccountDetails>
           <ColumnWrapper bg={colors.white}>
             <SectionTitle>Debit Account Details</SectionTitle>
-            <Divider marginY="8px" />
-            <DetailRow>
-              <Label>Debit Account</Label>
-              <Value>{transaction?.debitAccount}</Value>
-            </DetailRow>
-            <DetailRow>
-              <Label>Amount</Label>
-              <LabelTwo>
-                CFA <span>{transaction?.outgoingAmount}</span>
-              </LabelTwo>
-            </DetailRow>
+            <Divider $margin="12px 0 16px" />
+            <FlexCol $gap={"0.8rem"}>
+              <DetailRow>
+                <Label>Debit Account</Label>
+                <Value>{transaction?.debitAccount}</Value>
+              </DetailRow>
+              <DetailRow>
+                <Label>Amount</Label>
+                <LabelTwo>
+                  CFA <span>{transaction?.outgoingAmount}</span>
+                </LabelTwo>
+              </DetailRow>
+            </FlexCol>
           </ColumnWrapper>
 
           <ColumnWrapper bg={colors.white}>
             <SectionTitle>Credit Account Details</SectionTitle>
-            <Divider marginY="8px" />
-            <DetailRow>
-              <Label>Debit Account</Label>
-              <Value>{transaction?.debitAccount}</Value>
-            </DetailRow>
-            <DetailRow>
-              <Label>Amount</Label>
-              <LabelTwo>
-                CFA <span>{transaction?.outgoingAmount}</span>
-              </LabelTwo>
-            </DetailRow>
+            <Divider $margin="12px 0 16px" />
+            <FlexCol $gap={"0.8rem"}>
+              <DetailRow>
+                <Label>Debit Account</Label>
+                <Value>{transaction?.debitAccount}</Value>
+              </DetailRow>
+              <DetailRow>
+                <Label>Amount</Label>
+                <LabelTwo>
+                  CFA <span>{transaction?.outgoingAmount}</span>
+                </LabelTwo>
+              </DetailRow>
+            </FlexCol>
           </ColumnWrapper>
         </TransactionAccountDetails>
 
         <CommentWrapper>
           <ColumnWrapper bg={colors.white}>
             <SectionTitle>COO Comments</SectionTitle>
-            <Divider marginY="8px" />
-            {/* <FlexCol style={{ width: "100%" }}> */}
-            <DetailRow
-              style={{ justifyContent: "space-between", width: "100%" }}
-            >
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>Debit Account</Label>
-                <Value>{transaction?.debitAccount}</Value>
+            <Divider $margin="12px 0 16px" />
+            <FlexCol $gap={"0.8rem"}>
+              <DetailRow
+                style={{ justifyContent: "space-between", width: "100%" }}
+              >
+                <FlexCol $gap={"0rem"}>
+                  <Label>Debit Account</Label>
+                  <Value>{transaction?.debitAccount}</Value>
+                </FlexCol>
+                <FlexCol $gap={"0rem"}>
+                  <Label>Debit Account</Label>
+                  <Value>{transaction?.debitAccount}</Value>
+                </FlexCol>{" "}
+                <FlexCol $gap={"0rem"}>
+                  <Label>Debit Account</Label>
+                  <Value>{transaction?.debitAccount}</Value>
+                </FlexCol>
+              </DetailRow>
+              <FlexCol $gap={"0rem"}>
+                <Label>Reason For Rejecting</Label>
+                <Value>Any Reason for rejecting can be found here</Value>
               </FlexCol>
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>Debit Account</Label>
-                <Value>{transaction?.debitAccount}</Value>
-              </FlexCol>{" "}
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>Debit Account</Label>
-                <Value>{transaction?.debitAccount}</Value>
-              </FlexCol>
-            </DetailRow>
-            <FlexCol style={{ gap: "0rem" }}>
-              <Label>Reason For Rejecting</Label>
-              <Value>Any Reason for rejecting can be found here</Value>
             </FlexCol>
-            {/* </FlexCol> */}
           </ColumnWrapper>
         </CommentWrapper>
 
         <CommentWrapper>
           <ColumnWrapper bg={colors.white}>
             <SectionTitle>CFO Comments</SectionTitle>
-            <Divider marginY="8px" />
-            <DetailRow
-              style={{ justifyContent: "space-between", width: "100%" }}
-            >
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>ID</Label>
-                <Value>{transaction?.debitAccount}</Value>
+            <Divider $margin="12px 0 16px" />
+            <FlexCol $gap={"0.8rem"}>
+              <DetailRow
+                style={{ justifyContent: "space-between", width: "100%" }}
+              >
+                <FlexCol $gap={"0rem"}>
+                  <Label>ID</Label>
+                  <Value>{transaction?.debitAccount}</Value>
+                </FlexCol>
+                <FlexCol $gap={"0rem"}>
+                  <Label>CFO Name</Label>
+                  <Value>John Doe</Value>
+                </FlexCol>{" "}
+                <FlexCol $gap={"0rem"}>
+                  <Label>Date Approved</Label>
+                  <Value>{transaction?.debitAccount}</Value>
+                </FlexCol>
+              </DetailRow>
+              <FlexCol $gap={"0rem"}>
+                <Label>Reason For Rejecting</Label>
+                <Value>Any Reason for rejecting can be found here</Value>
               </FlexCol>
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>CFO Name</Label>
-                <Value>John Doe</Value>
-              </FlexCol>{" "}
-              <FlexCol style={{ gap: "0rem" }}>
-                <Label>Date Approved</Label>
-                <Value>{transaction?.debitAccount}</Value>
-              </FlexCol>
-            </DetailRow>
-            <FlexCol style={{ gap: "0rem" }}>
-              <Label>Reason For Rejecting</Label>
-              <Value>Any Reason for rejecting can be found here</Value>
             </FlexCol>
-            {/* </FlexCol> */}
           </ColumnWrapper>
         </CommentWrapper>
       </TransactionSummary>
@@ -248,7 +248,7 @@ const PageContainer = styled.div`
 const ColumnWrapper = styled.div`
   background-color: ${({ bg }) => bg ?? "#f8f8f8"};
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 16px 19px;
 `;
 
 const TransactionInitiatorGrid = styled.div`
@@ -263,7 +263,7 @@ const TransactionInitiatorGrid = styled.div`
   & > div {
     background-color: ${({ theme }) => theme.colors.white};
     & > *:first-child {
-      padding: 4px;
+      padding: 4px 0;
     }
   }
 `;
@@ -278,8 +278,8 @@ const SectionTitle = styled.h2`
 const DetailRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
   flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
+  width: 100%;
 `;
 
 const Label = styled.span`
@@ -288,11 +288,13 @@ const Label = styled.span`
   line-height: 24px;
   color: ${({ theme }) => theme.colors.gray500};
 `;
+
 const LabelTwo = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  color: ${({ theme }) => theme.colors.gray500};
+  color: #98a2b3;
+
   & > span {
     color: ${({ theme }) => theme.colors.Primary300};
   }
@@ -310,10 +312,11 @@ const TransactionSummary = styled.div`
   grid-template-columns: 1fr;
   gap: 20px;
   background-color: ${({ theme }) => theme.colors.gray100};
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   border-radius: 12px;
   margin-top: 20px;
 `;
+
 const TransactionAccountDetails = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -327,24 +330,25 @@ const CommentWrapper = styled.div`
   gap: 20px;
   border-radius: 12px;
 `;
+
 const SummaryBox = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 4px;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 24px 16px 19px;
+  margin-top: 20px;
 `;
 
 const PaymentStatusBox = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 4px;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 24px 16px 19px;
 `;
+
 const StatusBadge = styled.span`
   background-color: ${(props) =>
     props.status === "Paid" ? "#d4edda" : "#f8d7da"};
   color: ${(props) => (props.status === "Paid" ? "#155724" : "#721c24")};
-  padding: 5px 10px;
+  padding: 5px 14px;
   border-radius: 20px;
   font-size: 14px;
 `;
@@ -354,22 +358,18 @@ const ReceiptButton = styled.button`
   text-decoration: none;
   gap: 8px;
   align-items: center;
-  padding: 4px 12px 4px 12px;
+  padding: 6px 14px;
   cursor: pointer;
   border: 1px solid ${(props) => props.theme.colors.gray200};
   background-color: ${(props) => props.theme.colors.white};
   border-radius: 1rem;
   outline: none;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const FlexCol = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 10px;
+  gap: ${({ $gap }) => ($gap ? $gap : "10px")};
   width: 100%;
-  max-width: ${({ minWidth }) => (minWidth ? minWidth : "fit-content")};
 `;

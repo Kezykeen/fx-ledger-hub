@@ -1,10 +1,47 @@
-import React from "react";
 import { authImage } from "../../assets/images";
 import AppLogo from "../../components/logo";
 import { Button } from "../../components/button";
 import { InputField } from "../../components/inputField";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+const LoginPage = () => {
+  return (
+    <PageContainer>
+      <ContentContainer>
+        <AppLogo />
+        <FormWrapper>
+          <header>
+            <h2>Welcome back</h2>
+            <p>Please enter your account details to log in to your dashboard</p>
+          </header>
+          <fieldset>
+            <InputField
+              label={"User Name"}
+              type="text"
+              placeholder="Enter your user name"
+            />
+            <InputField
+              label={"Password"}
+              type="password"
+              placeholder="Enter your password"
+            />
+            <ForgotPassword>Forgot Password</ForgotPassword>
+            <Link to={"/s"}>
+              <Button buttonClass={"primary"} label={"Log In"} />
+            </Link>
+          </fieldset>
+        </FormWrapper>
+      </ContentContainer>
+
+      <ImageWrapper>
+        <img src={authImage} alt="IronClad Image" />
+      </ImageWrapper>
+    </PageContainer>
+  );
+};
+
+export default LoginPage;
 
 const PageContainer = styled.div`
   display: flex;
@@ -46,12 +83,13 @@ const FormWrapper = styled.form`
     margin-bottom: 2rem;
     & h2 {
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 500;
       color: #344054;
     }
     & p {
+      font-weight: 300;
       font-size: 16px;
-      color: #666;
+      color: #667085;
       text-align: center;
     }
   }
@@ -65,6 +103,18 @@ const FormWrapper = styled.form`
     border: none;
   }
 `;
+
+const ForgotPassword = styled.p`
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  color: #667085;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
 const ImageWrapper = styled.div`
   width: 50%;
   height: 100%;
@@ -83,40 +133,3 @@ const ImageWrapper = styled.div`
     display: none;
   }
 `;
-
-const LoginPage = () => {
-  return (
-    <PageContainer>
-      <ContentContainer>
-        <AppLogo />
-        <FormWrapper>
-          <header>
-            <h2>Welcome back</h2>
-            <p>Please enter your account details to log in to your dashboard</p>
-          </header>
-          <fieldset>
-            <InputField
-              label={"User Name"}
-              type="text"
-              placeholder="Enter here"
-            />
-            <InputField
-              label={"Password"}
-              type="password"
-              placeholder="1,200"
-            />
-            <Link to={"/s"}>
-              <Button buttonClass={"primary"} label={"Log In"} />
-            </Link>
-          </fieldset>
-        </FormWrapper>
-      </ContentContainer>
-
-      <ImageWrapper>
-        <img src={authImage} alt="IronClad Image" />
-      </ImageWrapper>
-    </PageContainer>
-  );
-};
-
-export default LoginPage;

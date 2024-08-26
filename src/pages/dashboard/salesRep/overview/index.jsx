@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { PageHeader } from "../../../../components/pageHeader";
 import { TabHeaderless } from "../../../../components/tabs/tabHeaderless";
@@ -7,7 +7,10 @@ import { TransactionAnalyticsCard } from "./components/transactionAnalyticsCard"
 import { CameraIcon, MoneyIcon, WalletIcon } from "../../../../assets/svgs";
 import TransactionAnalyticsChart from "./components/transactionAnalyticsChart";
 import RecentTransaction from "./components/recentTransaction";
+import { AnalyticsCard } from "./components/analyticsCard";
+
 const tabItems = ["Today", "7 days", "30 days", "12 Months"];
+
 const SalesRepOverview = () => {
   const [sortBy, setSortBy] = useState(tabItems[0]);
   return (
@@ -22,45 +25,49 @@ const SalesRepOverview = () => {
         onClick={(str) => setSortBy(str)}
       />
       <TransactionOverview />
-      <Wrapper>
-        <p>Payment Analytics</p>
-        <div>
-          <Grid>
-            <GridColOne>
-              <TransactionAnalyticsCard
-                icon={<CameraIcon />}
-                title={"Pending Payments"}
-                amount={120000}
-                link={"/sales/overview"}
-              />
-            </GridColOne>
-            <GridColTwo>
-              <RefundAnalyticsSummaryWrapper>
-                <div>
-                  <span>
-                    <WalletIcon />
-                  </span>
-                  <h5>Refunds Analytics</h5>
-                </div>
-                <Flex>
-                  <TransactionAnalyticsCard
-                    title={"Customer Refunds"}
-                    amount={500}
-                    link={"/sales/overview"}
-                    bgColor={"#E4E7EC66"}
-                  />
-                  <TransactionAnalyticsCard
-                    title={"Supplier Refunds"}
-                    amount={500}
-                    link={"/sales/overview"}
-                    bgColor={"#E4E7EC66"}
-                  />
-                </Flex>
-              </RefundAnalyticsSummaryWrapper>
-            </GridColTwo>
-          </Grid>
-        </div>
-      </Wrapper>
+      <CardsWrapper>
+        <AnalyticsCard />
+        <Wrapper>
+          <p>Payment Analytics</p>
+          <div>
+            <Grid>
+              <GridColOne>
+                <TransactionAnalyticsCard
+                  icon={<CameraIcon />}
+                  title={"Pending Payments"}
+                  amount={120000}
+                  link={"/sales/overview"}
+                  main
+                />
+              </GridColOne>
+              <GridColTwo>
+                <RefundAnalyticsSummaryWrapper>
+                  <div>
+                    <span>
+                      <WalletIcon />
+                    </span>
+                    <h5>Refunds Analytics</h5>
+                  </div>
+                  <Flex>
+                    <TransactionAnalyticsCard
+                      title={"Customer Refunds"}
+                      amount={500}
+                      link={"/sales/overview"}
+                      bgColor={"#E4E7EC66"}
+                    />
+                    <TransactionAnalyticsCard
+                      title={"Supplier Refunds"}
+                      amount={500}
+                      link={"/sales/overview"}
+                      bgColor={"#E4E7EC66"}
+                    />
+                  </Flex>
+                </RefundAnalyticsSummaryWrapper>
+              </GridColTwo>
+            </Grid>
+          </div>
+        </Wrapper>
+      </CardsWrapper>
       <TransactionAnalyticsWrapper>
         <TransactionAnalyticsChart />
         <UpFrontWrapper>
@@ -87,6 +94,11 @@ SalesRepOverview.displayName = "SalesRepOverview";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 24px;
+`;
+
+const CardsWrapper = styled.div`
+  display: flex;
   gap: 24px;
 `;
 
@@ -130,6 +142,7 @@ const Grid = styled.div`
 const GridColOne = styled.div`
   grid-column: span 1;
 `;
+
 const GridColTwo = styled.div`
   grid-column: span 3;
   width: 100%;
@@ -153,6 +166,13 @@ const RefundAnalyticsSummaryWrapper = styled.div`
     font-weight: 600;
     line-height: 20px;
     color: ${({ theme }) => theme.colors.Primary300};
+
+    & h5 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: ${({ theme }) => theme.colors.Gray900};
+    }
     & > span {
       display: flex;
       align-items: center;

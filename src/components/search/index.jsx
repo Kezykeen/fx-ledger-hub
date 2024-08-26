@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import styled from "styled-components";
 import { debounce } from "lodash"; // You'll need to install lodash
 
@@ -52,12 +52,14 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled.input`
   width: 100%;
+  height: 42px;
   padding: 10px 40px 10px 15px;
   padding-left: 40px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid ${({ theme }) => theme.colors.gray100};
   border-radius: 8px;
   font-size: 14px;
   outline: none;
+  box-shadow: 0px 1px 2px 0px #1018280d;
   transition: border-color 0.2s;
 
   &:focus {

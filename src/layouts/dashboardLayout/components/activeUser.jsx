@@ -1,19 +1,45 @@
-import React from "react";
 import styled from "styled-components";
-const AWrapper = styled.div`
+
+const ActiveUser = ({ name, email }) => {
+  const initials = name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+
+  return (
+    <Wrapper>
+      <Container>
+        <Avatar>
+          {initials}
+          <StatusDot />
+        </Avatar>
+        <InfoContainer>
+          <Name>{name}</Name>
+          <Email>{email}</Email>
+        </InfoContainer>
+      </Container>
+    </Wrapper>
+  );
+};
+
+export default ActiveUser;
+
+const Wrapper = styled.div`
   width: 100%;
   position: sticky;
   bottom: 0;
-  padding: 10px 24px;
-  padding-bottom: 24px;
+  padding: 15px 18px;
 `;
+
 const Container = styled.div`
   display: flex;
   align-items: center;
   background-color: #fdf1e4;
-  padding: 10px;
+  padding: 12px 16px;
   border-radius: 8px;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Avatar = styled.div`
@@ -25,7 +51,9 @@ const Avatar = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
   color: #e67e22;
   position: relative;
 `;
@@ -36,49 +64,30 @@ const InfoContainer = styled.div`
 `;
 
 const Name = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: #344054;
   position: relative;
-  font-weight: bold;
-  color: #333;
 `;
 
 const Email = styled.span`
-  color: #666;
-  font-size: 0.9em;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: #344054;
 `;
 
 const StatusDot = styled.span`
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   background-color: #2ecc71;
   border-radius: 50%;
   display: inline-block;
-
+  border: 1.5px solid #fff;
   position: absolute;
   bottom: -0px;
   left: 70%;
 `;
-
-const ActiveUser = ({ name, email }) => {
-  const initials = name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
-
-  return (
-    <AWrapper>
-      <Container>
-        <Avatar>
-          {initials}
-          <StatusDot />
-        </Avatar>
-        <InfoContainer>
-          <Name>{name}</Name>
-          <Email>{email}</Email>
-        </InfoContainer>
-      </Container>
-    </AWrapper>
-  );
-};
-
-export default ActiveUser;

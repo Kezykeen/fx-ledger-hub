@@ -1,5 +1,28 @@
-import React from "react";
 import styled from "styled-components";
+
+const PaginationElement = ({ currentPage, totalPages, onPageChange }) => {
+  return (
+    <PaginationWrapper>
+      <PageButton
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </PageButton>
+      <PageInfo>
+        Page <b>{currentPage}</b> of <b>{totalPages}</b>
+      </PageInfo>
+      <PageButton
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        Next
+      </PageButton>
+    </PaginationWrapper>
+  );
+};
+
+export default PaginationElement;
 
 const PaginationWrapper = styled.div`
   display: flex;
@@ -42,27 +65,3 @@ const PageInfo = styled.span`
   align-items: center;
   color: ${({ theme }) => theme.colors.gray700};
 `;
-
-const PaginationElement = ({ currentPage, totalPages, onPageChange }) => {
-  return (
-    <PaginationWrapper>
-      <PageButton
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </PageButton>
-      <PageInfo>
-        Page <b>{currentPage}</b> of <b>{totalPages}</b>
-      </PageInfo>
-      <PageButton
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Next
-      </PageButton>
-    </PaginationWrapper>
-  );
-};
-
-export default PaginationElement;

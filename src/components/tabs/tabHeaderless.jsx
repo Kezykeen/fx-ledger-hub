@@ -1,4 +1,3 @@
-import React from "react";
 import { BackgroundlessButton } from "../../globals/sharedStyles";
 import styled, { css } from "styled-components";
 
@@ -25,14 +24,14 @@ const TabHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const Button = styled(BackgroundlessButton)`
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   font-style: normal;
   transition: border ease-in-out 0.3s;
-  padding: 9px 16px 9px 16px;
-  gap: 10px;
+  padding: 10px 16px;
   border: 1px solid ${({ theme }) => theme.colors.gray300};
   color: ${({ isActive, theme }) =>
     isActive ? theme.colors.Primary300 : theme.colors.gray700};

@@ -1,42 +1,57 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { formatCurrency } from "../../../../../utils/helpers.utils";
-import { ArrowCircleIcon } from "../../../../../assets/svgs";
+import { ArrowCircleIcon, WalletBalanceIcon } from "../../../../../assets/svgs";
 
-const TransactionAnalyticsCard = ({
-  bgColor,
-  icon,
-  title,
-  amount,
-  link,
-  scale = true,
-  main = false,
-}) => {
+const AnalyticsCard = () => {
   return (
-    <TransactionAnalyticsCardWrapper $bg={bgColor}>
-      {icon && <Icon $scale={scale}>{icon}</Icon>}
-      <Text>{title}</Text>
-      <TotalAmount $main={main}>{formatCurrency(amount)}</TotalAmount>
-      <LinkWrapper to={link}>
-        <span>View all</span>
-        <span>
+    <Container>
+      <Title>Account Analytics</Title>
+      <CardWrapper>
+        <Icon>
+          <WalletBalanceIcon />
+        </Icon>
+        <Text>Account Balance</Text>
+        <TotalAmount>
+          <span>XFA</span> 1,200
+        </TotalAmount>
+        <LinkWrapper to={""}>
+          <span>View Transactions</span>
           <ArrowCircleIcon />
-        </span>
-      </LinkWrapper>
-    </TransactionAnalyticsCardWrapper>
+        </LinkWrapper>
+      </CardWrapper>
+    </Container>
   );
 };
 
-export { TransactionAnalyticsCard };
+export { AnalyticsCard };
 
-const TransactionAnalyticsCardWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme, $bg }) => ($bg ? $bg : theme.colors.gray100)};
+  gap: 16px;
+  width: 281px;
+  padding: 16px;
+  gap: 16px;
+  border-radius: 8px;
+  border: ${({ theme }) => `1px solid ${theme.colors.gray100}`};
+`;
+
+const Title = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  color: ${({ theme }) => theme.colors.gray900};
+`;
+
+const CardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #ffd7bf80;
   min-width: 227px;
   width: 100%;
   padding: 12px;
-  border-radius: ${({ bg }) => (bg ? "4px" : "8px")};
+  border-radius: 8px;
 `;
 
 const Icon = styled.div`
@@ -47,9 +62,6 @@ const Icon = styled.div`
   justify-content: center;
   color: ${({ theme }) => theme.colors.Primary300};
   margin-bottom: 16px;
-  & > svg {
-    transform: ${({ $scale }) => ($scale ? "scale(1.8)" : "scale(1)")};
-  }
 `;
 
 const Text = styled.p`
@@ -61,11 +73,15 @@ const Text = styled.p`
 `;
 
 const TotalAmount = styled.div`
-  font-size: ${({ $main }) => ($main ? "32px" : "24px")};
+  font-size: 24px;
   font-weight: 700;
   line-height: 48px;
-  margin: 8px 0 12px;
+  margin-top: 8px;
   color: ${({ theme }) => theme.colors.gray800};
+
+  & > span {
+    color: #fd853a;
+  }
 `;
 
 const LinkWrapper = styled(Link)`
@@ -76,7 +92,7 @@ const LinkWrapper = styled(Link)`
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
-  margin-top: auto;
+  margin-top: 12px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
   padding-top: 0.6rem;
   color: ${({ theme }) => theme.colors.Primary300};

@@ -4,11 +4,7 @@ export const BackgroundlessButton = styled.button`
   background: transparent;
   cursor: pointer;
   border: 0px;
-  transition: 0.2s ease-in-out;
-
-  :active {
-    transform: scale(1.05);
-  }
+  transition: 0.2s ease-in;
 
   :disabled {
     :active {

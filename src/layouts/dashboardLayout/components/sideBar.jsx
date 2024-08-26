@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import AppLogo from "../../../components/logo";
 import { Button } from "../../../components/button";
@@ -61,6 +60,7 @@ const SideBarWrapper = styled.div`
   position: sticky;
   left: 0;
 `;
+
 const Flex = styled.div`
   display: flex;
   align-items: center;
@@ -68,10 +68,10 @@ const Flex = styled.div`
   width: 100%;
   justify-content: center;
 `;
+
 const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.white};
@@ -83,25 +83,25 @@ const SideBarContainer = styled.div`
     width: 100%;
     padding-top: 18px;
     padding-bottom: 12px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0.5px solid #e4e7ec;
     padding-left: 24px;
   }
 `;
+
 const ActionWrapper = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 50px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #ddd;
+  padding: 50px 24px 22px;
+  border-bottom: 0.5px solid #e4e7ec;
 `;
+
 const MenuWrapper = styled.div`
   flex: 1;
   width: 100%;
   padding: 24px 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
   overflow-y: auto;
+
   & > h3 {
     font-weight: 500;
     font-size: 1rem;

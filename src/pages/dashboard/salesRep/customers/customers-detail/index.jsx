@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { PageHeader } from "../../../../../components/pageHeader";
 import { Divider } from "..";
 import { colors } from "../../../../../theme/colors";
-import { ButtonDropdown, Flex } from "../../../../../components/buttonDropdown";
+import { ButtonDropdown } from "../../../../../components/buttonDropdown";
 import { TableTab } from "../../../../../components/tableTab";
+import { useState } from "react";
 import { CustomerRecord } from "../components/customer-history/transcation-history";
+import { ArrowDown } from "../../../../../assets/svgs";
 
 const customer = {
   date: "June 4,2023",
@@ -17,21 +19,46 @@ const customer = {
 };
 
 export const CustomerDetailsOverview = () => {
-  const buttonGroup = [
+  const [exportOpen, setExportOpen] = useState(false);
+  const [textOpen, setTextOpen] = useState(false);
+  const exportButtonGroup = [
     {
-      name: "View",
+      name: "Update Payment",
       onClick: () => {},
     },
     {
-      name: "Edit",
+      name: "Initial Refund",
       onClick: () => {},
     },
     {
-      name: "Delete",
-      textColor: "R300",
+      name: "initial Upfront",
       onClick: () => {},
     },
   ];
+  const exportTextGroup = [
+    {
+      name: "CFA",
+      onClick: () => {},
+    },
+    {
+      name: "RMB",
+      onClick: () => {},
+    },
+    {
+      name: "USDT",
+      onClick: () => {},
+    },
+    {
+      name: "Dollar",
+      onClick: () => {},
+    },
+  ];
+
+  const handleTabChange = (selectedTab) => {
+    console.log("Selected tab:", selectedTab);
+    // Perform actions based on the selected tab
+  };
+
   return (
     <PageContainer>
       <DetailRow>
@@ -41,15 +68,19 @@ export const CustomerDetailsOverview = () => {
         />
         <div>
           <ButtonDropdown
-            buttonGroup={buttonGroup}
+            open={exportOpen}
+            setOpen={setExportOpen}
+            buttonGroup={exportButtonGroup}
             buttonElement={
-              <Flex>
+              <StyledMenuButton>
                 <span>Actions</span>
-              </Flex>
+                <ArrowDown />
+              </StyledMenuButton>
             }
           />
         </div>
       </DetailRow>
+      <Divider />
       <ColumnWrapper>
         <DetailRow>
           <SectionTitle>Customer Details</SectionTitle>
@@ -89,27 +120,34 @@ export const CustomerDetailsOverview = () => {
       </ColumnWrapper>
 
       <CustomersHistory>
-        <DetailRow>
+        <FlexRow>
           <PageHeader
             title={"Customer History"}
             subTitle={
               "You are viewing customer history below. Please select the history you wish to view"
             }
           />
+
           <div>
             <ButtonDropdown
-              buttonGroup={buttonGroup}
+              open={textOpen}
+              setOpen={setTextOpen}
+              buttonGroup={exportTextGroup}
               buttonElement={
-                <Flex>
+                <StyleMenuButton>
                   <span>All Teams</span>
-                </Flex>
+                  <ArrowDown />
+                </StyleMenuButton>
               }
             />
           </div>
-        </DetailRow>
+        </FlexRow>
+        <Line></Line>
         <TableTab
           tabs={["Transaction History", "Refund History", "Supply History"]}
+          defaultActiveTab="Transaction History"
           backgroundColor="gray100"
+          onTabChange={handleTabChange}
         />
 
         <SummaryBox>
@@ -176,27 +214,47 @@ const SummaryBox = styled.div`
   margin-bottom: 20px;
 `;
 
-const ReceiptButton = styled.button`
+const StyledMenuButton = styled.button`
   display: flex;
+  justify-content: center;
   text-decoration: none;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
-  padding: 4px 12px 4px 12px;
   cursor: pointer;
-  border: 1px solid ${(props) => props.theme.colors.gray200};
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 1rem;
+  padding: 10px 16px !important;
+  border: none;
+  color: white;
+  background-color: ${(props) => props.theme.colors.Primary300};
+  border-radius: 8px;
   outline: none;
-  &:hover {
-    text-decoration: underline;
-  }
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  width: 150px;
+  height: 44px;
 `;
 
-const FlexCol = styled.div`
+const StyleMenuButton = styled.button`
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  justify-content: center;
+  text-decoration: none;
   gap: 10px;
-  width: 100%;
-  max-width: ${({ minWidth }) => (minWidth ? minWidth : "fit-content")};
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 16px !important;
+  border: none;
+  background-color: ${(props) => props.theme.colors.Primary100};
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  width: 150px;
+  height: 44px;
+`;
+
+
+const FlexRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Line = styled.div`
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray200} !important;
 `;

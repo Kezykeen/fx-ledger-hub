@@ -40,10 +40,6 @@ export const ButtonDropdown = ({
 
 const ButtonContainer = ({ buttonGroup, handleItemClick }) => {
   return (
-    <>
-      {buttonGroup?.map((btn, index) => (
-        <StyledMenuItem key={index} role="button" onClick={btn.onClick}>
-          <Text>{btn.name}</Text>
     <Container>
       {buttonGroup?.map((btn, i) => (
         <StyledMenuItem
@@ -58,11 +54,6 @@ const ButtonContainer = ({ buttonGroup, handleItemClick }) => {
   );
 };
 
-// Styled components
-
-const StyledMenuItem = styled(MenuItem)`
-  background-color: ${({ theme }) => theme.colors.white};
-  
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -85,7 +76,7 @@ const Label = styled.div`
 
 const DropdownContainer = styled.div`
   position: absolute;
-  top: 100%;
+  top: 90%;
   left: 0;
   margin-top: 10px;
   animation: ${fadeIn} 0.25s ease-in-out;
@@ -97,7 +88,7 @@ const DropdownContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90px;
+  width: 170px;
 `;
 
 const StyledMenuItem = styled.div`
@@ -118,25 +109,6 @@ const Text = styled.p`
   line-height: 20px;
   color: ${({ theme }) => theme.colors.gray700};
 `;
-
-const StyledMenuButton = styled(MenuButton)`
-  display: flex;
-  text-decoration: none;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 18px !important;
-  height: 44px;
-  width: auto;
-  border: 1px solid red;
-  cursor: pointer;
-  border: 1px solid ${(props) => props.theme.colors.gray200};
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 8px;
-  outline: none;
-  box-shadow: 0px 1px 2px 0px #1018280d;
-`;
-
 
 export const Flex = styled.div`
   display: flex;

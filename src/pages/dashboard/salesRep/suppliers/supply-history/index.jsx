@@ -40,10 +40,7 @@ export const SuppliersOverview = () => {
           title={"Supply History"}
           subTitle={"You are viewing supply history details below."}
         />
-        <div>
-          
-          
-        </div>
+        
       </DetailRow>
       <ColumnWrapper>
         <DetailRow>

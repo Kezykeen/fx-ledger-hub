@@ -3,25 +3,29 @@ import { PageHeader } from "../../../../components/pageHeader";
 import { TableWidget } from "../../../../components/tableWidget";
 import Customers from "./components/customers";
 import { Button } from "../../../../components/button";
-import { PlusIcon } from "../../../../assets/svgs";
+import { ArrowDown, PlusIcon } from "../../../../assets/svgs";
 import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
+import { useState } from "react";
+import FilterComponent from "./components/fiterComponent";
 
 const CustomersHistory = () => {
-  const buttonGroup = [
+  const [exportOpen, setExportOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const exportButtonGroup = [
     {
-      name: "View",
+      name: "Update Payment",
       onClick: () => {},
     },
     {
-      name: "Edit",
+      name: "Initial Refund",
       onClick: () => {},
     },
     {
-      name: "Delete",
-      textColor: "R300",
+      name: "initial Upfront",
       onClick: () => {},
     },
   ];
+
   return (
     <Container>
       <DetailRow>
@@ -29,7 +33,6 @@ const CustomersHistory = () => {
           title={"All Customers"}
           subTitle={"Here is an overview of all your transactions"}
         />
-
         <DetailRow>
           <ActionWrapper>
             <Button
@@ -42,18 +45,27 @@ const CustomersHistory = () => {
             />
           </ActionWrapper>
 
-          <ButtonDropdown
-            buttonGroup={buttonGroup}
-            buttonElement={
-              <Flex>
-                <span>Actions</span>
-              </Flex>
-            }
-          />
+          <div>
+            <ButtonDropdown
+              open={exportOpen}
+              setOpen={setExportOpen}
+              buttonGroup={exportButtonGroup}
+              buttonElement={
+                <StyledMenuButton>   
+                  <span>Actions</span>
+                  <ArrowDown />
+                </StyledMenuButton>
+              }
+            />
+          </div>
         </DetailRow>
       </DetailRow>
       <WidgetWrapper>
-        <TableWidget />
+        <TableWidget
+          customFilter={<FilterComponent setFilterOpen={setFilterOpen} />}
+          filterOpen={filterOpen}
+          setFilterOpen={setFilterOpen}
+        />
       </WidgetWrapper>
       <Customers />
     </Container>
@@ -75,6 +87,23 @@ const WidgetWrapper = styled.div`
   width: 100%;
 `;
 
+const StyledMenuButton = styled.button`
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 16px !important;
+  border: 1px solid ${(props) => props.theme.colors.gray100} !important;
+  background-color: ${(props) => props.theme.colors.white};
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  width: 186px;
+  height: 44px;
+`;
+
 const ActionWrapper = styled.div`
   padding-left: 24px;
   padding-right: 24px;
@@ -83,12 +112,12 @@ const ActionWrapper = styled.div`
 const DetailRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
 `;
 
 export const Divider = styled.div`
-  margin: ${({ margin }) => margin ?? "20px"};
+  margin: ${({ margin }) => margin ?? "20px 0"};
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;

@@ -52,7 +52,7 @@ const Suppliers = () => {
       Cell: () => (
         <Button>
           <Flex>
-            <SubTitle to={"/s/"}>Edit</SubTitle>
+            <SubTitle to={"/s/"}>Edit Details</SubTitle>
             <Span></Span>
             <ViewDetails to={"/s/supply-history"}>
               View Details

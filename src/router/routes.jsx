@@ -9,6 +9,8 @@ import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transact
 import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
 import { SupplyHistory } from "../pages/dashboard/salesRep/suppliers";
 import { SuppliersOverview } from "../pages/dashboard/salesRep/suppliers/supply-history";
+import { CustomerTransactionOverview } from "../pages/dashboard/salesRep/customers/customers-detail/transaction";
+
 
 const authRoutes = [
   {
@@ -43,6 +45,10 @@ const dashboardRoutes = [
       {
         element: <CustomerDetailsOverview />,
         path: "customers/customers-detail",
+      },
+      {
+        element: <CustomerTransactionOverview />,
+        path: "customers/customers-detail/transaction-details",
       },
       {
         element: <SupplyHistory />,

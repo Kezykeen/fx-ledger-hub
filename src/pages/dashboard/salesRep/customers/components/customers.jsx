@@ -3,15 +3,10 @@ import styled from "styled-components";
 import { Table } from "./table/table";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const ViewDetails = styled(Link)`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: #FD853A;
-  cursor: pointer;
-`;
 const Customers = () => {
+  const [pageNumber, setPageNumber] = useState(1);
   const columns = [
     {
       Header: "Customer Name",
@@ -54,7 +49,7 @@ const Customers = () => {
       Cell: () => (
         <Button>
           <Flex>
-            <SubTitle to={"/s/"}>Edit</SubTitle>
+            <SubTitle onClick={""}>Edit Details</SubTitle>
             <Span></Span>
             <ViewDetails to={"/s/customers/customers-detail"}>
               View Details
@@ -64,81 +59,60 @@ const Customers = () => {
       ),
     },
   ];
-  const data = [
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
+  const data = {
+    data:[
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Paid",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Owing",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Paid",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Owing",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Paid",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        paymentStatus: "Owing",
+        dateAdded: "Jan 4, 2022",
+      },
+    ],
+    metaData: {
+      totalPages: 10,
+      page: pageNumber,
     },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Paid",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      paymentStatus: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-  ];
-  return <Table columns={columns} data={data} />;
+  }
+  
+  return (
+    <Table
+      columns={columns}
+      data={data?.data}
+      setPageNumber={setPageNumber}
+      availablePages={data?.metaData?.totalPages}
+      pageNumber={data?.metaData?.page}
+    />
+  );
 };
 
 export default Customers;
@@ -165,6 +139,10 @@ const SubTitle = styled.p`
   line-height: 20px;
   text-align: left;
   color: ${({ theme }) => theme.colors.gray700};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.Primary300};
+  }
 `;
 
 const PaymentStatus = styled.span`
@@ -192,5 +170,17 @@ const Button = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.colors.Primary50};
     cursor: pointer;
+  }
+`;
+
+const ViewDetails = styled(Link)`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #fd853a;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gray700};
   }
 `;

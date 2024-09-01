@@ -4,9 +4,9 @@ import { TableWidget } from "../../../../components/tableWidget";
 import { Button } from "../../../../components/button";
 import { PlusIcon } from "../../../../assets/svgs";
 import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
-import Suppliers from "./components/suppliers";
+import SuppliersTable from "./components/suppliersTable";
 
-const SupplyHistory = () => {
+const Suppliers = () => {
   const buttonGroup = [
     {
       name: "View",
@@ -55,14 +55,14 @@ const SupplyHistory = () => {
       <WidgetWrapper>
         <TableWidget />
       </WidgetWrapper>
-      <Suppliers />
+      <SuppliersTable />
     </Container>
   );
 };
 
-export { SupplyHistory };
+export { Suppliers };
 
-SupplyHistory.displayName = "SupplyHistory";
+Suppliers.displayName = "SupplyHistory";
 
 const Container = styled.div`
   /* Add your styles here */

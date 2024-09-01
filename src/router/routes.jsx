@@ -5,13 +5,13 @@ import {
   TransactionHistory,
 } from "../pages/dashboard/salesRep";
 import { InitiateTransaction } from "../pages/dashboard/salesRep/initiateTransaction";
-import { SupplyHistoryDetails } from "../pages/dashboard/salesRep/supplyHistory";
+import { SupplyHistory } from "../pages/dashboard/salesRep/supplyHistory";
 import { EditTransaction } from "../pages/dashboard/salesRep/transactionHistory/edit";
 import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
 import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
-import { SupplyHistory } from "../pages/dashboard/salesRep/suppliers";
-import { SuppliersOverview } from "../pages/dashboard/salesRep/suppliers/supply-history";
+import { Suppliers } from "../pages/dashboard/salesRep/suppliers";
+import { SupplierDetails } from "../pages/dashboard/salesRep/suppliers/details";
 import { CustomerRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/transcation-history";
 import { RefundRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/upfront-history";
@@ -51,10 +51,6 @@ const dashboardRoutes = [
         path: "customers",
       },
       {
-        element: <div>Suppliers</div>,
-        path: "suppliers",
-      },
-      {
         // CustomerDetailsOverview as the parent route
         element: <CustomerDetailsOverview />,
         path: "customers/customers-detail",
@@ -75,22 +71,22 @@ const dashboardRoutes = [
         ],
       },
       {
-        element: <SupplyHistory />,
+        element: <Suppliers />,
         index: true,
         path: "suppliers",
       },
       {
-        element: <SuppliersOverview />,
+        element: <SupplierDetails />,
         index: true,
-        path: "supply-history",
+        path: "suppliers/:id",
       },
       {
         element: <div>Payments</div>,
         index: true,
-        path: "suppliers",
+        path: "payments",
       },
       {
-        element: <SupplyHistoryDetails />,
+        element: <SupplyHistory />,
         index: true,
         path: "supply-history",
       },

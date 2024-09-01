@@ -8,7 +8,7 @@ import { supplyHistoryTabs } from "./components/data";
 import { Button } from "../../../../components/button";
 import { AddIcon } from "../../../../assets/svgs";
 
-const SupplyHistoryDetails = () => {
+const SupplyHistory = () => {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const handleTabChange = (selectedTab) => {
@@ -43,9 +43,9 @@ const SupplyHistoryDetails = () => {
   );
 };
 
-export { SupplyHistoryDetails };
+export { SupplyHistory };
 
-SupplyHistoryDetails.displayName = "SupplyHistory";
+SupplyHistory.displayName = "SupplyHistory";
 
 const Container = styled.div``;
 

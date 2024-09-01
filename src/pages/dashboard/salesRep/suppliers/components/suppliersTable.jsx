@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Table } from "./table/table";
 import { Link } from "react-router-dom";
@@ -9,7 +8,8 @@ const ViewDetails = styled(Link)`
   font-weight: 500;
   cursor: pointer;
 `;
-const Suppliers = () => {
+
+const SuppliersTable = () => {
   const columns = [
     {
       Header: "Customer Name",
@@ -54,9 +54,7 @@ const Suppliers = () => {
           <Flex>
             <SubTitle to={"/s/"}>Edit Details</SubTitle>
             <Span></Span>
-            <ViewDetails to={"/s/supply-history"}>
-              View Details
-            </ViewDetails>
+            <ViewDetails to={"1"}>View Details</ViewDetails>
           </Flex>
         </Button>
       ),
@@ -139,7 +137,7 @@ const Suppliers = () => {
   return <Table columns={columns} data={data} />;
 };
 
-export default Suppliers;
+export default SuppliersTable;
 
 const Flex = styled.div`
   display: flex;
@@ -172,22 +170,21 @@ const PaymentStatus = styled.span`
   font-weight: 500;
   background-color: ${(props) =>
     props.status === "Complete"
-      ? "#D1FAE5" 
+      ? "#D1FAE5"
       : props.status === "Refund in progress"
-      ? "#FEDF89" 
+      ? "#FEDF89"
       : props.status === "Supply in progress"
-      ? "#FFD7BF" 
+      ? "#FFD7BF"
       : "#FEE2E2"}; // light red for default or any other status
-  
+
   color: ${(props) =>
     props.status === "Complete"
       ? "#059669"
       : props.status === "Refund in progress"
-      ? "#B54708" 
+      ? "#B54708"
       : props.status === "Supply in progress"
-      ? "#DB6C27" 
+      ? "#DB6C27"
       : "#D92D20"}; // dark red for default or any other status
-  
 `;
 
 const Button = styled.div`

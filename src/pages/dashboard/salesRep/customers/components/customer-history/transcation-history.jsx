@@ -3,6 +3,7 @@ import { TableWidget } from "../../../../../../components/tableWidget";
 import { TableTab } from "../../../../../../components/tableTab";
 import { PageHeader } from "../../../../../../components/pageHeader";
 import Transactions from "../customer-record/customer-transaction";
+import { customerTab } from "../data";
 
 const CustomerRecord = () => {
   const handleTabChange = (selectedTab) => {
@@ -18,11 +19,7 @@ const CustomerRecord = () => {
       <WidgetWrapper>
         <TableWidget />
         <Divider />
-        <TableTab
-          tabs={["In Progress", "Approved", "Cancelled"]}
-          defaultActiveTab="Cancelled"
-          onTabChange={handleTabChange}
-        />
+        <TableTab tabs={customerTab} onTabChange={handleTabChange} />
       </WidgetWrapper>
       <Transactions />
     </Container>

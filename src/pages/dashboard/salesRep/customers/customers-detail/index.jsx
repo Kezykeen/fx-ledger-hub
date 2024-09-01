@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ArrowDown } from "../../../../../assets/svgs";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { customerDetailsTab } from "../components/data";
 
 const customer = {
   date: "June 4,2023",
@@ -57,8 +58,8 @@ export const CustomerDetailsOverview = () => {
     },
   ];
 
-   // Function to handle tab changes
-   const handleTabChange = (tab) => {
+  // Function to handle tab changes
+  const handleTabChange = (tab) => {
     // Handle the active tab change logic if needed
     console.log(`Active tab changed to: ${tab}`);
   };
@@ -165,8 +166,7 @@ export const CustomerDetailsOverview = () => {
         </FlexRow>
         <Line></Line>
         <TableTab
-          tabs={["Transaction History", "Refund History", "Upfront History"]}
-          defaultActiveTab="Transaction History"
+          tabs={customerDetailsTab}
           backgroundColor="gray100"
           onTabChange={handleTabChange}
           onTabClick={handleTabClick}

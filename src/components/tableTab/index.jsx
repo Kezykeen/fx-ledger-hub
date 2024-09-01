@@ -82,6 +82,5 @@ const TabButton = styled.button`
   &:hover {
     background-color: ${(props) =>
       props.active ? props.activeColor : props.hoverColor};
-    color: ${({ theme }) => theme.colors.gray400};
   }
 `;

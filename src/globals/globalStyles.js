@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Montserrat", sans-serif ;
      font-optical-sizing: auto;
      font-style: normal;
+     scroll-behavior: smooth;
   }
 
   html,

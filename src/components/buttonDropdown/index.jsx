@@ -78,7 +78,7 @@ const Label = styled.div`
 
 const DropdownContainer = styled.div`
   position: absolute;
-  top: 100%;
+  top: 90%;
   left: 0;
   margin-top: 10px;
   animation: ${fadeIn} 0.25s ease-in-out;
@@ -101,6 +101,8 @@ const StyledMenuItem = styled.div`
 
   &:hover {
     opacity: 1;
+    background-color: ${(props) => props.theme.colors.Primary50};
+    border-radius: 8px;
   }
 `;
 

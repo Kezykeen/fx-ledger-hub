@@ -76,12 +76,12 @@ const Label = styled.label`
 
 const Input = styled.input`
   height: 44px;
-  padding: 9.5px 12px;
+  padding: 10px 14px;
   border: ${({ theme, $isError }) =>
     $isError
       ? `1px solid ${theme.colors.red100}`
       : `1px solid ${theme.colors.gray300}`};
-  border-radius: 4px;
+  border-radius: 8px;
   font-style: normal;
   font-weight: 400;
   font-size: 0.875rem;

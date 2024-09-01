@@ -15,7 +15,6 @@
     "@hookform/resolvers": "^2.9.11",
     "@mui/material": "^5.16.0",
     "@mui/x-date-pickers": "^7.11.0",
-    "@szhsin/react-menu": "^4.2.2",
     "chart.js": "3.2.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "framer-motion": "^11.3.21",

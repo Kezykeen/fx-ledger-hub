@@ -5,9 +5,16 @@ import {
   TransactionHistory,
 } from "../pages/dashboard/salesRep";
 import { InitiateTransaction } from "../pages/dashboard/salesRep/initiateTransaction";
-import { SupplyHistory } from "../pages/dashboard/salesRep/supplyHistory";
+import { SupplyHistoryDetails } from "../pages/dashboard/salesRep/supplyHistory";
 import { EditTransaction } from "../pages/dashboard/salesRep/transactionHistory/edit";
+import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
+import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
+import { SupplyHistory } from "../pages/dashboard/salesRep/suppliers";
+import { SuppliersOverview } from "../pages/dashboard/salesRep/suppliers/supply-history";
+import { CustomerRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/transcation-history";
+import { RefundRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/refund-history";
+import { UpfrontRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/upfront-history";
 
 const authRoutes = [
   {
@@ -39,17 +46,51 @@ const dashboardRoutes = [
         path: "transactions/:id/edit",
       },
       {
-        element: <div>Customers</div>,
+        element: <CustomersHistory />,
         index: true,
         path: "customers",
       },
       {
         element: <div>Suppliers</div>,
+        path: "suppliers",
+      },
+      {
+        // CustomerDetailsOverview as the parent route
+        element: <CustomerDetailsOverview />,
+        path: "customers/customers-detail",
+        children: [
+          {
+            // Child route under CustomerDetailsOverview
+            element: <CustomerRecord />,
+            path: "",
+          },
+          {
+            element: <RefundRecord />,
+            path: "refund",
+          },
+          {
+            element: <UpfrontRecord />,
+            path: "upfront",
+          },
+        ],
+      },
+      {
+        element: <SupplyHistory />,
         index: true,
         path: "suppliers",
       },
       {
-        element: <SupplyHistory />,
+        element: <SuppliersOverview />,
+        index: true,
+        path: "supply-history",
+      },
+      {
+        element: <div>Payments</div>,
+        index: true,
+        path: "suppliers",
+      },
+      {
+        element: <SupplyHistoryDetails />,
         index: true,
         path: "supply-history",
       },
@@ -59,24 +100,9 @@ const dashboardRoutes = [
         path: "ledger/:team",
       },
       {
-        element: <div>Payments</div>,
-        index: true,
-        path: "payments",
-      },
-      {
-        element: <div>Refund History</div>,
-        index: true,
-        path: "refund-history",
-      },
-      {
         element: <div>Reports</div>,
         index: true,
         path: "report",
-      },
-      {
-        element: <div>User management</div>,
-        index: true,
-        path: "manage-user",
       },
       {
         element: <InitiateTransaction />,

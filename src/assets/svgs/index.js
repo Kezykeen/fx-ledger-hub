@@ -8,12 +8,14 @@ import TimeLineIcon from "./timeLineIcon.svg";
 import WalletIcon from "./walletIcon.svg";
 import UserCogIcon from "./userCogIcon.svg";
 import SupplierIcon from "./suppliersIcon.svg";
+import SupplierHistoryIcon from "./supplyHistoryIcon.svg"
 import AlertIcon from "./alertIcon.svg";
 import LogoutIcon from "./logoutIcon.svg";
 import TrendRiseIcon from "./trendRiseIcon.svg";
 import TrendFallIcon from "./trendFallIcon.svg";
 import DataBaseIcon from "./dataBaseIcon.svg";
 import ArrowCircleIcon from "./arrowCircleIcon.svg";
+import ArrowDown from "./arrowDownIcon.svg"
 import MoneyIcon from "./moneyIcon.svg";
 import InOutFlowIcon from "./inOutFlow.svg";
 import DownloadMini from "./downloadMini.svg";
@@ -47,12 +49,14 @@ export {
   UserCogIcon,
   LedgerIcon,
   SupplierIcon,
+  SupplierHistoryIcon,
   AlertIcon,
   LogoutIcon,
   TrendRiseIcon,
   TrendFallIcon,
   DataBaseIcon,
   ArrowCircleIcon,
+  ArrowDown,
   MoneyIcon,
   InOutFlowIcon,
   DownloadMini,

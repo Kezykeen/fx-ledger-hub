@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Table } from "./table/table";
-import { InOutFlowIcon } from "../../../../../assets/svgs";
+import { Table } from "../table/table";
+import { InOutFlowIcon } from "../../../../../../assets/svgs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
 
 const Transactions = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -163,30 +162,6 @@ const Flex = styled.div`
   color: ${({ theme }) => theme.colors.gray800};
   align-items: center;
 `;
-const Title = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 28px;
-  text-align: left;
-`;
-const SubTitle = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  text-align: left;
-  color: ${({ theme }) => theme.colors.gray500};
-`;
-
-const CurrencyIcon = styled.div`
-  width: 32px;
-  height: 32px;
-  background-color: #fef3c7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-`;
 
 const PaymentStatus = styled.span`
   padding: 4px 12px;
@@ -209,4 +184,4 @@ const ViewDetails = styled(Link)`
   color: #f97316;
   font-weight: 500;
   cursor: pointer;
-`; 
+`;

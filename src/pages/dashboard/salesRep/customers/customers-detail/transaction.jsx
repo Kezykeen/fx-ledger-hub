@@ -124,20 +124,6 @@ export const CustomerTransactionOverview = () => {
             title={"Transaction Summary"}
             subTitle={"You are viewing transaction summary below"}
           />
-
-          <div>
-            <ButtonDropdown
-              open={textOpen}
-              setOpen={setTextOpen}
-              buttonGroup={exportTextGroup}
-              buttonElement={
-                <StyledMenuButton>
-                  <span>All Team</span>
-                  <ArrowDown />
-                </StyledMenuButton>
-              }
-            />
-          </div>
         </FlexRow>
 
         <Divider />
@@ -284,12 +270,13 @@ const StyledMenuButton = styled.button`
   align-items: center;
   cursor: pointer;
   padding: 10px 16px !important;
+  color: white;
   border: 1px solid ${(props) => props.theme.colors.gray100} !important;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.Primary300};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;
-  width: 186px;
+  width: 150px;
   height: 44px;
 `;
 

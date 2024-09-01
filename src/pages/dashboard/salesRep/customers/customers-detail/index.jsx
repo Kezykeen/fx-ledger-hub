@@ -5,8 +5,9 @@ import { colors } from "../../../../../theme/colors";
 import { ButtonDropdown } from "../../../../../components/buttonDropdown";
 import { TableTab } from "../../../../../components/tableTab";
 import { useState } from "react";
-import { CustomerRecord } from "../components/customer-history/transcation-history";
 import { ArrowDown } from "../../../../../assets/svgs";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const customer = {
   date: "June 4,2023",
@@ -21,6 +22,8 @@ const customer = {
 export const CustomerDetailsOverview = () => {
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
+  const navigate = useNavigate();
+
   const exportButtonGroup = [
     {
       name: "Update Payment",
@@ -54,11 +57,26 @@ export const CustomerDetailsOverview = () => {
     },
   ];
 
-  const handleTabChange = (selectedTab) => {
-    console.log("Selected tab:", selectedTab);
-    // Perform actions based on the selected tab
+   // Function to handle tab changes
+   const handleTabChange = (tab) => {
+    // Handle the active tab change logic if needed
+    console.log(`Active tab changed to: ${tab}`);
   };
-
+  const handleTabClick = (tab) => {
+    switch (tab) {
+      case "Transaction History":
+        navigate("");
+        break;
+      case "Refund History":
+        navigate("refund");
+        break;
+      case "Upfront History":
+        navigate("upfront");
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <PageContainer>
       <DetailRow>
@@ -81,43 +99,46 @@ export const CustomerDetailsOverview = () => {
         </div>
       </DetailRow>
       <Divider />
-      <ColumnWrapper>
-        <DetailRow>
-          <SectionTitle>Customer Details</SectionTitle>
-          <Value>
-            <Label>Date</Label>: {customer?.date}
-          </Value>
-        </DetailRow>
-        <Divider marginY="8px" />
-        <DetailRow>
-          <Label style={{ width: "100%" }}>Customer Name</Label>
-          <Label style={{ width: "100%" }}>Country</Label>
-          <Label style={{ width: "100%" }}>City</Label>
-        </DetailRow>
-        <DetailRow>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {customer?.customerName}
-          </Value>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {customer?.customerCounrty}
-          </Value>
-          <Value style={{ width: "100%" }}>{customer?.customerCity}</Value>
-        </DetailRow>
-        <DetailRow>
-          <Label style={{ width: "100%" }}>State</Label>
-          <Label style={{ width: "100%" }}>Phone Number</Label>
-          <Label style={{ width: "100%" }}>Address</Label>
-        </DetailRow>
-        <DetailRow>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {customer?.customerState}
-          </Value>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {customer?.phoneNumber}
-          </Value>
-          <Value style={{ width: "100%" }}>{customer?.customerAddress}</Value>
-        </DetailRow>
-      </ColumnWrapper>
+
+      <CustomersHistory>
+        <ColumnWrapper>
+          <DetailRow>
+            <SectionTitle>Customer Details</SectionTitle>
+            <Value>
+              <Label>Date</Label>: {customer?.date}
+            </Value>
+          </DetailRow>
+          <Divider marginY="8px" />
+          <DetailRow>
+            <Label style={{ width: "100%" }}>Customer Name</Label>
+            <Label style={{ width: "100%" }}>Country</Label>
+            <Label style={{ width: "100%" }}>City</Label>
+          </DetailRow>
+          <DetailRow>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {customer?.customerName}
+            </Value>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {customer?.customerCounrty}
+            </Value>
+            <Value style={{ width: "100%" }}>{customer?.customerCity}</Value>
+          </DetailRow>
+          <DetailRow>
+            <Label style={{ width: "100%" }}>State</Label>
+            <Label style={{ width: "100%" }}>Phone Number</Label>
+            <Label style={{ width: "100%" }}>Address</Label>
+          </DetailRow>
+          <DetailRow>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {customer?.customerState}
+            </Value>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {customer?.phoneNumber}
+            </Value>
+            <Value style={{ width: "100%" }}>{customer?.customerAddress}</Value>
+          </DetailRow>
+        </ColumnWrapper>
+      </CustomersHistory>
 
       <CustomersHistory>
         <FlexRow>
@@ -144,14 +165,15 @@ export const CustomerDetailsOverview = () => {
         </FlexRow>
         <Line></Line>
         <TableTab
-          tabs={["Transaction History", "Refund History", "Supply History"]}
+          tabs={["Transaction History", "Refund History", "Upfront History"]}
           defaultActiveTab="Transaction History"
           backgroundColor="gray100"
           onTabChange={handleTabChange}
+          onTabClick={handleTabClick}
         />
 
         <SummaryBox>
-          <CustomerRecord />
+          <Outlet />
         </SummaryBox>
       </CustomersHistory>
     </PageContainer>
@@ -164,7 +186,7 @@ const PageContainer = styled.div`
 `;
 
 const ColumnWrapper = styled.div`
-  background-color: ${({ bg }) => bg ?? "#f8f8f8"};
+  background-color: ${({ bg }) => bg ?? "#ffff"};
   border-radius: 8px;
   padding: 20px;
 `;
@@ -248,7 +270,6 @@ const StyleMenuButton = styled.button`
   width: 150px;
   height: 44px;
 `;
-
 
 const FlexRow = styled.div`
   display: flex;

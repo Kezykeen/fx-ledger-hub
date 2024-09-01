@@ -6,6 +6,7 @@ const TableTab = ({
   tabs,
   defaultActiveTab,
   onTabChange,
+  onTabClick,
   backgroundColor = "#FFF3EBCC",
   activeColor = colors.Primary300,
   hoverColor = colors.Primary200,
@@ -16,6 +17,9 @@ const TableTab = ({
     setActiveTab(tab);
     if (onTabChange) {
       onTabChange(tab);
+    }
+    if (onTabClick) {
+      onTabClick(tab); // Trigger the onTabClick function to handle routing
     }
   };
 

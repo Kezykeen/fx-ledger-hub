@@ -1,37 +1,27 @@
 import styled from "styled-components";
 import { TableWidget } from "../../../../../../components/tableWidget";
-import { TableTab } from "../../../../../../components/tableTab";
 import { PageHeader } from "../../../../../../components/pageHeader";
-import Transactions from "../customer-record/customer-transaction";
+import Refund from "../customer-record/customer-refund";
 
-const CustomerRecord = () => {
-  const handleTabChange = (selectedTab) => {
-    console.log("Selected tab:", selectedTab);
-    // Perform actions based on the selected tab
-  };
+
+const RefundRecord = () => {
   return (
     <Container>
       <PageHeader
-        title={"Transaction History"}
-        subTitle={"Here is an overview of all your transactions "}
+        title={"Refund History"}
+        subTitle={"Here is an overview customer refund history below"}
       />
       <WidgetWrapper>
         <TableWidget />
-        <Divider />
-        <TableTab
-          tabs={["In Progress", "Approved", "Cancelled"]}
-          defaultActiveTab="Cancelled"
-          onTabChange={handleTabChange}
-        />
       </WidgetWrapper>
-      <Transactions />
+      <Refund />
     </Container>
   );
 };
 
-export { CustomerRecord };
+export { RefundRecord };
 
-CustomerRecord.displayName = "CustomerRecord";
+RefundRecord.displayName = "RefundRecord";
 
 const Container = styled.div`
   /* Add your styles here */

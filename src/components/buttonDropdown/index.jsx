@@ -99,6 +99,8 @@ const StyledMenuItem = styled.div`
 
   &:hover {
     opacity: 1;
+    background-color: ${(props) => props.theme.colors.Primary50};
+    border-radius: 8px;
   }
 `;
 

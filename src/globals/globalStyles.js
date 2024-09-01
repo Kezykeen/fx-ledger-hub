@@ -59,6 +59,10 @@ const GlobalStyle = createGlobalStyle`
 
   }
 
+  svg {
+    flex-shrink: 0;
+  }
+
 /** Used to define container behavior: width, position: fixed etc... **/
 .Toastify__toast-container {
   border-radius: 8px;
@@ -116,24 +120,6 @@ const GlobalStyle = createGlobalStyle`
 	opacity: 0;
 	transition: opacity 0.5s;
 }
-
-
-
-/* status drop down */
-.szh-menu-button {
-    border: 0px;
-    width: fit-content;
-    background-color: transparent;
-    padding: 0!important;
-  }
-
-  .szh-menu-container {
-    width: fit-content;
-  }
-
-  .szh-menu__item, .szh-menu__item--focusable {
-    padding: 0;
-  }
 
 `;
 

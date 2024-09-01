@@ -1,35 +1,50 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
 import { colors } from "../../theme/colors";
 
 const TableTab = ({
   tabs,
-  defaultActiveTab,
   onTabChange,
   backgroundColor = "#FFF3EBCC",
-  activeColor = colors.Primary300,
-  hoverColor = colors.Primary200,
+  activeColor = colors.primary300,
+  hoverColor = colors.primary200,
 }) => {
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const getActiveTabFromHash = () => {
+    const hash = location.hash.replace("#", "");
+    const activeTab = tabs.find((tab) => tab.hash === hash);
+    return activeTab ? activeTab.hash : tabs[0].hash;
+  };
+
+  const activeTab = getActiveTabFromHash();
+
+  const handleTabClick = (hash) => {
+    navigate(`#${hash}`);
     if (onTabChange) {
-      onTabChange(tab);
+      onTabChange(hash);
     }
   };
 
+  useEffect(() => {
+    if (!location.hash) {
+      navigate(`#${tabs[0].hash}`);
+    }
+  }, [tabs, location.hash, navigate]);
+
   return (
     <TabContainer backgroundColor={backgroundColor}>
-      {tabs.map((tab) => (
+      {tabs.map(({ label, hash }) => (
         <TabButton
-          key={tab}
-          active={activeTab === tab}
+          key={hash}
+          active={activeTab === hash}
           activeColor={activeColor}
           hoverColor={hoverColor}
-          onClick={() => handleTabClick(tab)}
+          onClick={() => handleTabClick(hash)}
         >
-          {tab}
+          {label}
         </TabButton>
       ))}
     </TabContainer>

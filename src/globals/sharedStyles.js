@@ -14,3 +14,11 @@ export const BackgroundlessButton = styled.button`
     opacity: 0.6;
   }
 `;
+
+export const FlexCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: ${({ $gap }) => ($gap ? `${$gap}px` : `10px`)};
+  width: 100%;
+`;

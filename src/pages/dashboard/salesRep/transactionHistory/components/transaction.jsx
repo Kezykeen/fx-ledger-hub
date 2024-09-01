@@ -65,9 +65,7 @@ const Transactions = () => {
       Header: "",
       id: "action",
       Cell: () => (
-        <ViewDetails to={"/s/transactions/transaction-detail"}>
-          View Details
-        </ViewDetails>
+        <ViewDetails to={"/transactions/1"}>View Details</ViewDetails>
       ),
     },
   ];

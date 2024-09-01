@@ -41,6 +41,7 @@ const TransactionAnalyticsChart = () => {
           value={selectedYear}
           onChange={setSelectedYear}
           width="120px"
+          searchable={false}
         />
       </Header>
       <ChartCards>

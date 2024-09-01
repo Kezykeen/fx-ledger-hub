@@ -67,7 +67,7 @@ const BreadcrumbsItem = styled.li`
 
 const BreadcrumbsLink = styled.p`
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.Primary300};
+  color: ${({ theme }) => theme.colors.primary300};
   transition: color 0.3s;
   text-transform: capitalize;
   font-size: 14px;

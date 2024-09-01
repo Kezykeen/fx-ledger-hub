@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Table } from "./table/table";
 import { InOutFlowIcon } from "../../../../../assets/svgs";
+import { Link } from "react-router-dom";
 
 const RecentTransaction = () => {
   const columns = [
@@ -60,7 +61,9 @@ const RecentTransaction = () => {
     {
       Header: "",
       id: "action",
-      Cell: () => <ViewDetails>View Details</ViewDetails>,
+      Cell: () => (
+        <ViewDetails to={"/transactions/1"}>View Details</ViewDetails>
+      ),
     },
   ];
   const data = [
@@ -172,9 +175,8 @@ const SmallText = styled.small`
   line-height: 20px;
 `;
 
-const ViewDetails = styled.span`
-  color: #fd853a;
-  font-weight: 600;
-  line-height: 20px;
+const ViewDetails = styled(Link)`
+  color: #f97316;
+  font-weight: 500;
   cursor: pointer;
 `;

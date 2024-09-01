@@ -33,7 +33,6 @@ const TransactionAnalyticsCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme, $bg }) => ($bg ? $bg : theme.colors.gray100)};
-  min-width: 227px;
   width: 100%;
   padding: 12px;
   border-radius: ${({ bg }) => (bg ? "4px" : "8px")};
@@ -45,7 +44,7 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.Primary300};
+  color: ${({ theme }) => theme.colors.primary300};
   margin-bottom: 16px;
   & > svg {
     transform: ${({ $scale }) => ($scale ? "scale(1.8)" : "scale(1)")};
@@ -79,11 +78,11 @@ const LinkWrapper = styled(Link)`
   margin-top: auto;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
   padding-top: 0.6rem;
-  color: ${({ theme }) => theme.colors.Primary300};
+  color: ${({ theme }) => theme.colors.primary300};
   transition: all ease-in-out 0.2s;
   cursor: pointer;
   &:hover {
-    color: ${({ theme }) => theme.colors.Primary200};
+    color: ${({ theme }) => theme.colors.primary200};
   }
   & > span {
     display: flex;

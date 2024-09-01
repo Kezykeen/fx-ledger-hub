@@ -8,6 +8,7 @@ import { CameraIcon, MoneyIcon, WalletIcon } from "../../../../assets/svgs";
 import TransactionAnalyticsChart from "./components/transactionAnalyticsChart";
 import RecentTransaction from "./components/recentTransaction";
 import { AnalyticsCard } from "./components/analyticsCard";
+import AccountBalance from "./components/accountBalance";
 
 const tabItems = ["Today", "7 days", "30 days", "12 Months"];
 
@@ -19,6 +20,7 @@ const SalesRepOverview = () => {
         title={"Welcome back, Amara"}
         subTitle={"Here is an overview of all your transactions "}
       />
+      <AccountBalance />
       <TabHeaderless
         isActive={sortBy}
         items={tabItems}
@@ -36,7 +38,7 @@ const SalesRepOverview = () => {
                   icon={<CameraIcon />}
                   title={"Pending Payments"}
                   amount={120000}
-                  link={"/sales/overview"}
+                  link={"/payments"}
                   main
                 />
               </GridColOne>
@@ -52,13 +54,13 @@ const SalesRepOverview = () => {
                     <TransactionAnalyticsCard
                       title={"Customer Refunds"}
                       amount={500}
-                      link={"/sales/overview"}
+                      link={"/refund-history"}
                       bgColor={"#E4E7EC66"}
                     />
                     <TransactionAnalyticsCard
                       title={"Supplier Refunds"}
                       amount={500}
-                      link={"/sales/overview"}
+                      link={"/refund-history"}
                       bgColor={"#E4E7EC66"}
                     />
                   </Flex>
@@ -77,7 +79,7 @@ const SalesRepOverview = () => {
             scale={false}
             title={"Total Upfronts"}
             amount={1200}
-            link={"/sales/overview"}
+            link={"/payments"}
             bgColor={"#FFD7BF80"}
           />
         </UpFrontWrapper>
@@ -105,6 +107,7 @@ const CardsWrapper = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 0.7rem;
   padding: 1.5rem;
   padding-bottom: 0.85rem;
@@ -165,7 +168,7 @@ const RefundAnalyticsSummaryWrapper = styled.div`
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
-    color: ${({ theme }) => theme.colors.Primary300};
+    color: ${({ theme }) => theme.colors.primary300};
 
     & h5 {
       font-size: 14px;

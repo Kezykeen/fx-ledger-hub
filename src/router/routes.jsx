@@ -4,24 +4,27 @@ import {
   SalesRepOverview,
   TransactionHistory,
 } from "../pages/dashboard/salesRep";
+import { InitiateTransaction } from "../pages/dashboard/salesRep/initiateTransaction";
+import { SupplyHistory } from "../pages/dashboard/salesRep/supplyHistory";
+import { EditTransaction } from "../pages/dashboard/salesRep/transactionHistory/edit";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
 
 const authRoutes = [
   {
-    path: "/",
+    path: "/login",
     element: <LoginPage />,
   },
 ];
 
 const dashboardRoutes = [
   {
-    path: "/s",
+    path: "/",
     element: <DashboardLayout />,
     children: [
       {
         element: <SalesRepOverview />,
         index: true,
-        path: "",
+        path: "dashboard",
       },
       {
         element: <TransactionHistory />,
@@ -29,7 +32,11 @@ const dashboardRoutes = [
       },
       {
         element: <TransactionDetailsOverview />,
-        path: "transactions/transaction-detail",
+        path: "transactions/:id",
+      },
+      {
+        element: <EditTransaction />,
+        path: "transactions/:id/edit",
       },
       {
         element: <div>Customers</div>,
@@ -37,44 +44,19 @@ const dashboardRoutes = [
         path: "customers",
       },
       {
-        element: <div>Payments</div>,
+        element: <div>Suppliers</div>,
         index: true,
-        path: "payments",
+        path: "suppliers",
       },
       {
-        element: <div>Refund</div>,
+        element: <SupplyHistory />,
         index: true,
-        path: "refund",
+        path: "supply-history",
       },
       {
-        element: <div>Reports</div>,
+        element: <div>Ledger</div>,
         index: true,
-        path: "report",
-      },
-    ],
-  },
-  {
-    path: "/c",
-    element: <DashboardLayout />,
-    children: [
-      { element: <div>Home</div>, index: true, path: "" },
-      {
-        element: <TransactionHistory />,
-        path: "transactions",
-      },
-      {
-        element: <TransactionDetailsOverview />,
-        path: "transactions/transaction-detail",
-      },
-      {
-        element: <div>Customers</div>,
-        index: true,
-        path: "customers",
-      },
-      {
-        element: <div>Supliers</div>,
-        index: true,
-        path: "supliers",
+        path: "ledger/:team",
       },
       {
         element: <div>Payments</div>,
@@ -82,9 +64,9 @@ const dashboardRoutes = [
         path: "payments",
       },
       {
-        element: <div>Refund</div>,
+        element: <div>Refund History</div>,
         index: true,
-        path: "refund",
+        path: "refund-history",
       },
       {
         element: <div>Reports</div>,
@@ -95,6 +77,11 @@ const dashboardRoutes = [
         element: <div>User management</div>,
         index: true,
         path: "manage-user",
+      },
+      {
+        element: <InitiateTransaction />,
+        index: true,
+        path: "initiate-transaction",
       },
     ],
   },

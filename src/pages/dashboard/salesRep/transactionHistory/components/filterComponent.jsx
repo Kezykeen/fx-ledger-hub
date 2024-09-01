@@ -44,11 +44,13 @@ const FilterComponent = ({ setFilterOpen }) => {
         />
       </InputWrapper>
       <SMSelectDropDown
+        label={"Incoming currency"}
         options={currencyOptions}
         value={formData?.currency || null}
         onChange={(selectedOption) => handleChange("currency", selectedOption)}
       />
       <SMSelectDropDown
+        label={"Payment status"}
         options={paymentStatus}
         value={formData?.status || null}
         onChange={(selectedOption) => handleChange("status", selectedOption)}

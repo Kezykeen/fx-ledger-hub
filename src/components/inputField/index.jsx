@@ -1,71 +1,46 @@
-import { useState } from "react";
 import styled from "styled-components";
-// import { ValidationText } from "../index";
-// import { PasswordIcon } from "../../assets/svgs";
 
 export const InputField = ({
   label,
   type = "text",
   inputType = "input",
-  className = "",
   endIcon: EndIcon,
   disabled = false,
   placeholder = "",
   error = false,
-  icon = "",
   errorText = "",
   rows = 3,
+  value,
   name = "",
   onChange = () => {},
-  register = () => {},
-  setValue = () => {},
+  register,
   required,
   id,
   width,
+  noShift = false,
   ...restProps
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
-    <TextFieldWrapper $width={width}>
-      {label && <label htmlFor={name}>{label}</label>}
+    <TextFieldWrapper $width={width} $noShift={noShift}>
+      {label && <Label htmlFor={name}>{label}</Label>}
       {inputType === "input" ? (
-        type === "password" ? (
-          <IconWrapper>
-            <Input
-              type={showPassword ? "text" : type}
-              $isError={error}
-              placeholder={placeholder}
-              disabled={disabled}
-              onChange={onChange}
-              name={name}
-              {...register(name, { required })}
-              {...restProps}
-            />
-            {/* <PasswordIcon
-              onClick={() => {
-                setShowPassword(!showPassword);
-              }}
-            /> */}
-          </IconWrapper>
-        ) : (
-          <IconWrapper>
-            <Input
-              type={type}
-              $isError={error}
-              placeholder={placeholder}
-              disabled={disabled}
-              $width={width}
-              onChange={onChange}
-              name={name}
-              id={id}
-              {...register(name, { required })}
-              {...restProps}
-              $hasIcon={!!EndIcon}
-            />
-            {EndIcon && EndIcon}
-          </IconWrapper>
-        )
+        <IconWrapper>
+          <Input
+            type={type}
+            $isError={error}
+            placeholder={placeholder}
+            disabled={disabled}
+            $width={width}
+            onChange={onChange}
+            name={name}
+            id={id}
+            value={value}
+            {...(register ? register(name, { required }) : {})}
+            {...restProps}
+            $hasIcon={!!EndIcon}
+          />
+          {EndIcon && EndIcon}
+        </IconWrapper>
       ) : inputType === "textarea" ? (
         <Textarea
           $isError={error}
@@ -75,29 +50,28 @@ export const InputField = ({
           disabled={disabled}
           onChange={onChange}
           name={name}
-          {...register(name, { required })}
+          {...(register ? register(name, { required }) : {})}
           {...restProps}
         />
-      ) : (
-        ""
-      )}
-      <div>
-        {/* {errorText.length > 0 && <ValidationText message={errorText} />} */}
-      </div>
+      ) : null}
+      {errorText.length > 0 && <Error>{errorText}</Error>}
     </TextFieldWrapper>
   );
 };
 
 const TextFieldWrapper = styled.div`
-  width: ${({ $width }) => ($width ? $width : `100%`)};
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  & > label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #667085;
-  }
+  gap: 6px;
+  width: ${({ $width }) => ($width ? $width : `100%`)};
+  height: ${({ $noShift }) => ($noShift ? `90px` : `auto`)};
+`;
+
+const Label = styled.label`
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.gray500};
 `;
 
 const Input = styled.input`
@@ -105,7 +79,7 @@ const Input = styled.input`
   padding: 9.5px 12px;
   border: ${({ theme, $isError }) =>
     $isError
-      ? `1px solid ${theme.colors.red400}`
+      ? `1px solid ${theme.colors.red100}`
       : `1px solid ${theme.colors.gray300}`};
   border-radius: 4px;
   font-style: normal;
@@ -128,8 +102,13 @@ const Input = styled.input`
   }
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.N20};
-    color: ${({ theme }) => theme.colors.GA5};
+    border: ${({ theme }) => `1px solid ${theme.colors.primary50}`};
+    background: ${({ theme }) => theme.colors.primary25};
+    color: ${({ theme }) => theme.colors.primary300};
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.primary300};
+    }
   }
 `;
 
@@ -143,16 +122,18 @@ const Textarea = styled.textarea`
       : `1px solid ${theme.colors.gray300}`};
   border-radius: 4px;
   font-style: normal;
-  font-weight: 450;
-  font-size: 1rem;
+  font-weight: 400;
+  font-size: 0.875rem;
   line-height: 20px;
   width: ${({ $width }) => ($width ? $width : `100%`)};
+  outline-color: ${({ theme }) => theme.colors.primary};
   color: #999;
   margin: 0;
 
   &:focus {
-    outline-color: transparent !important;
-    border: ${({ theme }) => `2px solid ${theme.colors.gray300} !important`};
+    outline: none;
+    border-color: #f4a261;
+    box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.2);
   }
 
   &::placeholder {
@@ -160,8 +141,13 @@ const Textarea = styled.textarea`
   }
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.N20};
-    color: ${({ theme }) => theme.colors.GA5};
+    border: ${({ theme }) => `1px solid ${theme.colors.primary50}`};
+    background: ${({ theme }) => theme.colors.primary25};
+    color: ${({ theme }) => theme.colors.primary300};
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.primary300};
+    }
   }
 `;
 
@@ -178,4 +164,11 @@ const IconWrapper = styled.div`
     height: 24px;
     cursor: pointer;
   }
+`;
+
+const Error = styled.p`
+  color: #e96d6d;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
 `;

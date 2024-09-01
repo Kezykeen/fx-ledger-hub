@@ -1,15 +1,15 @@
-"use client";
 import { forwardRef } from "react";
 import Select, { components } from "react-select";
 import { colors } from "../../theme/colors";
 import styled from "styled-components";
-import { ValidationText } from "../validationText";
+import { Controller } from "react-hook-form";
+
 /**
  * Custom Select component with React Select library.
  * @module SMSelect
  * @param {Object} props - Component props.
  * @param {Array} [props.options] - Array of options to display in the dropdown.
- * @param {string} [props.varient='simple'] - Select variant, either 'simple' or 'custom'.
+ * @param {string} [props.variant='simple'] - Select variant, either 'simple' or 'custom'.
  * @param {Function} [props.onChange=()=>{}] - Function called when an option is selected.
  * @param {string} [props.selectWidth='100%'] - Width of the select input.
  * @param {string} [props.placeholder='Hello'] - Placeholder text displayed when no option is selected.
@@ -19,12 +19,12 @@ import { ValidationText } from "../validationText";
  * @param {*} [props.value] - Value of the selected option.
  * @param {boolean} [props.searchable] - Determines if the select input is searchable.
  * @param {string} [props.id] - HTML id attribute for the select input.
- * @param {boolean} [props.isError=false] - Determines if there is an error state.
+ * @param {boolean} [props.error=false] - Determines if there is an error state.
  * @param {string} [props.errorText=''] - Text to display when there is an error.
  * @param {React.Ref} [ref] - Reference to the select component.
  * @returns {React.Component} React component.
  */
-export const selectStyles = ({ isError }) => ({
+export const selectStyles = ({ error }) => ({
   input: (styles) => ({
     ...styles,
     "&:not(.aui-no-focusvisible) :focus-visible": {
@@ -58,8 +58,10 @@ export const selectStyles = ({ isError }) => ({
     borderRadius: "4px",
     outline: "none",
     cursor: "pointer",
-    border: `1px solid ${isError ? "red" : isFocused ? `#f4a261` : colors.N30}`,
-    minHeight: "40px",
+    border: `1px solid ${
+      error ? colors.red100 : isFocused ? `#f4a261` : colors.N30
+    }`,
+    minHeight: "44px",
     width: `100%`,
     color: isDisabled ? "#97a0af" : "#97a0af",
     backgroundColor: isDisabled ? "#f4f5f7" : colors.white,
@@ -67,7 +69,7 @@ export const selectStyles = ({ isError }) => ({
     "&:hover": {
       border: isFocused
         ? `1px solid #f4a261`
-        : isError
+        : error
         ? "1px solid red"
         : "1px solid #dfe1e6",
     },
@@ -124,19 +126,23 @@ const SMSelectDropDown = forwardRef(
   (
     {
       options = [],
-      varient = "simple",
+      variant = "simple",
       onChange = () => {},
       placeholder,
       disabled,
+      label,
       loading,
       defaultInputValue,
       value,
       searchable,
       id,
       width,
-      isError = false,
+      error = false,
       errorText = "",
-      ...field
+      control,
+      name,
+      field,
+      noShift = false,
     },
     ref
   ) => {
@@ -144,6 +150,7 @@ const SMSelectDropDown = forwardRef(
       const awaitedValue = await value;
       onChange(awaitedValue);
     };
+
     const customOption = ({ data, ...props }) => (
       <components.Option {...props}>
         <div style={{ display: "flex", gap: ".3rem", alignItems: "center" }}>
@@ -160,6 +167,7 @@ const SMSelectDropDown = forwardRef(
         </div>
       </components.Option>
     );
+
     const customSingleValue = ({ data }) => (
       <div
         style={{
@@ -180,30 +188,58 @@ const SMSelectDropDown = forwardRef(
         <span style={{ whiteSpace: "nowrap" }}>{data?.label}</span>
       </div>
     );
+
     return (
-      <Container $width={width}>
-        <Select
-          ref={ref}
-          options={options}
-          onChange={handleChange}
-          placeholder={placeholder}
-          isDisabled={disabled}
-          isLoading={loading}
-          value={value}
-          defaultValue={defaultInputValue}
-          isSearchable={searchable}
-          id={id}
-          styles={selectStyles({ isError })}
-          components={
-            varient === "simple"
-              ? {}
-              : { Option: customOption, SingleValue: customSingleValue }
-          }
-          {...field}
-        />
-        <div>
-          {errorText.length > 0 && <ValidationText message={errorText} />}
-        </div>
+      <Container $width={width} $label={label} $noShift={noShift}>
+        {label && <Label htmlFor={name}>{label}</Label>}
+        {control ? (
+          <Controller
+            name={name}
+            control={control}
+            render={({ field }) => (
+              <Select
+                ref={ref}
+                options={options}
+                onChange={handleChange}
+                placeholder={placeholder}
+                isDisabled={disabled}
+                isLoading={loading}
+                value={value}
+                defaultValue={defaultInputValue}
+                isSearchable={searchable}
+                id={id}
+                styles={selectStyles({ error })}
+                components={
+                  variant === "simple"
+                    ? {}
+                    : { Option: customOption, SingleValue: customSingleValue }
+                }
+                {...field}
+              />
+            )}
+          />
+        ) : (
+          <Select
+            {...field}
+            ref={ref}
+            options={options}
+            onChange={handleChange}
+            placeholder={placeholder}
+            isDisabled={disabled}
+            isLoading={loading}
+            value={value}
+            defaultValue={defaultInputValue}
+            isSearchable={searchable}
+            id={id}
+            styles={selectStyles({ error })}
+            components={
+              variant === "simple"
+                ? {}
+                : { Option: customOption, SingleValue: customSingleValue }
+            }
+          />
+        )}
+        {errorText.length > 0 && <Error>{errorText}</Error>}
       </Container>
     );
   }
@@ -213,5 +249,21 @@ export default SMSelectDropDown;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: ${({ $label }) => $label && `6px`};
   width: ${({ $width }) => ($width ? $width : `100%`)};
+  height: ${({ $noShift }) => ($noShift ? `90px` : `auto`)};
+`;
+
+const Label = styled.label`
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.gray500};
+`;
+
+const Error = styled.p`
+  color: #e96d6d;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
 `;

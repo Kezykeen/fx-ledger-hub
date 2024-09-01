@@ -24,3 +24,37 @@ export function formatCurrency(amount, locale = "en-US") {
   })}`;
   return formatted.replace(/\.00$/, "").replace(/NGN/, "").slice(1);
 }
+
+export const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const findValueAndLabel = (
+  id,
+  array,
+  property = "value",
+  strictCompare = false
+) => {
+  const found = array.find((item) =>
+    // eslint-disable-next-line
+    strictCompare ? item[property] === id : item[property] == id
+  );
+  return found?.value ? { value: found?.value, label: found?.label } : null;
+};
+
+export const parseSelectFormData = (data) => {
+  const parsedData = {};
+
+  for (const key in data) {
+    if (
+      typeof data[key] === "object" &&
+      data[key] !== null &&
+      "value" in data[key]
+    ) {
+      parsedData[key] = data[key].value;
+    } else {
+      parsedData[key] = data[key];
+    }
+  }
+  return parsedData;
+};

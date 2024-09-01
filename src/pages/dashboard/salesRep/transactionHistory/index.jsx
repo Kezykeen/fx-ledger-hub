@@ -5,6 +5,7 @@ import { TableWidget } from "../../../../components/tableWidget";
 import { TableTab } from "../../../../components/tableTab";
 import FilterComponent from "./components/filterComponent";
 import { useState } from "react";
+import { transactionTabs } from "./components/data";
 
 const TransactionHistory = () => {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -27,11 +28,7 @@ const TransactionHistory = () => {
           setFilterOpen={setFilterOpen}
         />
         <Divider />
-        <TableTab
-          tabs={["In Progress", "Approved", "Declined"]}
-          defaultActiveTab="Declined"
-          onTabChange={handleTabChange}
-        />
+        <TableTab tabs={transactionTabs} onTabChange={handleTabChange} />
       </WidgetWrapper>
       <Transactions />
     </Container>
@@ -42,9 +39,8 @@ export { TransactionHistory };
 
 TransactionHistory.displayName = "TransactionHistory";
 
-const Container = styled.div`
-  /* Add your styles here */
-`;
+const Container = styled.div``;
+
 const WidgetWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.gray100};
   margin-top: 1rem;

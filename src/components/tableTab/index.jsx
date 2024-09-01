@@ -1,40 +1,55 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
 import { colors } from "../../theme/colors";
 
 const TableTab = ({
   tabs,
-  defaultActiveTab,
   onTabChange,
   onTabClick,
   backgroundColor = "#FFF3EBCC",
-  activeColor = colors.Primary300,
-  hoverColor = colors.Primary50,
+  activeColor = colors.primary300,
+  hoverColor = colors.primary50,
   padding = "16px 24px", // Add padding as a prop with a default value
 }) => {
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const getActiveTabFromHash = () => {
+    const hash = location.hash.replace("#", "");
+    const activeTab = tabs.find((tab) => tab.hash === hash);
+    return activeTab ? activeTab.hash : tabs[0].hash;
+  };
+
+  const activeTab = getActiveTabFromHash();
+
+  const handleTabClick = (hash) => {
+    navigate(`#${hash}`);
     if (onTabChange) {
-      onTabChange(tab);
+      onTabChange(hash);
     }
     if (onTabClick) {
-      onTabClick(tab); // Trigger the onTabClick function to handle routing
+      onTabClick(hash); // Trigger the onTabClick function to handle routing
     }
   };
 
+  useEffect(() => {
+    if (!location.hash) {
+      navigate(`#${tabs[0].hash}`);
+    }
+  }, [tabs, location.hash, navigate]);
+
   return (
     <TabContainer backgroundColor={backgroundColor} padding={padding}>
-      {tabs.map((tab) => (
+      {tabs.map(({ label, hash }) => (
         <TabButton
-          key={tab}
-          active={activeTab === tab}
+          key={hash}
+          active={activeTab === hash}
           activeColor={activeColor}
           hoverColor={hoverColor}
-          onClick={() => handleTabClick(tab)}
+          onClick={() => handleTabClick(hash)}
         >
-          {tab}
+          {label}
         </TabButton>
       ))}
     </TabContainer>
@@ -67,6 +82,5 @@ const TabButton = styled.button`
   &:hover {
     background-color: ${(props) =>
       props.active ? props.activeColor : props.hoverColor};
-    color: ${({ theme }) => theme.colors.gray400};
   }
 `;

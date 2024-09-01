@@ -3,13 +3,14 @@ import { PageHeader } from "../../../../../components/pageHeader";
 import { Divider } from "..";
 import { colors } from "../../../../../theme/colors";
 import { DownloadMini } from "../../../../../assets/svgs";
+import ActionButtons from "./components/actionButtons";
 
 const transaction = {
   initiatorId: "1234RTY",
   salesRepName: "John Doe",
   incomingAmount: 1200,
   outgoingAmount: 12000,
-  date: "June 4,2023",
+  date: "June 4, 2023",
   incomingCurrency: "Naira",
   rate: 550,
   customerName: "John Doe",
@@ -34,37 +35,42 @@ export const TransactionDetailsOverview = () => {
       <PageHeader
         title={"Transaction Details"}
         subTitle={"You are viewing transaction details below."}
+        endComponent={<ActionButtons />}
       />
       <Divider />
       <TransactionInitiatorGrid>
         <ColumnWrapper>
           <SectionTitle>Transaction Initiator</SectionTitle>
           <Divider $margin="8px 0 16px" />
-          <DetailRow>
-            <Label>ID</Label>
-            <Value>{transaction?.initiatorId}</Value>
-          </DetailRow>
-          <DetailRow>
-            <Label>Sales Rep Name</Label>
-            <Value>{transaction?.salesRepName}</Value>
-          </DetailRow>
+          <FlexCol $gap={"0.3rem"}>
+            <DetailRow>
+              <Label>ID</Label>
+              <Value>{transaction?.initiatorId}</Value>
+            </DetailRow>
+            <DetailRow>
+              <Label>Sales Rep Name</Label>
+              <Value>{transaction?.salesRepName}</Value>
+            </DetailRow>
+          </FlexCol>
         </ColumnWrapper>
 
         <ColumnWrapper>
           <SectionTitle>Exchange Summary</SectionTitle>
           <Divider $margin="8px 0 16px" />
-          <DetailRow>
-            <Label>Incoming Amount</Label>
-            <LabelTwo>
-              CFA <span>{transaction?.incomingAmount}</span>
-            </LabelTwo>
-          </DetailRow>
-          <DetailRow>
-            <Label>Outgoing Amount</Label>
-            <LabelTwo>
-              N <span>{transaction?.outgoingAmount}</span>
-            </LabelTwo>
-          </DetailRow>
+          <FlexCol $gap={"0.3rem"}>
+            <DetailRow>
+              <Label>Incoming Amount</Label>
+              <LabelTwo>
+                CFA <span>{transaction?.incomingAmount}</span>
+              </LabelTwo>
+            </DetailRow>
+            <DetailRow>
+              <Label>Outgoing Amount</Label>
+              <LabelTwo>
+                N <span>{transaction?.outgoingAmount}</span>
+              </LabelTwo>
+            </DetailRow>
+          </FlexCol>
         </ColumnWrapper>
       </TransactionInitiatorGrid>
 
@@ -82,21 +88,24 @@ export const TransactionDetailsOverview = () => {
             </Value>
           </DetailRow>
           <Divider $margin="12px 0 16px" />
-
-          <DetailRow>
-            <Label style={{ width: "100%" }}>Incoming currency</Label>
-            <Label style={{ width: "100%" }}>Rate</Label>
-            <Label style={{ width: "100%" }}>Customer Name</Label>
-          </DetailRow>
-          <DetailRow>
-            <Value style={{ width: "100%", color: colors.Primary300 }}>
-              {transaction?.incomingCurrency}
-            </Value>
-            <Value style={{ width: "100%", color: colors.Primary300 }}>
-              {transaction?.rate}
-            </Value>
-            <Value style={{ width: "100%" }}>{transaction?.customerName}</Value>
-          </DetailRow>
+          <FlexCol $gap={"0.3rem"}>
+            <DetailRow>
+              <Label style={{ width: "100%" }}>Incoming currency</Label>
+              <Label style={{ width: "100%" }}>Rate</Label>
+              <Label style={{ width: "100%" }}>Customer Name</Label>
+            </DetailRow>
+            <DetailRow>
+              <Value style={{ width: "100%", color: colors.primary300 }}>
+                {transaction?.incomingCurrency}
+              </Value>
+              <Value style={{ width: "100%", color: colors.primary300 }}>
+                {transaction?.rate}
+              </Value>
+              <Value style={{ width: "100%" }}>
+                {transaction?.customerName}
+              </Value>
+            </DetailRow>
+          </FlexCol>
         </SummaryBox>
 
         <PaymentStatusBox>
@@ -186,20 +195,20 @@ export const TransactionDetailsOverview = () => {
               <DetailRow
                 style={{ justifyContent: "space-between", width: "100%" }}
               >
-                <FlexCol $gap={"0rem"}>
-                  <Label>Debit Account</Label>
-                  <Value>{transaction?.debitAccount}</Value>
+                <FlexCol $gap={"0.3rem"}>
+                  <Label>ID</Label>
+                  <Value>{transaction?.cooId}</Value>
                 </FlexCol>
-                <FlexCol $gap={"0rem"}>
-                  <Label>Debit Account</Label>
-                  <Value>{transaction?.debitAccount}</Value>
-                </FlexCol>{" "}
-                <FlexCol $gap={"0rem"}>
-                  <Label>Debit Account</Label>
-                  <Value>{transaction?.debitAccount}</Value>
+                <FlexCol $gap={"0.3rem"}>
+                  <Label>Book Keeper Name</Label>
+                  <Value>{transaction?.bookKeeperName}</Value>
+                </FlexCol>
+                <FlexCol $gap={"0.3rem"}>
+                  <Label>Date Approved</Label>
+                  <Value>{transaction?.date}</Value>
                 </FlexCol>
               </DetailRow>
-              <FlexCol $gap={"0rem"}>
+              <FlexCol $gap={"0.3rem"}>
                 <Label>Reason For Rejecting</Label>
                 <Value>Any Reason for rejecting can be found here</Value>
               </FlexCol>
@@ -215,20 +224,20 @@ export const TransactionDetailsOverview = () => {
               <DetailRow
                 style={{ justifyContent: "space-between", width: "100%" }}
               >
-                <FlexCol $gap={"0rem"}>
+                <FlexCol $gap={"0.3rem"}>
                   <Label>ID</Label>
-                  <Value>{transaction?.debitAccount}</Value>
+                  <Value>{transaction?.cfoId}</Value>
                 </FlexCol>
-                <FlexCol $gap={"0rem"}>
+                <FlexCol $gap={"0.3rem"}>
                   <Label>CFO Name</Label>
-                  <Value>John Doe</Value>
+                  <Value>{transaction.cfoName}</Value>
                 </FlexCol>{" "}
-                <FlexCol $gap={"0rem"}>
+                <FlexCol $gap={"0.3rem"}>
                   <Label>Date Approved</Label>
-                  <Value>{transaction?.debitAccount}</Value>
+                  <Value>{transaction?.date}</Value>
                 </FlexCol>
               </DetailRow>
-              <FlexCol $gap={"0rem"}>
+              <FlexCol $gap={"0.3rem"}>
                 <Label>Reason For Rejecting</Label>
                 <Value>Any Reason for rejecting can be found here</Value>
               </FlexCol>
@@ -296,7 +305,7 @@ const LabelTwo = styled.span`
   color: #98a2b3;
 
   & > span {
-    color: ${({ theme }) => theme.colors.Primary300};
+    color: ${({ theme }) => theme.colors.primary300};
   }
 `;
 

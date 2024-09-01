@@ -63,7 +63,7 @@ const SearchInput = styled.input`
   transition: border-color 0.2s;
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.Primary300};
+    border-color: ${({ theme }) => theme.colors.primary300};
   }
 `;
 

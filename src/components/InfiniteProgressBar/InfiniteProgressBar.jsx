@@ -20,7 +20,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBar = styled.div`
   width: ${({ width }) => width};
-  background-color: ${({ theme }) => theme.colors.Primary300};
+  background-color: ${({ theme }) => theme.colors.primary300};
   animation: ${move} 2s linear infinite;
 `;
 

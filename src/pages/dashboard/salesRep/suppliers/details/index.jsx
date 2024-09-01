@@ -5,7 +5,7 @@ import { colors } from "../../../../../theme/colors";
 import { ButtonDropdown, Flex } from "../../../../../components/buttonDropdown";
 import { TableTab } from "../../../../../components/tableTab";
 import { CustomerRecord } from "../../customers/components/customer-history/transcation-history";
-
+import { supplierDetailsTab } from "../components/data";
 
 const suppliers = {
   date: "June 4,2023",
@@ -17,7 +17,7 @@ const suppliers = {
   phoneNumber: "08120289349",
 };
 
-export const SuppliersOverview = () => {
+export const SupplierDetails = () => {
   const buttonGroup = [
     {
       name: "View",
@@ -40,7 +40,6 @@ export const SuppliersOverview = () => {
           title={"Supply History"}
           subTitle={"You are viewing supply history details below."}
         />
-        
       </DetailRow>
       <ColumnWrapper>
         <DetailRow>
@@ -99,13 +98,10 @@ export const SuppliersOverview = () => {
             />
           </div>
         </DetailRow>
-        <TableTab
-          tabs={["Transaction History", "Refund History", "Supply History"]}
-          backgroundColor="gray100"
-        />
+        <TableTab tabs={supplierDetailsTab} backgroundColor="gray100" />
 
         <SummaryBox>
-            <CustomerRecord />
+          <CustomerRecord />
         </SummaryBox>
       </CustomersHistory>
     </PageContainer>
@@ -168,27 +164,27 @@ const SummaryBox = styled.div`
   margin-bottom: 20px;
 `;
 
-const ReceiptButton = styled.button`
-  display: flex;
-  text-decoration: none;
-  gap: 8px;
-  align-items: center;
-  padding: 4px 12px 4px 12px;
-  cursor: pointer;
-  border: 1px solid ${(props) => props.theme.colors.gray200};
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 1rem;
-  outline: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+// const ReceiptButton = styled.button`
+//   display: flex;
+//   text-decoration: none;
+//   gap: 8px;
+//   align-items: center;
+//   padding: 4px 12px 4px 12px;
+//   cursor: pointer;
+//   border: 1px solid ${(props) => props.theme.colors.gray200};
+//   background-color: ${(props) => props.theme.colors.white};
+//   border-radius: 1rem;
+//   outline: none;
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// `;
 
-const FlexCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 10px;
-  width: 100%;
-  max-width: ${({ minWidth }) => (minWidth ? minWidth : "fit-content")};
-`;
+// const FlexCol = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: start;
+//   gap: 10px;
+//   width: 100%;
+//   max-width: ${({ minWidth }) => (minWidth ? minWidth : "fit-content")};
+// `;

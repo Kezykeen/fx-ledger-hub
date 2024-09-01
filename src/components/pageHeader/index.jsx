@@ -1,15 +1,23 @@
 import styled from "styled-components";
 
-const PageHeader = ({ title, subTitle }) => {
+const PageHeader = ({ title, subTitle, endComponent }) => {
   return (
-    <Wrapper>
-      <p>{title}</p>
-      <small>{subTitle}</small>
-    </Wrapper>
+    <Container>
+      <Wrapper>
+        <p>{title}</p>
+        <small>{subTitle}</small>
+      </Wrapper>
+      {endComponent && endComponent}
+    </Container>
   );
 };
 
 export { PageHeader };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Wrapper = styled.div`
   display: flex;

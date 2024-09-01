@@ -14,7 +14,7 @@ const AnalyticsCard = () => {
         <TotalAmount>
           <span>XFA</span> 1,200
         </TotalAmount>
-        <LinkWrapper to={""}>
+        <LinkWrapper to={"/transactions"}>
           <span>View Transactions</span>
           <ArrowCircleIcon />
         </LinkWrapper>
@@ -29,9 +29,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 281px;
+  width: 240px;
   padding: 16px;
-  gap: 16px;
   border-radius: 8px;
   border: ${({ theme }) => `1px solid ${theme.colors.gray100}`};
 `;
@@ -48,7 +47,6 @@ const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ffd7bf80;
-  min-width: 227px;
   width: 100%;
   padding: 12px;
   border-radius: 8px;
@@ -60,7 +58,7 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.Primary300};
+  color: ${({ theme }) => theme.colors.primary300};
   margin-bottom: 16px;
 `;
 
@@ -95,11 +93,11 @@ const LinkWrapper = styled(Link)`
   margin-top: 12px;
   border-top: 1px solid ${({ theme }) => theme.colors.gray300};
   padding-top: 0.6rem;
-  color: ${({ theme }) => theme.colors.Primary300};
+  color: ${({ theme }) => theme.colors.primary300};
   transition: all ease-in-out 0.2s;
   cursor: pointer;
   &:hover {
-    color: ${({ theme }) => theme.colors.Primary200};
+    color: ${({ theme }) => theme.colors.primary200};
   }
   & > span {
     display: flex;

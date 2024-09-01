@@ -27,7 +27,7 @@ const LoginPage = () => {
               placeholder="Enter your password"
             />
             <ForgotPassword>Forgot Password</ForgotPassword>
-            <Link to={"/s"}>
+            <Link to={"/dashboard"}>
               <Button buttonClass={"primary"} label={"Log In"} />
             </Link>
           </fieldset>

@@ -19,11 +19,38 @@ export const currencyOptions = [
     value: `naira`,
   },
   {
-    label: `CFA`,
-    value: `cfa`,
+    label: `XFA`,
+    value: `xfa`,
   },
   {
     label: `USDT`,
     value: `usdt`,
+  },
+  {
+    label: `Dollar`,
+    value: `dollar`,
+  },
+  {
+    label: `RMB`,
+    value: `rmb`,
+  },
+];
+
+export const transactionTabs = [
+  {
+    label: "Pending Approval",
+    hash: `pending-approval`,
+  },
+  {
+    label: "In Progress",
+    hash: `in-progress`,
+  },
+  {
+    label: "Approved",
+    hash: `approved`,
+  },
+  {
+    label: "Declined",
+    hash: `declined`,
   },
 ];

@@ -34,9 +34,9 @@ const Button = styled(BackgroundlessButton)`
   padding: 10px 16px;
   border: 1px solid ${({ theme }) => theme.colors.gray300};
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.Primary300 : theme.colors.gray700};
+    isActive ? theme.colors.primary300 : theme.colors.gray700};
   background: ${({ isActive, theme }) =>
-    isActive ? theme.colors.Primary25 : theme.colors.white};
+    isActive ? theme.colors.primary25 : theme.colors.white};
   &:first-of-type {
     border-radius: 8px 0px 0px 8px !important;
   }
@@ -49,7 +49,7 @@ const Button = styled(BackgroundlessButton)`
   ${({ isActive, theme }) =>
     isActive &&
     css`
-      border: 1px solid ${theme.colors.Primary300} !important;
+      border: 1px solid ${theme.colors.primary300} !important;
     `}
   &:has(+ .active) {
     border-right: 1px solid transparent;

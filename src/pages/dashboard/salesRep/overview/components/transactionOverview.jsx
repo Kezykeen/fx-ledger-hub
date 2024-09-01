@@ -16,16 +16,16 @@ const TransactionOverview = () => {
       trend: "rise",
       iconBgColor1: "#F24A20F0",
       iconBgColor2: "#F24A20F0",
-      iconColor: colors.Primary100,
+      iconColor: colors.primary100,
     },
     {
       transactionDetail: "In - Progress",
       transactionAmount: 1500,
       trendColor: "#30B895",
       trend: "rise",
-      iconBgColor1: colors.Primary50,
-      iconBgColor2: colors.Primary25,
-      iconColor: colors.Primary300,
+      iconBgColor1: colors.primary50,
+      iconBgColor2: colors.primary25,
+      iconColor: colors.primary300,
     },
     {
       transactionDetail: "Approved",
@@ -108,7 +108,7 @@ const Wrapper = styled.div`
   padding: 1.5rem;
   padding-bottom: 0.85rem;
   border-radius: 12px;
-  background: ${({ theme }) => theme.colors.Primary25};
+  background: ${({ theme }) => theme.colors.primary25};
   & > p {
     font-size: clamp(16px, 1vw, 18px);
     font-weight: 500;

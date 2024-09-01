@@ -3,16 +3,19 @@ import AppLogo from "../../../components/logo";
 import { Button } from "../../../components/button";
 
 import ActiveUser from "./activeUser";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./navItem";
 import { PlusIcon } from "../../../assets/svgs";
-import { cfoNavs, salesNavs } from "../../../constants/data";
+import { navs } from "../../../constants/data";
+import AdminActions from "./adminActions";
 
 const SideBar = () => {
   const loc = useLocation();
-  const isSalesRep = loc.pathname.startsWith("/s");
-  const navToUse = isSalesRep ? salesNavs : cfoNavs;
+  const navigate = useNavigate();
+  // const isSalesRep = loc.pathname.startsWith("/s");
+  const isSalesRep = false;
   const isActive = (path) => loc.pathname.includes(path);
+
   return (
     <SideBarWrapper>
       <SideBarContainer>
@@ -20,29 +23,35 @@ const SideBar = () => {
           <AppLogo useColored />
         </header>
         <ActionWrapper>
-          <Button
-            buttonClass={"primary"}
-            label={
-              <Flex>
-                <span>{<PlusIcon />}</span> <span>Initiate Transaction</span>
-              </Flex>
-            }
-          />
+          {isSalesRep ? (
+            <Button
+              buttonClass={"primary"}
+              onClick={() => navigate("initiate-transaction")}
+              label={
+                <Flex>
+                  <span>{<PlusIcon />}</span> <span>Initiate Transaction</span>
+                </Flex>
+              }
+            />
+          ) : (
+            <AdminActions />
+          )}
         </ActionWrapper>
         <MenuWrapper>
           <h3>NAVIGATION</h3>
           <Menu>
-            {navToUse.map((nav, index) => (
-              <NavItem
-                key={index}
-                name={nav.name}
-                path={nav.path}
-                icon={nav.icon}
-                isActive={
-                  index === 0 ? nav.path === loc.pathname : isActive(nav.path)
-                }
-              />
-            ))}
+            {navs.map((nav, index) => {
+              console.log(isActive(nav), nav);
+              return (
+                <NavItem
+                  key={index}
+                  {...nav}
+                  isActive={
+                    index === 0 ? nav.path === loc.pathname : isActive(nav.path)
+                  }
+                />
+              );
+            })}
           </Menu>
         </MenuWrapper>
         <ActiveUser name="John Doe" email="Johndoe@gmail.com" />
@@ -58,6 +67,7 @@ const SideBarWrapper = styled.div`
   height: 100dvh;
   padding: 16px;
   position: sticky;
+  flex-shrink: 0;
   left: 0;
 `;
 

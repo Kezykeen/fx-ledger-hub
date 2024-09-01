@@ -9,12 +9,7 @@ const TopNav = () => {
   const loc = useLocation();
   const pathname = loc.pathname;
   const crumbs = createBreadcrumbs(pathname);
-  const crumbsData = [
-    ...crumbs.slice(0, 1).map((crumb) => ({ ...crumb, name: "Home" })),
-    ...crumbs.slice(1),
-  ];
-  const isCrumsGreaterThanTwo = crumbsData.length > 1;
-  let activeRoot = isCrumsGreaterThanTwo ? crumbsData[1] : crumbsData[0];
+  let activeRoot = crumbs[0];
   activeRoot = {
     ...activeRoot,
     name: NavIcons[activeRoot.name.toLowerCase()],
@@ -24,7 +19,7 @@ const TopNav = () => {
   return (
     <NavWrapper>
       <span>
-        <Breadcrumbs crumbs={[activeRoot, ...crumbsData.slice(0)]} />
+        <Breadcrumbs crumbs={[activeRoot, ...crumbs.slice(0)]} />
       </span>
       <div>
         <ButtonWrapper>
@@ -56,6 +51,7 @@ const NavWrapper = styled.nav`
     align-items: center;
   }
 `;
+
 const ButtonWrapper = styled.button`
   background-color: #e4e7ec99;
   color: #344054;
@@ -66,7 +62,7 @@ const ButtonWrapper = styled.button`
   border-radius: 7px;
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.Primary300};
+    background-color: ${({ theme }) => theme.colors.primary300};
     color: white;
   }
 `;

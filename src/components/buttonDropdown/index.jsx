@@ -7,6 +7,7 @@ export const ButtonDropdown = ({
   buttonGroup,
   buttonElement,
   customElement,
+  width,
 }) => {
   const handleClick = () => {
     setOpen((previousOpen) => !previousOpen);
@@ -29,6 +30,7 @@ export const ButtonDropdown = ({
               <ButtonContainer
                 buttonGroup={buttonGroup}
                 handleItemClick={handleItemClick}
+                width={width}
               />
             )}
           </DropdownContainer>
@@ -38,9 +40,9 @@ export const ButtonDropdown = ({
   );
 };
 
-const ButtonContainer = ({ buttonGroup, handleItemClick }) => {
+const ButtonContainer = ({ buttonGroup, handleItemClick, width }) => {
   return (
-    <Container>
+    <Container $width={width}>
       {buttonGroup?.map((btn, i) => (
         <StyledMenuItem
           key={i}
@@ -88,7 +90,7 @@ const DropdownContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 170px;
+  width: ${({ $width }) => ($width ? $width : `90px`)};
 `;
 
 const StyledMenuItem = styled.div`

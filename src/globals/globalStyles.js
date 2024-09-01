@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Montserrat", sans-serif ;
      font-optical-sizing: auto;
      font-style: normal;
+     scroll-behavior: smooth;
   }
 
   html,
@@ -57,6 +58,10 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     font-family: "Montserrat", sans-serif;  
 
+  }
+
+  svg {
+    flex-shrink: 0;
   }
 
 /** Used to define container behavior: width, position: fixed etc... **/
@@ -116,24 +121,6 @@ const GlobalStyle = createGlobalStyle`
 	opacity: 0;
 	transition: opacity 0.5s;
 }
-
-
-
-/* status drop down */
-.szh-menu-button {
-    border: 0px;
-    width: fit-content;
-    background-color: transparent;
-    padding: 0!important;
-  }
-
-  .szh-menu-container {
-    width: fit-content;
-  }
-
-  .szh-menu__item, .szh-menu__item--focusable {
-    padding: 0;
-  }
 
 `;
 

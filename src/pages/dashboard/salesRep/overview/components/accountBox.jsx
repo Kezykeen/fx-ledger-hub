@@ -1,0 +1,95 @@
+import styled from "styled-components";
+import { ArrowRightDuo } from "../../../../../assets/svgs";
+import { formatNumberWithCommas } from "../../../../../utils/helpers.utils";
+import AmountModal from "./amountModal";
+import { useState } from "react";
+
+const AccountBox = ({ icon: Icon, amount, count, asset }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <Container>
+      <Icon />
+      <TextWrapper>
+        <AmountWrapper>
+          <Amount>{formatNumberWithCommas(amount)}</Amount>
+          <CountBox onClick={() => setIsModalOpen(true)}>
+            <Count>{count}</Count>
+            <ArrowRightDuo />
+          </CountBox>
+        </AmountWrapper>
+        <Asset>{asset}</Asset>
+      </TextWrapper>
+      <AmountModal
+        handleClose={() => setIsModalOpen(false)}
+        isOpen={isModalOpen}
+        asset={asset}
+        icon={Icon}
+      />
+    </Container>
+  );
+};
+
+export default AccountBox;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 24px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.white};
+
+  & > svg {
+    width: 51px;
+    height: 51px;
+  }
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const AmountWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+const Amount = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.gray900};
+`;
+
+const CountBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 23px;
+  padding: 8px;
+  gap: 0px;
+  border-radius: 4px;
+  border: 1px solid #d0d5dd;
+  cursor: pointer;
+`;
+
+const Count = styled.p`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: ${({ theme }) => theme.colors.gray600};
+`;
+
+const Asset = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: ${({ theme }) => theme.colors.gray400};
+  text-transform: uppercase;
+`;

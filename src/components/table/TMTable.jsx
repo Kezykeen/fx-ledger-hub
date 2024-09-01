@@ -211,15 +211,22 @@ const TableRow = styled(motion.tr)`
   &.separator {
     height: 13px;
   }
+
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.Primary50};
+    cursor: pointer;
+  }
 `;
 
 const TableCell = styled(motion.td)`
   max-width: 200px;
   background-color: #f2f4f799;
-  padding: 16px 12px;
+  padding: 16px 20px;
   font-size: 14px;
   font-weight: 500;
-  line-height: 13.69px;
+  line-height: 20px;
   color: ${({ theme }) => theme.colors.gray800};
 `;
 

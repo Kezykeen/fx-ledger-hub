@@ -4,7 +4,14 @@ import {
   SalesRepOverview,
   TransactionHistory,
 } from "../pages/dashboard/salesRep";
+import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
+import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
+import { SupplyHistory } from "../pages/dashboard/salesRep/suppliers";
+import { SuppliersOverview } from "../pages/dashboard/salesRep/suppliers/supply-history";
+import { CustomerRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/transcation-history";
+import { RefundRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/refund-history";
+import { UpfrontRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/upfront-history";
 
 const authRoutes = [
   {
@@ -32,9 +39,39 @@ const dashboardRoutes = [
         path: "transactions/transaction-detail",
       },
       {
-        element: <div>Customers</div>,
+        element: <CustomersHistory />,
         index: true,
         path: "customers",
+      },
+      {
+        // CustomerDetailsOverview as the parent route
+        element: <CustomerDetailsOverview />,
+        path: "customers/customers-detail",
+        children: [
+          {
+            // Child route under CustomerDetailsOverview
+            element: <CustomerRecord />,
+            path: "",
+          },
+          {
+            element: <RefundRecord />,
+            path: "refund",
+          },
+          {
+            element: <UpfrontRecord />,
+            path: "upfront",
+          },
+        ],
+      },
+      {
+        element: <SupplyHistory />,
+        index: true,
+        path: "suppliers",
+      },
+      {
+        element: <SuppliersOverview />,
+        index: true,
+        path: "supply-history",
       },
       {
         element: <div>Payments</div>,
@@ -67,14 +104,32 @@ const dashboardRoutes = [
         path: "transactions/transaction-detail",
       },
       {
-        element: <div>Customers</div>,
-        index: true,
+        element: <CustomersHistory />,
         path: "customers",
       },
       {
-        element: <div>Supliers</div>,
+        elements: <CustomerDetailsOverview />,
+        path: "customers/customers-detail",
+        children: [
+          {
+            // Child route under CustomerDetailsOverview
+            element: <CustomerRecord />,
+            path: "",
+          },
+          {
+            element: <RefundRecord />,
+            path: "refund",
+          },
+          {
+            element: <UpfrontRecord />,
+            path: "upfront",
+          },
+        ],
+      },
+      {
+        element: <div>Suppliers</div>,
         index: true,
-        path: "supliers",
+        path: "suppliers",
       },
       {
         element: <div>Payments</div>,

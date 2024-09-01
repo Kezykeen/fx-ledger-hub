@@ -170,6 +170,7 @@ export const CustomerDetailsOverview = () => {
           backgroundColor="gray100"
           onTabChange={handleTabChange}
           onTabClick={handleTabClick}
+          padding="16px 0"
         />
 
         <SummaryBox>

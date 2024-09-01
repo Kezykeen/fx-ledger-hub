@@ -9,7 +9,8 @@ const TableTab = ({
   onTabClick,
   backgroundColor = "#FFF3EBCC",
   activeColor = colors.Primary300,
-  hoverColor = colors.Primary200,
+  hoverColor = colors.Primary50,
+  padding = "16px 24px", // Add padding as a prop with a default value
 }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]);
 
@@ -24,7 +25,7 @@ const TableTab = ({
   };
 
   return (
-    <TabContainer backgroundColor={backgroundColor}>
+    <TabContainer backgroundColor={backgroundColor} padding={padding}>
       {tabs.map((tab) => (
         <TabButton
           key={tab}
@@ -47,7 +48,7 @@ const TabContainer = styled.div`
   align-items: center;
   background-color: ${(props) => props.backgroundColor || "#FFF3EBCC"};
   border-radius: 8px;
-  padding: 16px 24px;
+  padding: ${(props) => props.padding};
   gap: 4px;
 `;
 
@@ -66,6 +67,6 @@ const TabButton = styled.button`
   &:hover {
     background-color: ${(props) =>
       props.active ? props.activeColor : props.hoverColor};
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.gray400};
   }
 `;

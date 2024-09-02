@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Table } from "./table/table";
-import { InOutFlowIcon } from "../../../../../assets/svgs";
+import { InOutFlowIcon } from "../../../../assets/svgs";
 import { Link } from "react-router-dom";
 
 const RecentTransaction = () => {

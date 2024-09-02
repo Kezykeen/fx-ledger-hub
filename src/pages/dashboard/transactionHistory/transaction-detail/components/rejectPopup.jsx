@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { PopUp } from "../../../../../../components/popUp";
-import { InputField } from "../../../../../../components/inputField";
+import { PopUp } from "../../../../../components/popUp";
+import { InputField } from "../../../../../components/inputField";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-import ToastComponent from "../../../../../../components/toastComponent";
+import ToastComponent from "../../../../../components/toastComponent";
 
 const rejectSchema = yup.object().shape({
   reason: yup.string().required("please input reason"),

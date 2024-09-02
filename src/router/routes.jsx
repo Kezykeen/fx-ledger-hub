@@ -1,20 +1,17 @@
 import LoginPage from "../layouts/authLayout";
 import DashboardLayout from "../layouts/dashboardLayout";
-import {
-  SalesRepOverview,
-  TransactionHistory,
-} from "../pages/dashboard/salesRep";
-import { InitiateTransaction } from "../pages/dashboard/salesRep/initiateTransaction";
-import { SupplyHistory } from "../pages/dashboard/salesRep/supplyHistory";
-import { EditTransaction } from "../pages/dashboard/salesRep/transactionHistory/edit";
-import { CustomersHistory } from "../pages/dashboard/salesRep/customers";
-import { TransactionDetailsOverview } from "../pages/dashboard/salesRep/transactionHistory/transaction-detail";
-import { CustomerDetailsOverview } from "../pages/dashboard/salesRep/customers/customers-detail";
-import { Suppliers } from "../pages/dashboard/salesRep/suppliers";
-import { SupplierDetails } from "../pages/dashboard/salesRep/suppliers/details";
-import { CustomerRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/transcation-history";
-import { RefundRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/refund-history";
-import { UpfrontRecord } from "../pages/dashboard/salesRep/customers/components/customer-history/upfront-history";
+import { SalesRepOverview, TransactionHistory } from "../pages/dashboard";
+import { InitiateTransaction } from "../pages/dashboard/initiateTransaction";
+import { SupplyHistory } from "../pages/dashboard/supplyHistory";
+import { EditTransaction } from "../pages/dashboard/transactionHistory/edit";
+import { CustomersHistory } from "../pages/dashboard/customers";
+import { TransactionDetailsOverview } from "../pages/dashboard/transactionHistory/transaction-detail";
+import { CustomerDetailsOverview } from "../pages/dashboard/customers/customers-detail";
+import { Suppliers } from "../pages/dashboard/suppliers";
+import { SupplierDetails } from "../pages/dashboard/suppliers/details";
+import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transcation-history";
+import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
+import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
 
 const authRoutes = [
   {

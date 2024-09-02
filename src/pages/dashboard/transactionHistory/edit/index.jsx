@@ -10,16 +10,16 @@ import { InitiateTransactionSchema } from "../../initiateTransaction/components/
 import {
   findValueAndLabel,
   parseSelectFormData,
-} from "../../../../../utils/helpers.utils";
+} from "../../../../utils/helpers.utils";
 import { currencyOptions } from "../components/data";
-import { PageHeader } from "../../../../../components/pageHeader";
+import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
-import { InputField } from "../../../../../components/inputField";
-import { CheckBox } from "../../../../../components/checkbox";
-import { DocumentUpload } from "../../../../../components/documentUpload";
-import { Button } from "../../../../../components/button";
-import { PopUp } from "../../../../../components/popUp";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
+import { InputField } from "../../../../components/inputField";
+import { CheckBox } from "../../../../components/checkbox";
+import { DocumentUpload } from "../../../../components/documentUpload";
+import { Button } from "../../../../components/button";
+import { PopUp } from "../../../../components/popUp";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const EditTransaction = ({ data }) => {

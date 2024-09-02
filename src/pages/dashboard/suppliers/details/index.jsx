@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../../components/pageHeader";
+import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
-import { colors } from "../../../../../theme/colors";
-import { ButtonDropdown, Flex } from "../../../../../components/buttonDropdown";
-import { TableTab } from "../../../../../components/tableTab";
-import { CustomerRecord } from "../../customers/components/customer-history/transcation-history";
+import { colors } from "../../../../theme/colors";
+import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
+import { TableTab } from "../../../../components/tableTab";
 import { supplierDetailsTab } from "../components/data";
+import { CustomerRecord } from "../../customers/components/customer-history/transcation-history";
 
 const suppliers = {
   date: "June 4,2023",

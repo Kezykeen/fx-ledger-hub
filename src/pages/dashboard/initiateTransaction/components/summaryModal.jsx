@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Modal } from "../../../../../components/modal";
-import { Button } from "../../../../../components/button";
+import { Modal } from "../../../../components/modal";
+import { Button } from "../../../../components/button";
 import { toast } from "react-toastify";
-import ToastComponent from "../../../../../components/toastComponent";
+import ToastComponent from "../../../../components/toastComponent";
 
 const SummaryModal = ({ isOpen, closeHandler, data }) => {
   const handleSubmit = () => {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Modal } from "../../../../../components/modal";
-import { Button } from "../../../../../components/button";
-import { ArrowRightUpIcon } from "../../../../../assets/svgs";
+import { Modal } from "../../../../components/modal";
+import { Button } from "../../../../components/button";
+import { ArrowRightUpIcon } from "../../../../assets/svgs";
 import { useNavigate } from "react-router-dom";
 
 const AmountModal = ({ isOpen, handleClose, asset, icon: Icon }) => {

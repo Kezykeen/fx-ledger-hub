@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
-import { TabHeaderless } from "../../../../components/tabs/tabHeaderless";
+import { PageHeader } from "../../../components/pageHeader";
+import { TabHeaderless } from "../../../components/tabs/tabHeaderless";
 import { TransactionOverview } from "./components/transactionOverview";
 import { TransactionAnalyticsCard } from "./components/transactionAnalyticsCard";
-import { CameraIcon, MoneyIcon, WalletIcon } from "../../../../assets/svgs";
+import { CameraIcon, MoneyIcon, WalletIcon } from "../../../assets/svgs";
 import TransactionAnalyticsChart from "./components/transactionAnalyticsChart";
 import RecentTransaction from "./components/recentTransaction";
 import { AnalyticsCard } from "./components/analyticsCard";

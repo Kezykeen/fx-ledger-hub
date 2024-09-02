@@ -1,4 +1,4 @@
-import { TMTable } from "../../../../../../components/table/TMTable";
+import { TMTable } from "../../../../../components/table/TMTable";
 
 export const Table = ({
   columns = [],

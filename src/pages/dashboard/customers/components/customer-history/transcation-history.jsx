@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { TableWidget } from "../../../../../../components/tableWidget";
-import { TableTab } from "../../../../../../components/tableTab";
-import { PageHeader } from "../../../../../../components/pageHeader";
+import { TableWidget } from "../../../../../components/tableWidget";
+import { TableTab } from "../../../../../components/tableTab";
+import { PageHeader } from "../../../../../components/pageHeader";
 import Transactions from "../customer-record/customer-transaction";
 import { customerTab } from "../data";
 

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
-import { TableWidget } from "../../../../components/tableWidget";
+import { PageHeader } from "../../../components/pageHeader";
+import { TableWidget } from "../../../components/tableWidget";
 import Customers from "./components/customers";
-import { Button } from "../../../../components/button";
-import { ArrowDown, PlusIcon } from "../../../../assets/svgs";
-import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
+import { Button } from "../../../components/button";
+import { ArrowDown, PlusIcon } from "../../../assets/svgs";
+import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import { useState } from "react";
 import FilterComponent from "./components/fiterComponent";
 
@@ -51,7 +51,7 @@ const CustomersHistory = () => {
               setOpen={setExportOpen}
               buttonGroup={exportButtonGroup}
               buttonElement={
-                <StyledMenuButton>   
+                <StyledMenuButton>
                   <span>Actions</span>
                   <ArrowDown />
                 </StyledMenuButton>

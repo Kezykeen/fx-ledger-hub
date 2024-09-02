@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Table } from "../table/table";
-import { DownloadMini, InOutFlowIcon } from "../../../../../../assets/svgs";
+import { DownloadMini, InOutFlowIcon } from "../../../../../assets/svgs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 

@@ -1,19 +1,19 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
+import { PageHeader } from "../../../components/pageHeader";
 import { Divider } from "../transactionHistory";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { InitiateTransactionSchema } from "./components/validation";
-import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
+import SMSelectDropDown from "../../../components/smSelect/selectDropdown";
 import { currencyOptions } from "../transactionHistory/components/data";
-import { InputField } from "../../../../components/inputField";
+import { InputField } from "../../../components/inputField";
 import { customerData, transactionMeansOptions } from "./components/data";
-import { CheckBox } from "../../../../components/checkbox";
+import { CheckBox } from "../../../components/checkbox";
 import { useEffect, useState } from "react";
-import { DocumentUpload } from "../../../../components/documentUpload";
-import { Button } from "../../../../components/button";
+import { DocumentUpload } from "../../../components/documentUpload";
+import { Button } from "../../../components/button";
 import AccountModal from "./components/accountModal";
-import { findValueAndLabel } from "../../../../utils/helpers.utils";
+import { findValueAndLabel } from "../../../utils/helpers.utils";
 
 export const InitiateTransaction = ({ data }) => {
   const [isFullPayment, setIsFullPayment] = useState(false);

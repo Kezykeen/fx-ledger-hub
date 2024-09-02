@@ -1,7 +1,7 @@
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
 import { accountDetailsOptions } from "./data";
-import { InputField } from "../../../../../components/inputField";
-import { AddIcon, DeleteIcon } from "../../../../../assets/svgs";
+import { InputField } from "../../../../components/inputField";
+import { AddIcon, DeleteIcon } from "../../../../assets/svgs";
 import styled from "styled-components";
 
 const AccountEntry = ({

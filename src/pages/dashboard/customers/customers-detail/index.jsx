@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../../components/pageHeader";
+import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
-import { colors } from "../../../../../theme/colors";
-import { ButtonDropdown } from "../../../../../components/buttonDropdown";
-import { TableTab } from "../../../../../components/tableTab";
+import { colors } from "../../../../theme/colors";
+import { ButtonDropdown } from "../../../../components/buttonDropdown";
+import { TableTab } from "../../../../components/tableTab";
 import { useState } from "react";
-import { ArrowDown } from "../../../../../assets/svgs";
+import { ArrowDown } from "../../../../assets/svgs";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { customerDetailsTab } from "../components/data";

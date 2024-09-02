@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../../components/pageHeader";
+import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
 import { useState } from "react";
-import { colors } from "../../../../../theme/colors";
-import { DownloadMini, ArrowDown } from "../../../../../assets/svgs";
-import { ButtonDropdown } from "../../../../../components/buttonDropdown";
+import { colors } from "../../../../theme/colors";
+import { DownloadMini, ArrowDown } from "../../../../assets/svgs";
+import { ButtonDropdown } from "../../../../components/buttonDropdown";
 
 const transaction = {
   initiatorId: "1234RTY",
@@ -32,7 +32,7 @@ const transaction = {
 
 export const CustomerTransactionOverview = () => {
   const [exportOpen, setExportOpen] = useState(false);
-  const [textOpen, setTextOpen] = useState(false)
+  const [textOpen, setTextOpen] = useState(false);
   const exportButtonGroup = [
     {
       name: "Update Payment",

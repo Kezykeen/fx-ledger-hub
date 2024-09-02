@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../../../../../components/button";
+import { Button } from "../../../../../components/button";
 import { useNavigate } from "react-router-dom";
 import RejectPopup from "./rejectPopup";
 import { useState } from "react";

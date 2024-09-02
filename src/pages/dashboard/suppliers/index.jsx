@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
-import { TableWidget } from "../../../../components/tableWidget";
-import { Button } from "../../../../components/button";
-import { PlusIcon } from "../../../../assets/svgs";
-import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
+import { PageHeader } from "../../../components/pageHeader";
+import { TableWidget } from "../../../components/tableWidget";
+import { Button } from "../../../components/button";
+import { PlusIcon } from "../../../assets/svgs";
+import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import SuppliersTable from "./components/suppliersTable";
 
 const Suppliers = () => {

@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 import { Table } from "../table/table";
-import { InOutFlowIcon } from "../../../../../../assets/svgs";
+import { InOutFlowIcon } from "../../../../../assets/svgs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 

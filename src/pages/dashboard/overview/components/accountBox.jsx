@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ArrowRightDuo } from "../../../../../assets/svgs";
-import { formatNumberWithCommas } from "../../../../../utils/helpers.utils";
+import { ArrowRightDuo } from "../../../../assets/svgs";
+import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
 import AmountModal from "./amountModal";
 import { useState } from "react";
 

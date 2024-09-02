@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { currencyOptions, paymentStatus } from "./data";
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
 import { useState } from "react";
-import { Button } from "../../../../../components/button";
-import { InputField } from "../../../../../components/inputField";
+import { Button } from "../../../../components/button";
+import { InputField } from "../../../../components/inputField";
 
 const FilterComponent = ({ setFilterOpen }) => {
   const [formData, setFormData] = useState();

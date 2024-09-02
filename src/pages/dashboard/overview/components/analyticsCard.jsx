@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ArrowCircleIcon, WalletBalanceIcon } from "../../../../../assets/svgs";
+import { ArrowCircleIcon, WalletBalanceIcon } from "../../../../assets/svgs";
 
 const AnalyticsCard = () => {
   return (

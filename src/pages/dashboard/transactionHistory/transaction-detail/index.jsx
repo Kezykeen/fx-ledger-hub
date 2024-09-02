@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../../components/pageHeader";
+import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
-import { colors } from "../../../../../theme/colors";
-import { DownloadMini } from "../../../../../assets/svgs";
+import { colors } from "../../../../theme/colors";
+import { DownloadMini } from "../../../../assets/svgs";
 import ActionButtons from "./components/actionButtons";
 
 const transaction = {

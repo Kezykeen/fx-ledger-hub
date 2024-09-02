@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
-import { ChartWrapper } from "../../../../../components/charts/chart";
-import { ChartCards } from "../../../../../components/chartCards/chartCards";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
+import { ChartWrapper } from "../../../../components/charts/chart";
+import { ChartCards } from "../../../../components/chartCards/chartCards";
 
 const TransactionAnalyticsChart = () => {
   const [selectedYear, setSelectedYear] = useState({

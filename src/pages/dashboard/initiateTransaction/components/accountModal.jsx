@@ -1,5 +1,5 @@
-import { Modal } from "../../../../../components/modal";
-import { Button } from "../../../../../components/button";
+import { Modal } from "../../../../components/modal";
+import { Button } from "../../../../components/button";
 import styled from "styled-components";
 import AccountEntry from "./accountEntry";
 import { useState } from "react";

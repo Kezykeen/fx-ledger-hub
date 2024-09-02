@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { formatCurrency } from "../../../../../utils/helpers.utils";
-import { ArrowCircleIcon } from "../../../../../assets/svgs";
+import { formatCurrency } from "../../../../utils/helpers.utils";
+import { ArrowCircleIcon } from "../../../../assets/svgs";
 
 const TransactionAnalyticsCard = ({
   bgColor,

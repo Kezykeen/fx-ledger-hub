@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { TableWidget } from "../../../../../../components/tableWidget";
-import { PageHeader } from "../../../../../../components/pageHeader";
+import { TableWidget } from "../../../../../components/tableWidget";
+import { PageHeader } from "../../../../../components/pageHeader";
 import Upfront from "../customer-record/customer-upfront";
-
 
 const UpfrontRecord = () => {
   return (

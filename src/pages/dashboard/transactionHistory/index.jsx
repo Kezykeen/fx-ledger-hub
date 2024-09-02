@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
+import { PageHeader } from "../../../components/pageHeader";
 import Transactions from "./components/transaction";
-import { TableWidget } from "../../../../components/tableWidget";
-import { TableTab } from "../../../../components/tableTab";
+import { TableWidget } from "../../../components/tableWidget";
+import { TableTab } from "../../../components/tableTab";
 import FilterComponent from "./components/filterComponent";
 import { useState } from "react";
 import { transactionTabs } from "./components/data";

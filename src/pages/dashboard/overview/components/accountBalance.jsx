@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "../../../../../components/button";
+import { Button } from "../../../../components/button";
 import {
   ArrowUpIcon,
   CFAIcon,
@@ -7,7 +7,7 @@ import {
   NairaIcon,
   RMBIcon,
   USDTIcon,
-} from "../../../../../assets/svgs";
+} from "../../../../assets/svgs";
 import AccountBox from "./accountBox";
 import FundModal from "./fundModal";
 import { useState } from "react";

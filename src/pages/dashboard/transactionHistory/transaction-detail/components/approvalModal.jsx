@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Modal } from "../../../../../../components/modal";
+import { Modal } from "../../../../../components/modal";
 import AccountEntry from "../../../initiateTransaction/components/accountEntry";
-import { Button } from "../../../../../../components/button";
-import { PopUp } from "../../../../../../components/popUp";
-import ToastComponent from "../../../../../../components/toastComponent";
+import { Button } from "../../../../../components/button";
+import { PopUp } from "../../../../../components/popUp";
+import ToastComponent from "../../../../../components/toastComponent";
 import { toast } from "react-toastify";
 
 const ApprovalModal = ({ isOpen, closeHandler, data }) => {

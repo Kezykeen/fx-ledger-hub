@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { PageHeader } from "../../../../components/pageHeader";
-import { TableWidget } from "../../../../components/tableWidget";
+import { PageHeader } from "../../../components/pageHeader";
+import { TableWidget } from "../../../components/tableWidget";
 import FilterComponent from "../transactionHistory/components/filterComponent";
 import { useState } from "react";
-import { TableTab } from "../../../../components/tableTab";
+import { TableTab } from "../../../components/tableTab";
 import { supplyHistoryTabs } from "./components/data";
-import { Button } from "../../../../components/button";
-import { AddIcon } from "../../../../assets/svgs";
+import { Button } from "../../../components/button";
+import { AddIcon } from "../../../assets/svgs";
 
 const SupplyHistory = () => {
   const [filterOpen, setFilterOpen] = useState(false);

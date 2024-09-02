@@ -3,9 +3,9 @@ import {
   DataBaseIcon,
   TrendFallIcon,
   TrendRiseIcon,
-} from "../../../../../assets/svgs";
-import { colors } from "../../../../../theme/colors";
-import { formatCurrency } from "../../../../../utils/helpers.utils";
+} from "../../../../assets/svgs";
+import { colors } from "../../../../theme/colors";
+import { formatCurrency } from "../../../../utils/helpers.utils";
 
 const TransactionOverview = () => {
   const transactionSummary = [

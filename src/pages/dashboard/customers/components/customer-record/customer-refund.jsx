@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Table } from "../table/table";
-import { InOutFlowIcon } from "../../../../../../assets/svgs";
+import { InOutFlowIcon } from "../../../../../assets/svgs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -50,11 +50,7 @@ const Refund = () => {
     {
       Header: "",
       id: "action",
-      Cell: () => (
-        <ViewDetails to={""}>
-          View Details
-        </ViewDetails>
-      ),
+      Cell: () => <ViewDetails to={""}>View Details</ViewDetails>,
     },
   ];
   const data = {

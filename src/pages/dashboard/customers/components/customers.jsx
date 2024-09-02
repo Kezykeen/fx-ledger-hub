@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Table } from "./table/table";
 import Avatar from "@mui/material/Avatar";
@@ -60,7 +59,7 @@ const Customers = () => {
     },
   ];
   const data = {
-    data:[
+    data: [
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
@@ -102,8 +101,8 @@ const Customers = () => {
       totalPages: 10,
       page: pageNumber,
     },
-  }
-  
+  };
+
   return (
     <Table
       columns={columns}

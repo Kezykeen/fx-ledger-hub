@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import { Modal } from "../../../../../components/modal";
+import { Modal } from "../../../../components/modal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import { withdrawAccountSchema } from "./validation";
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
 import { currencyOptions } from "../../transactionHistory/components/data";
-import { InputField } from "../../../../../components/inputField";
-import { DocumentUpload } from "../../../../../components/documentUpload";
-import { Button } from "../../../../../components/button";
-import { PopUp } from "../../../../../components/popUp";
+import { InputField } from "../../../../components/inputField";
+import { DocumentUpload } from "../../../../components/documentUpload";
+import { Button } from "../../../../components/button";
+import { PopUp } from "../../../../components/popUp";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import ToastComponent from "../../../../../components/toastComponent";
+import ToastComponent from "../../../../components/toastComponent";
 import { accountDetailsOptions } from "../../initiateTransaction/components/data";
 
 const WithdrawModal = ({ isOpen, handleClose }) => {

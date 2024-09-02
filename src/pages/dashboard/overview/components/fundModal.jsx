@@ -1,18 +1,18 @@
 import styled from "styled-components";
-import { Modal } from "../../../../../components/modal";
+import { Modal } from "../../../../components/modal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import { fundAccountSchema } from "./validation";
-import SMSelectDropDown from "../../../../../components/smSelect/selectDropdown";
-import { currencyOptions } from "../../transactionHistory/components/data";
-import { InputField } from "../../../../../components/inputField";
-import { DocumentUpload } from "../../../../../components/documentUpload";
-import { Button } from "../../../../../components/button";
+import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
+import { InputField } from "../../../../components/inputField";
+import { DocumentUpload } from "../../../../components/documentUpload";
+import { Button } from "../../../../components/button";
 import { useState } from "react";
-import { PopUp } from "../../../../../components/popUp";
+import { PopUp } from "../../../../components/popUp";
 import { toast } from "react-toastify";
-import ToastComponent from "../../../../../components/toastComponent";
+import ToastComponent from "../../../../components/toastComponent";
 import { accountDetailsOptions } from "../../initiateTransaction/components/data";
+import { currencyOptions } from "../../transactionHistory/components/data";
 
 const FundModal = ({ isOpen, handleClose }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);

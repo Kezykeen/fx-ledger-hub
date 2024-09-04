@@ -3,26 +3,41 @@ import { PageHeader } from "../../../components/pageHeader";
 import { TableWidget } from "../../../components/tableWidget";
 import Customers from "./components/customers";
 import { Button } from "../../../components/button";
-import { ArrowDown, PlusIcon } from "../../../assets/svgs";
+import { DropdownIcon, PlusIcon } from "../../../assets/svgs";
+import { UpdateModal } from "./components/updatePaymentModal";
 import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import { useState } from "react";
 import FilterComponent from "./components/fiterComponent";
 
+const data = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
+
 const CustomersHistory = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const exportButtonGroup = [
     {
       name: "Update Payment",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "Initial Refund",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "initial Upfront",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
   ];
 
@@ -36,12 +51,18 @@ const CustomersHistory = () => {
         <DetailRow>
           <ActionWrapper>
             <Button
-              buttonClass={"primary"}
+              buttonClass={"outline"}
               label={
                 <Flex>
                   <span>{<PlusIcon />}</span> <span>Add Customer</span>
                 </Flex>
               }
+            />
+            
+            <UpdateModal
+              closeHandler={() => setIsUpdateModalOpen(false)}
+              isOpen={isUpdateModalOpen}
+              data={data}
             />
           </ActionWrapper>
 
@@ -53,7 +74,7 @@ const CustomersHistory = () => {
               buttonElement={
                 <StyledMenuButton>
                   <span>Actions</span>
-                  <ArrowDown />
+                  <DropdownIcon />
                 </StyledMenuButton>
               }
             />
@@ -96,7 +117,8 @@ const StyledMenuButton = styled.button`
   cursor: pointer;
   padding: 10px 16px !important;
   border: 1px solid ${(props) => props.theme.colors.gray100} !important;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.primary300};
+  color: ${(props) => props.theme.colors.white};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;

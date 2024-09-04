@@ -62,7 +62,7 @@ const Transactions = () => {
       Header: "",
       id: "action",
       Cell: () => (
-        <ViewDetails to={"/s/customers/customers-detail/transaction-details"}>
+        <ViewDetails to={"/customers/customers-detail/transaction-details"}>
           View Details
         </ViewDetails>
       ),
@@ -124,17 +124,6 @@ const Transactions = () => {
         date: "Jan 7, 2022",
         paymentStatus: "Failed",
         customerDetails: "Emma Wilson",
-      },
-      {
-        currency: "CNY to KRW",
-        rate: "175",
-        incoming: "5000",
-        incomingCurrency: "CNY",
-        outgoing: "875,000",
-        outgoingCurrency: "KRW",
-        date: "Jan 8, 2022",
-        paymentStatus: "Paid",
-        customerDetails: "David Lee",
       },
     ],
     metaData: {

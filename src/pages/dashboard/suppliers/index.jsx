@@ -1,27 +1,22 @@
 import styled from "styled-components";
 import { PageHeader } from "../../../components/pageHeader";
 import { TableWidget } from "../../../components/tableWidget";
-import { Button } from "../../../components/button";
 import { PlusIcon } from "../../../assets/svgs";
-import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import SuppliersTable from "./components/suppliersTable";
+import { Button } from "../../../components/button";
+import { useState } from "react";
+import { Flex } from "../../../components/buttonDropdown";
+import { UpdateModal } from "../customers/components/updatePaymentModal";
+
+const data = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
 
 const Suppliers = () => {
-  const buttonGroup = [
-    {
-      name: "View",
-      onClick: () => {},
-    },
-    {
-      name: "Edit",
-      onClick: () => {},
-    },
-    {
-      name: "Delete",
-      textColor: "R300",
-      onClick: () => {},
-    },
-  ];
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   return (
     <Container>
       <DetailRow>
@@ -33,22 +28,35 @@ const Suppliers = () => {
         <DetailRow>
           <ActionWrapper>
             <Button
-              buttonClass={"primary"}
+              onClick={() => {
+                setIsUpdateModalOpen(true);
+              }}
+              buttonClass={"outline"}
               label={
                 <Flex>
-                  <span>{<PlusIcon />}</span> <span>Add Supplier</span>
+                  <span>{<PlusIcon />}</span> <span>Add Customer</span>
                 </Flex>
               }
             />
           </ActionWrapper>
 
-          <ButtonDropdown
-            buttonGroup={buttonGroup}
-            buttonElement={
-              <Flex>
-                <span>Initiate Refund</span>
-              </Flex>
-            }
+          <div>
+            <Button
+              onClick={() => {
+                setIsUpdateModalOpen(true);
+              }}
+              buttonClass={"primary"}
+              label={
+                <Flex>
+                  <span>Intiate Refund</span>
+                </Flex>
+              }
+            />
+          </div>
+          <UpdateModal
+            closeHandler={() => setIsUpdateModalOpen(false)}
+            isOpen={isUpdateModalOpen}
+            data={data}
           />
         </DetailRow>
       </DetailRow>
@@ -88,7 +96,7 @@ const DetailRow = styled.div`
 `;
 
 export const Divider = styled.div`
-  margin: ${({ margin }) => margin ?? "20px"};
+  margin: ${({ margin }) => margin ?? "20px 0"};
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;

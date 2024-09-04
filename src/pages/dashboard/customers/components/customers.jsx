@@ -3,9 +3,19 @@ import { Table } from "./table/table";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { UpdateModal } from "./updatePaymentModal";
+
+const datas = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
 
 const Customers = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  
   const columns = [
     {
       Header: "Customer Name",
@@ -48,9 +58,11 @@ const Customers = () => {
       Cell: () => (
         <Button>
           <Flex>
-            <SubTitle onClick={""}>Edit Details</SubTitle>
+            <SubTitle onClick={() => setIsUpdateModalOpen(true)}>
+              Edit Details
+            </SubTitle>
             <Span></Span>
-            <ViewDetails to={"/s/customers/customers-detail"}>
+            <ViewDetails to={"/customers/customers-detail"}>
               View Details
             </ViewDetails>
           </Flex>
@@ -58,6 +70,7 @@ const Customers = () => {
       ),
     },
   ];
+
   const data = {
     data: [
       {
@@ -90,12 +103,6 @@ const Customers = () => {
         paymentStatus: "Paid",
         dateAdded: "Jan 4, 2022",
       },
-      {
-        customerName: "John Doe",
-        phoneNumber: "+234 8120 1234",
-        paymentStatus: "Owing",
-        dateAdded: "Jan 4, 2022",
-      },
     ],
     metaData: {
       totalPages: 10,
@@ -104,13 +111,20 @@ const Customers = () => {
   };
 
   return (
-    <Table
-      columns={columns}
-      data={data?.data}
-      setPageNumber={setPageNumber}
-      availablePages={data?.metaData?.totalPages}
-      pageNumber={data?.metaData?.page}
-    />
+    <>
+      <Table
+        columns={columns}
+        data={data?.data}
+        setPageNumber={setPageNumber}
+        availablePages={data?.metaData?.totalPages}
+        pageNumber={data?.metaData?.page}
+      />
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={datas}
+      />
+    </>
   );
 };
 
@@ -140,7 +154,7 @@ const SubTitle = styled.p`
   color: ${({ theme }) => theme.colors.gray700};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.Primary300};
+    color: ${({ theme }) => theme.colors.primary300};
   }
 `;
 
@@ -163,11 +177,11 @@ const Button = styled.div`
   background-color: #6670850d;
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.Primary50};
+    background-color: ${(props) => props.theme.colors.primary50};
     cursor: pointer;
   }
 `;

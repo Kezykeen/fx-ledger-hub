@@ -12,6 +12,7 @@ import { SupplierDetails } from "../pages/dashboard/suppliers/details";
 import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transcation-history";
 import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
+import CustomerTransactionOverview from "../pages/dashboard/customers/customers-detail/transaction";
 
 const authRoutes = [
   {
@@ -68,14 +69,21 @@ const dashboardRoutes = [
         ],
       },
       {
+        element: <CustomerTransactionOverview />,
+        path: "/customers/customers-detail/transaction-details",
+      },
+      {
         element: <Suppliers />,
         index: true,
         path: "suppliers",
       },
       {
         element: <SupplierDetails />,
-        index: true,
-        path: "suppliers/:id",
+        path: "suppliers/supplier-details",
+        children: [
+          {},
+          {},
+        ]
       },
       {
         element: <div>Payments</div>,

@@ -36,6 +36,7 @@ import NairaIcon from "./naira.svg";
 import DollarIcon from "./dollar.svg";
 import ArrowRightUpIcon from "./account-arrow.svg";
 import ConfirmIcon from "./confirm.svg";
+import DropdownBlackIcon from "./dropDownBlack.svg";
 
 export {
   Logo,
@@ -76,4 +77,5 @@ export {
   DollarIcon,
   ArrowRightUpIcon,
   ConfirmIcon,
+  DropdownBlackIcon,
 };

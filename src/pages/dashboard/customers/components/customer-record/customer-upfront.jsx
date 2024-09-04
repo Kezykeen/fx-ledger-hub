@@ -90,12 +90,6 @@ const Upfront = () => {
         date: "Jan 4, 2022",
         customerDetails: "John Doe",
       },
-      {
-        currency: "USDT",
-        amount: "1000",
-        date: "Jan 4, 2022",
-        customerDetails: "John Doe",
-      },
     ],
     metaData: {
       totalPages: 10,
@@ -133,4 +127,13 @@ const ViewDetails = styled(Link)`
   color: #f97316;
   font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.gray100};
+    cursor: pointer;
+    color: black;
+    padding: 7px;
+    border-radius: 5px;
+  }
 `;

@@ -1,14 +1,10 @@
 export const supplierDetailsTab = [
   {
-    label: "Transaction History",
-    hash: "transaction-history",
+    label: "Supply History",
+    hash: "supply-history",
   },
   {
     label: "Refund History",
     hash: "refund-history",
-  },
-  {
-    label: "Supply History",
-    hash: "supply-history",
-  },
+  }
 ];

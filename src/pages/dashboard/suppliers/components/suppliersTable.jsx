@@ -2,14 +2,11 @@ import styled from "styled-components";
 import { Table } from "./table/table";
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import { useState } from "react";
 
-const ViewDetails = styled(Link)`
-  color: #f97316;
-  font-weight: 500;
-  cursor: pointer;
-`;
 
 const SuppliersTable = () => {
+  const [pageNumber, setPageNumber] = useState(1);
   const columns = [
     {
       Header: "Customer Name",
@@ -52,89 +49,61 @@ const SuppliersTable = () => {
       Cell: () => (
         <Button>
           <Flex>
-            <SubTitle to={"/s/"}>Edit Details</SubTitle>
+            <SubTitle to={"supplier-details"}>Edit Details</SubTitle>
             <Span></Span>
-            <ViewDetails to={"1"}>View Details</ViewDetails>
+            <ViewDetails to={"supplier-details"}>View Details</ViewDetails>
           </Flex>
         </Button>
       ),
     },
   ];
-  const data = [
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Complete",
-      dateAdded: "Jan 4, 2022",
+  const data = {
+    data: [
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        status: "Complete",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        status: "Owing",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        status: "Refund in progress",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        status: "Supply in progress",
+        dateAdded: "Jan 4, 2022",
+      },
+      {
+        customerName: "John Doe",
+        phoneNumber: "+234 8120 1234",
+        status: "Complete",
+        dateAdded: "Jan 4, 2022",
+      },
+    ],
+    metaData: {
+      totalPages: 10,
+      page: pageNumber,
     },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Refund in progress",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Supply in progress",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Complete",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Complete",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Refund in progress",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Complete",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Supply in progress",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Complete",
-      dateAdded: "Jan 4, 2022",
-    },
-    {
-      customerName: "John Doe",
-      phoneNumber: "+234 8120 1234",
-      status: "Owing",
-      dateAdded: "Jan 4, 2022",
-    },
-  ];
-  return <Table columns={columns} data={data} />;
+  };
+  return (
+    <Table
+      columns={columns}
+      data={data?.data}
+      setPageNumber={setPageNumber}
+      availablePages={data?.metaData?.totalPages}
+      pageNumber={data?.metaData?.page}
+    />
+  );
 };
 
 export default SuppliersTable;
@@ -193,14 +162,20 @@ const Button = styled.div`
   padding: 4px 12px 4px 12px;
   gap: 12px;
   border-radius: 8px;
-  background-color: ${(props) => props.theme.colors.gray100};
+  background-color: #6670850d;
   display: flex;
   justify-content: center;
   align-item: center;
   transition: background-color 0.1s ease-in-out;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.Primary50};
+    background-color: ${(props) => props.theme.colors.primary50};
     cursor: pointer;
   }
+`;
+
+const ViewDetails = styled(Link)`
+  color: #f97316;
+  font-weight: 500;
+  cursor: pointer;
 `;

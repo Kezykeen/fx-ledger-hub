@@ -8,3 +8,14 @@ export const supplierDetailsTab = [
     hash: "refund-history",
   }
 ];
+
+export const suppliersTab = [
+  {
+    label: "Open",
+    hash: "open",
+  },
+  {
+    label: "Closed",
+    hash: "closed",
+  }
+];

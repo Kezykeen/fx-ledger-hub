@@ -13,6 +13,8 @@ import { CustomerRecord } from "../pages/dashboard/customers/components/customer
 import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
 import CustomerTransactionOverview from "../pages/dashboard/customers/customers-detail/transaction";
+import SuppliersHistory from "../pages/dashboard/suppliers/supplier-record/supplier-history";
+import RefundHistory from "../pages/dashboard/suppliers/supplier-record/refund-history";
 
 const authRoutes = [
   {
@@ -81,8 +83,14 @@ const dashboardRoutes = [
         element: <SupplierDetails />,
         path: "suppliers/supplier-details",
         children: [
-          {},
-          {},
+          {
+            element: <SuppliersHistory />,
+            path: "",
+          },
+          {
+            element: <RefundHistory />,
+            path: "refund",
+          },
         ]
       },
       {

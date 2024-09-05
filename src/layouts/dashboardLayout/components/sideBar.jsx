@@ -41,7 +41,6 @@ const SideBar = () => {
           <h3>NAVIGATION</h3>
           <Menu>
             {navs.map((nav, index) => {
-              console.log(isActive(nav), nav);
               return (
                 <NavItem
                   key={index}

@@ -44,20 +44,18 @@ const CustomersHistory = () => {
               }
             />
           </ActionWrapper>
-
-          <div>
-            <ButtonDropdown
-              open={exportOpen}
-              setOpen={setExportOpen}
-              buttonGroup={exportButtonGroup}
-              buttonElement={
-                <StyledMenuButton>
-                  <span>Actions</span>
-                  <ArrowDown />
-                </StyledMenuButton>
-              }
-            />
-          </div>
+          <ButtonDropdown
+            open={exportOpen}
+            setOpen={setExportOpen}
+            buttonGroup={exportButtonGroup}
+            width={`unset`}
+            buttonElement={
+              <StyledMenuButton>
+                <span>Actions</span>
+                <ArrowDown />
+              </StyledMenuButton>
+            }
+          />
         </DetailRow>
       </DetailRow>
       <WidgetWrapper>
@@ -110,10 +108,12 @@ const ActionWrapper = styled.div`
 `;
 
 const DetailRow = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
   flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
+  z-index: 99;
 `;
 
 export const Divider = styled.div`

@@ -8,10 +8,12 @@ import { CustomersHistory } from "../pages/dashboard/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/transactionHistory/transaction-detail";
 import { CustomerDetailsOverview } from "../pages/dashboard/customers/customers-detail";
 import { Suppliers } from "../pages/dashboard/suppliers";
+import { Payments } from "../pages/dashboard/payments";
 import { SupplierDetails } from "../pages/dashboard/suppliers/details";
-import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transcation-history";
+import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transaction-history";
 import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
+import { PaymentDetails } from "../pages/dashboard/payments/details";
 
 const authRoutes = [
   {
@@ -78,14 +80,24 @@ const dashboardRoutes = [
         path: "suppliers/:id",
       },
       {
-        element: <div>Payments</div>,
+        element: <Payments />,
         index: true,
         path: "payments",
+      },
+      {
+        element: <PaymentDetails />,
+        index: true,
+        path: "payments/:id",
       },
       {
         element: <SupplyHistory />,
         index: true,
         path: "supply-history",
+      },
+      {
+        element: <div>Refund history</div>,
+        index: true,
+        path: "refund-history",
       },
       {
         element: <div>Ledger</div>,
@@ -96,6 +108,11 @@ const dashboardRoutes = [
         element: <div>Reports</div>,
         index: true,
         path: "report",
+      },
+      {
+        element: <div>User management</div>,
+        index: true,
+        path: "manage-user",
       },
       {
         element: <InitiateTransaction />,

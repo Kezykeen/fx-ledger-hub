@@ -7,9 +7,12 @@ import { TableTab } from "../../../components/tableTab";
 import { supplyHistoryTabs } from "./components/data";
 import { Button } from "../../../components/button";
 import { AddIcon } from "../../../assets/svgs";
+import SupplyHistoryTable from "./components/supplyTable";
+import InitiateSupplyModal from "./components/initiateSupplyModal";
 
 const SupplyHistory = () => {
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isSupplyModalOpen, setIsSupplyModalOpen] = useState(false);
 
   const handleTabChange = (selectedTab) => {
     console.log("Selected tab:", selectedTab);
@@ -27,6 +30,7 @@ const SupplyHistory = () => {
             label={"Initiate Supply"}
             buttonClass={"primary"}
             width={"180px"}
+            onClick={() => setIsSupplyModalOpen(true)}
           />
         }
       />
@@ -39,6 +43,11 @@ const SupplyHistory = () => {
         <Divider />
         <TableTab tabs={supplyHistoryTabs} onTabChange={handleTabChange} />
       </WidgetWrapper>
+      <SupplyHistoryTable />
+      <InitiateSupplyModal
+        closeHandler={() => setIsSupplyModalOpen(false)}
+        isOpen={isSupplyModalOpen}
+      />
     </Container>
   );
 };

@@ -6,11 +6,12 @@ import { colors } from "../../theme/colors";
 const TableTab = ({
   tabs,
   onTabChange,
-  onTabClick,
   backgroundColor = "#FFF3EBCC",
   activeColor = colors.primary300,
   hoverColor = colors.primary50,
-  padding = "16px 24px", // Add padding as a prop with a default value
+  padding = "16px 24px",
+  handleStateTab,
+  activeStateTab,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,15 +22,12 @@ const TableTab = ({
     return activeTab ? activeTab.hash : tabs[0].hash;
   };
 
-  const activeTab = getActiveTabFromHash();
+  const activeTab = activeStateTab ?? getActiveTabFromHash();
 
   const handleTabClick = (hash) => {
     navigate(`#${hash}`);
     if (onTabChange) {
       onTabChange(hash);
-    }
-    if (onTabClick) {
-      onTabClick(hash); // Trigger the onTabClick function to handle routing
     }
   };
 
@@ -47,7 +45,9 @@ const TableTab = ({
           active={activeTab === hash}
           activeColor={activeColor}
           hoverColor={hoverColor}
-          onClick={() => handleTabClick(hash)}
+          onClick={() =>
+            activeStateTab ? handleStateTab(hash) : handleTabClick(hash)
+          }
         >
           {label}
         </TabButton>

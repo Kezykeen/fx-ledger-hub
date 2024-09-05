@@ -1,29 +1,35 @@
+export const customerHistoryHash = {
+  transaction: `transaction-history`,
+  refund: `refund-history`,
+  upfront: `upfront-history`,
+};
+
 export const customerTab = [
   {
     label: "In Progress",
-    hash: "in-progress",
+    hash: "customer_in-progress",
   },
   {
     label: "Approved",
-    hash: "approved",
+    hash: "customer_approved",
   },
   {
     label: "Cancelled",
-    hash: "cancelled",
+    hash: "customer_cancelled",
   },
 ];
 
 export const customerDetailsTab = [
   {
     label: "Transaction History",
-    hash: "transaction-history",
+    hash: customerHistoryHash.transaction,
   },
   {
     label: "Refund History",
-    hash: "refund-history",
+    hash: customerHistoryHash.refund,
   },
   {
     label: "Upfront History",
-    hash: "upfront-history",
+    hash: customerHistoryHash.upfront,
   },
 ];

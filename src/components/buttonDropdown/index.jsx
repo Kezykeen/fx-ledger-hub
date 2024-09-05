@@ -85,6 +85,7 @@ const DropdownContainer = styled.div`
   border-radius: 8px;
   background-color: #fff;
   padding: 10px 6px;
+  box-shadow: 0px 2px 7px 1px #10182817;
 `;
 
 const Container = styled.div`
@@ -96,13 +97,16 @@ const Container = styled.div`
 const StyledMenuItem = styled.div`
   background-color: white;
   cursor: pointer;
-  opacity: 0.8;
   transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 1;
-    background-color: ${(props) => props.theme.colors.Primary50};
+    background-color: #fd853a33;
     border-radius: 8px;
+
+    & > p {
+      color: #c04a00;
+    }
   }
 `;
 

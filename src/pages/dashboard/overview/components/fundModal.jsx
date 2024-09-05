@@ -108,7 +108,7 @@ const FundModal = ({ isOpen, handleClose }) => {
         open={isConfirmOpen}
         handleClose={() => setIsConfirmOpen(false)}
         onSubmit={handleSubmit(onSubmit)}
-        title={"Confirm  Submission?"}
+        title={"Confirm Submission?"}
         subtitle={
           "Are you sure you want to proceed with submission of this receipt?"
         }

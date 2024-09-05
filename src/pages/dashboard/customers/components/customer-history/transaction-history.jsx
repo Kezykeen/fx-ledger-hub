@@ -4,12 +4,15 @@ import { TableTab } from "../../../../../components/tableTab";
 import { PageHeader } from "../../../../../components/pageHeader";
 import Transactions from "../customer-record/customer-transaction";
 import { customerTab } from "../data";
+import { useState } from "react";
 
 const CustomerRecord = () => {
+  const [activeTab, setActiveTab] = useState(customerTab[0].hash);
+
   const handleTabChange = (selectedTab) => {
-    console.log("Selected tab:", selectedTab);
-    // Perform actions based on the selected tab
+    setActiveTab(selectedTab);
   };
+
   return (
     <Container>
       <PageHeader
@@ -19,7 +22,11 @@ const CustomerRecord = () => {
       <WidgetWrapper>
         <TableWidget />
         <Divider />
-        <TableTab tabs={customerTab} onTabChange={handleTabChange} />
+        <TableTab
+          tabs={customerTab}
+          handleStateTab={handleTabChange}
+          activeStateTab={activeTab}
+        />
       </WidgetWrapper>
       <Transactions />
     </Container>

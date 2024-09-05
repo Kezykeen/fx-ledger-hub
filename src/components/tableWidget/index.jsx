@@ -25,19 +25,21 @@ const TableWidget = ({ customFilter, filterOpen, setFilterOpen }) => {
   return (
     <TableWidgetWrapper>
       <Flex>
-        <ButtonDropdown
-          open={filterOpen}
-          setOpen={setFilterOpen}
-          customElement={customFilter}
-          buttonElement={
-            <StyledMenuButton>
-              <Icon>
-                <FilterIcon className="svg" />
-              </Icon>
-              <span>Filters</span>
-            </StyledMenuButton>
-          }
-        />
+        {customFilter && (
+          <ButtonDropdown
+            open={filterOpen}
+            setOpen={setFilterOpen}
+            customElement={customFilter}
+            buttonElement={
+              <StyledMenuButton>
+                <Icon>
+                  <FilterIcon className="svg" />
+                </Icon>
+                <span>Filters</span>
+              </StyledMenuButton>
+            }
+          />
+        )}
         <Search />
       </Flex>
       <div>

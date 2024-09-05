@@ -34,7 +34,7 @@ const RejectPopup = ({ isOpen, closeModal }) => {
       />
     );
     console.log({ values });
-    closeModal();
+    handleClose();
   };
 
   return (

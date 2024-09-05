@@ -5,7 +5,7 @@ import { colors } from "../../../../theme/colors";
 import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
 import { supplierDetailsTab } from "../components/data";
-import { CustomerRecord } from "../../customers/components/customer-history/transcation-history";
+import { CustomerRecord } from "../../customers/components/customer-history/transaction-history";
 
 const suppliers = {
   date: "June 4,2023",

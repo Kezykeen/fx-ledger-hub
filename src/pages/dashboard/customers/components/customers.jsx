@@ -50,7 +50,7 @@ const Customers = () => {
           <Flex>
             <SubTitle onClick={""}>Edit Details</SubTitle>
             <Span></Span>
-            <ViewDetails to={"/s/customers/customers-detail"}>
+            <ViewDetails to={"/customers/customers-detail"}>
               View Details
             </ViewDetails>
           </Flex>

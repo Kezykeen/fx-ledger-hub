@@ -7,8 +7,19 @@ import { TableTab } from "../../../components/tableTab";
 import { supplyHistoryTabs } from "./components/data";
 import { Button } from "../../../components/button";
 import { AddIcon } from "../../../assets/svgs";
+import TransactionSupply from "./components/supply-transaction/transaction";
+import { UpdateModal } from "../customers/components/updatePaymentModal";
+
+const datas = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
+
 
 const SupplyHistory = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
 
   const handleTabChange = (selectedTab) => {
@@ -27,9 +38,11 @@ const SupplyHistory = () => {
             label={"Initiate Supply"}
             buttonClass={"primary"}
             width={"180px"}
+            onClick={() => setIsUpdateModalOpen(true)}
           />
         }
       />
+      <Divider />
       <WidgetWrapper>
         <TableWidget
           customFilter={<FilterComponent setFilterOpen={setFilterOpen} />}
@@ -38,7 +51,15 @@ const SupplyHistory = () => {
         />
         <Divider />
         <TableTab tabs={supplyHistoryTabs} onTabChange={handleTabChange} />
+
+        <UpdateModal
+          closeHandler={() => setIsUpdateModalOpen(false)}
+          isOpen={isUpdateModalOpen}
+          data={datas}
+        />
       </WidgetWrapper>
+
+      <TransactionSupply />
     </Container>
   );
 };

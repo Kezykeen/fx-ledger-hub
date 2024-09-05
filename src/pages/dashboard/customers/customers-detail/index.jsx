@@ -5,10 +5,11 @@ import { colors } from "../../../../theme/colors";
 import { ButtonDropdown } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
 import { useState } from "react";
-import { ArrowDown } from "../../../../assets/svgs";
+import { DropdownBlackIcon, DropdownIcon } from "../../../../assets/svgs";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { customerDetailsTab } from "../components/data";
+import { UpdateModal } from "../components/updatePaymentModal";
 
 const customer = {
   date: "June 4,2023",
@@ -20,7 +21,15 @@ const customer = {
   phoneNumber: "08120289349",
 };
 
+const data = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
+
 export const CustomerDetailsOverview = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,15 +37,21 @@ export const CustomerDetailsOverview = () => {
   const exportButtonGroup = [
     {
       name: "Update Payment",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "Initial Refund",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "initial Upfront",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
   ];
   const exportTextGroup = [
@@ -63,18 +78,19 @@ export const CustomerDetailsOverview = () => {
     // Handle the active tab change logic if needed
     console.log(`Active tab changed to: ${tab}`);
   };
-  const handleTabClick = (tab) => {
-    switch (tab) {
-      case "Transaction History":
+  const handleTabClick = (hash) => {
+    switch (hash) {
+      case "transaction-history":
         navigate("");
         break;
-      case "Refund History":
+      case "refund-history":
         navigate("refund");
         break;
-      case "Upfront History":
+      case "upfront-history":
         navigate("upfront");
         break;
       default:
+        navigate(`#${hash}`);
         break;
     }
   };
@@ -93,7 +109,7 @@ export const CustomerDetailsOverview = () => {
             buttonElement={
               <StyledMenuButton>
                 <span>Actions</span>
-                <ArrowDown />
+                <DropdownIcon />
               </StyledMenuButton>
             }
           />
@@ -158,7 +174,7 @@ export const CustomerDetailsOverview = () => {
               buttonElement={
                 <StyleMenuButton>
                   <span>All Teams</span>
-                  <ArrowDown />
+                  <DropdownBlackIcon />
                 </StyleMenuButton>
               }
             />
@@ -177,6 +193,11 @@ export const CustomerDetailsOverview = () => {
           <Outlet />
         </SummaryBox>
       </CustomersHistory>
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={data}
+      />
     </PageContainer>
   );
 };
@@ -247,7 +268,7 @@ const StyledMenuButton = styled.button`
   padding: 10px 16px !important;
   border: none;
   color: white;
-  background-color: ${(props) => props.theme.colors.Primary300};
+  background-color: ${(props) => props.theme.colors.primary300};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;
@@ -264,7 +285,7 @@ const StyleMenuButton = styled.button`
   cursor: pointer;
   padding: 10px 16px !important;
   border: none;
-  background-color: ${(props) => props.theme.colors.Primary100};
+  background-color: ${(props) => props.theme.colors.primary100};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;

@@ -215,7 +215,7 @@ const TableRow = styled(motion.tr)`
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.Primary50};
+    background-color: ${(props) => props.theme.colors.primary50};
     cursor: pointer;
   }
 `;

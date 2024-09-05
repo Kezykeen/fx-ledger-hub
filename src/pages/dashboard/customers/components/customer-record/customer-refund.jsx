@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import { Table } from "../table/table";
 import { InOutFlowIcon } from "../../../../../assets/svgs";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { UpdateModal } from "../updatePaymentModal";
+
+const datas = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
 
 const Refund = () => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const columns = [
     {
       Header: "Currency",
@@ -50,9 +58,14 @@ const Refund = () => {
     {
       Header: "",
       id: "action",
-      Cell: () => <ViewDetails to={""}>View Details</ViewDetails>,
+      Cell: () => (
+        <ViewDetailsButton onClick={() => setIsUpdateModalOpen(true)}>
+          View Details
+        </ViewDetailsButton>
+      ),
     },
   ];
+
   const data = {
     data: [
       {
@@ -90,27 +103,28 @@ const Refund = () => {
         customerDetails: "John Doe",
         status: "Closed",
       },
-      {
-        currency: "USDT",
-        amount: "1000",
-        date: "Jan 4, 2022",
-        customerDetails: "John Doe",
-        status: "Closed",
-      },
     ],
     metaData: {
       totalPages: 10,
       page: pageNumber,
     },
   };
+
   return (
-    <Table
-      columns={columns}
-      data={data?.data}
-      setPageNumber={setPageNumber}
-      availablePages={data?.metaData?.totalPages}
-      pageNumber={data?.metaData?.page}
-    />
+    <>
+      <Table
+        columns={columns}
+        data={data?.data}
+        setPageNumber={setPageNumber}
+        availablePages={data?.metaData?.totalPages}
+        pageNumber={data?.metaData?.page}
+      />
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={datas}
+      />
+    </>
   );
 };
 
@@ -129,8 +143,8 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
+    props.$status === "Closed" ? "#D1FAE5" : "#FEE2E2"};
+  color: ${(props) => (props.$status === "Closed" ? "#059669" : "#DC2626")};
 `;
 
 const SmallText = styled.small`
@@ -140,8 +154,20 @@ const SmallText = styled.small`
   line-height: 20px;
 `;
 
-const ViewDetails = styled(Link)`
+const ViewDetailsButton = styled.button`
   color: #f97316;
   font-weight: 500;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: background-color 0.5s ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.gray100};
+    cursor: pointer;
+    color: black;
+    padding: 7px;
+    border-radius: 5px;
+  }
 `;

@@ -1,11 +1,19 @@
 import styled from "styled-components";
-import { Table } from "../table/table";
-import { DownloadMini, InOutFlowIcon } from "../../../../../assets/svgs";
-import { Link } from "react-router-dom";
+import { Table } from "../components/table/table";
+import { InOutFlowIcon } from "../../../../assets/svgs";
 import { useState } from "react";
+import { UpdateModal } from "../../customers/components/updatePaymentModal";
 
-const Upfront = () => {
+const datas = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
+
+const HistoryRedcord = () => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const columns = [
     {
       Header: "Currency",
@@ -27,7 +35,7 @@ const Upfront = () => {
           {value}
           <br />
           <SmallText style={{ color: "#6B7280" }}>
-            {row.original.outgoingCurrency}
+            {row.original.currency}
           </SmallText>
         </>
       ),
@@ -37,58 +45,42 @@ const Upfront = () => {
       accessor: "date",
     },
     {
-      Header: "Received By",
-      accessor: "customerDetails",
-    },
-    {
       Header: "",
       id: "action",
       Cell: () => (
-        <ViewDetails to={""}>
-          <DownloadMini
-            style={{
-              fill: "#FD853A",
-              marginRight: "10px",
-              cursor: "pointer",
-              fontSize: "14px",
-            }}
-          />
-          Download Receipt
-        </ViewDetails>
+        <ViewDetailsButton onClick={() => setIsUpdateModalOpen(true)}>
+          View Details
+        </ViewDetailsButton>
       ),
     },
   ];
+
   const data = {
     data: [
       {
         currency: "USDT",
         amount: "1000",
         date: "Jan 4, 2022",
-        customerDetails: "John Doe",
       },
       {
         currency: "USDT",
         amount: "1000",
         date: "Jan 4, 2022",
-        customerDetails: "John Doe",
       },
       {
         currency: "USDT",
         amount: "1000",
         date: "Jan 4, 2022",
-        customerDetails: "John Doe",
       },
       {
         currency: "USDT",
         amount: "1000",
         date: "Jan 4, 2022",
-        customerDetails: "John Doe",
       },
       {
         currency: "USDT",
         amount: "1000",
         date: "Jan 4, 2022",
-        customerDetails: "John Doe",
       },
     ],
     metaData: {
@@ -96,18 +88,26 @@ const Upfront = () => {
       page: pageNumber,
     },
   };
+
   return (
-    <Table
-      columns={columns}
-      data={data?.data}
-      setPageNumber={setPageNumber}
-      availablePages={data?.metaData?.totalPages}
-      pageNumber={data?.metaData?.page}
-    />
+    <>
+      <Table
+        columns={columns}
+        data={data?.data}
+        setPageNumber={setPageNumber}
+        availablePages={data?.metaData?.totalPages}
+        pageNumber={data?.metaData?.page}
+      />
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={datas}
+      />
+    </>
   );
 };
 
-export default Upfront;
+export default HistoryRedcord;
 
 const Flex = styled.div`
   display: flex;
@@ -123,10 +123,13 @@ const SmallText = styled.small`
   line-height: 20px;
 `;
 
-const ViewDetails = styled(Link)`
+const ViewDetailsButton = styled.button`
   color: #f97316;
   font-weight: 500;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
   transition: background-color 0.5s ease-in-out;
 
   &:hover {

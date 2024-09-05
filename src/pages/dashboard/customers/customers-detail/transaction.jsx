@@ -3,7 +3,7 @@ import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
 import { useState } from "react";
 import { colors } from "../../../../theme/colors";
-import { DownloadMini, ArrowDown } from "../../../../assets/svgs";
+import { DownloadMini, DropdownIcon } from "../../../../assets/svgs";
 import { ButtonDropdown } from "../../../../components/buttonDropdown";
 
 const transaction = {
@@ -30,7 +30,7 @@ const transaction = {
   cfoRejectReason: "Any Reason for rejecting can be found here",
 };
 
-export const CustomerTransactionOverview = () => {
+const CustomerTransactionOverview = () => {
   const [exportOpen, setExportOpen] = useState(false);
   const exportButtonGroup = [
     {
@@ -63,7 +63,7 @@ export const CustomerTransactionOverview = () => {
             buttonElement={
               <StyledMenuButton>
                 <span>Actions</span>
-                <ArrowDown />
+                <DropdownIcon />
               </StyledMenuButton>
             }
           />
@@ -129,10 +129,10 @@ export const CustomerTransactionOverview = () => {
             <Label style={{ width: "100%" }}>Customer Name</Label>
           </DetailRow>
           <DetailRow>
-            <Value style={{ width: "100%", color: colors.Primary300 }}>
+            <Value style={{ width: "100%", color: colors.primary300 }}>
               {transaction?.incomingCurrency}
             </Value>
-            <Value style={{ width: "100%", color: colors.Primary300 }}>
+            <Value style={{ width: "100%", color: colors.primary300 }}>
               {transaction?.rate}
             </Value>
             <Value style={{ width: "100%" }}>{transaction?.customerName}</Value>
@@ -190,6 +190,8 @@ export const CustomerTransactionOverview = () => {
   );
 };
 
+export default CustomerTransactionOverview;
+
 const PageContainer = styled.div`
   margin: 0 auto;
   padding: 20px;
@@ -244,7 +246,7 @@ const LabelTwo = styled.span`
   line-height: 24px;
   color: ${({ theme }) => theme.colors.gray500};
   & > span {
-    color: ${({ theme }) => theme.colors.Primary300};
+    color: ${({ theme }) => theme.colors.primary300};
   }
 `;
 
@@ -258,7 +260,7 @@ const StyledMenuButton = styled.button`
   padding: 10px 16px !important;
   color: white;
   border: 1px solid ${(props) => props.theme.colors.gray100} !important;
-  background-color: ${(props) => props.theme.colors.Primary300};
+  background-color: ${(props) => props.theme.colors.primary300};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;

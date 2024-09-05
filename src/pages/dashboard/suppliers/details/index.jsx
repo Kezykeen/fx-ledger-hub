@@ -1,15 +1,18 @@
 import styled from "styled-components";
 import { PageHeader } from "../../../../components/pageHeader";
 import { Divider } from "..";
+import { useState } from "react";
 import { colors } from "../../../../theme/colors";
-import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
 import { supplierDetailsTab } from "../components/data";
-import { CustomerRecord } from "../../customers/components/customer-history/transaction-history";
-import { useState } from "react";
+import { ButtonDropdown } from "../../../../components/buttonDropdown";
+import { DropdownIcon } from "../../../../assets/svgs";
+import { Outlet, useNavigate } from "react-router-dom";
+import { UpdateModal } from "../../customers/components/updatePaymentModal";
 
 const suppliers = {
   date: "June 4,2023",
+  currency: "XFA",
   customerName: "John Doe",
   customerCounrty: "Nigeria",
   customerAddress: "51 Value Waters, Ago Palaceway",
@@ -18,97 +21,153 @@ const suppliers = {
   phoneNumber: "08120289349",
 };
 
-export const SupplierDetails = () => {
-  const [teamOpen, setTeamOpen] = useState(false);
+const data = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
 
-  const buttonGroup = [
+export const SupplierDetails = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const exportButtonGroup = [
     {
-      name: "View",
-      onClick: () => {},
+      name: "Initial Refund",
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
+    },
+    {
+      name: "Initial Supply",
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "Edit",
-      onClick: () => {},
-    },
-    {
-      name: "Delete",
-      textColor: "R300",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
   ];
+
+  // Function to handle tab changes
+  const handleTabChange = (tab) => {
+    // Handle the active tab change logic if needed
+    console.log(`Active tab changed to: ${tab}`);
+  };
+  const handleTabClick = (hash) => {
+    switch (hash) {
+      case "transaction-history":
+        navigate("");
+        break;
+      case "refund-history":
+        navigate("");
+        break;
+      default:
+        navigate(`#${hash}`);
+        break;
+    }
+  };
   return (
     <PageContainer>
       <DetailRow>
         <PageHeader
-          title={"Supply History"}
-          subTitle={"You are viewing supply history details below."}
+          title={"Supply Details"}
+          subTitle={"You are viewing customer details below."}
         />
+        <div>
+          <ButtonDropdown
+            open={exportOpen}
+            setOpen={setExportOpen}
+            buttonGroup={exportButtonGroup}
+            buttonElement={
+              <StyledMenuButton>
+                <span>Actions</span>
+                <DropdownIcon />
+              </StyledMenuButton>
+            }
+          />
+        </div>
       </DetailRow>
-      <ColumnWrapper>
-        <DetailRow>
-          <SectionTitle>Customer Details</SectionTitle>
-          <Value>
-            <Label>Date</Label>: {suppliers?.date}
-          </Value>
-        </DetailRow>
-        <Divider marginY="8px" />
-        <DetailRow>
-          <Label style={{ width: "100%" }}>Customer Name</Label>
-          <Label style={{ width: "100%" }}>Country</Label>
-          <Label style={{ width: "100%" }}>City</Label>
-        </DetailRow>
-        <DetailRow>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {suppliers?.customerName}
-          </Value>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {suppliers?.customerCounrty}
-          </Value>
-          <Value style={{ width: "100%" }}>{suppliers?.customerCity}</Value>
-        </DetailRow>
-        <DetailRow>
-          <Label style={{ width: "100%" }}>State</Label>
-          <Label style={{ width: "100%" }}>Phone Number</Label>
-          <Label style={{ width: "100%" }}>Address</Label>
-        </DetailRow>
-        <DetailRow>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {suppliers?.customerState}
-          </Value>
-          <Value style={{ width: "100%", color: colors.gray800 }}>
-            {suppliers?.phoneNumber}
-          </Value>
-          <Value style={{ width: "100%" }}>{suppliers?.customerAddress}</Value>
-        </DetailRow>
-      </ColumnWrapper>
+      <Divider />
+
+      <CustomersHistory>
+        <ColumnWrapper>
+          <DetailRow>
+            <SectionTitle>Supplier Details</SectionTitle>
+            <Value>
+              <DetailRow>
+                <Label>
+                  Currency: <span> {suppliers?.currency}</span>
+                </Label>
+                <Span></Span>
+                <Label>Date Added</Label>: {suppliers?.date}
+              </DetailRow>
+            </Value>
+          </DetailRow>
+          <Divider marginY="8px" />
+          <DetailRow>
+            <Label style={{ width: "100%" }}>Customer Name</Label>
+            <Label style={{ width: "100%" }}>Country</Label>
+            <Label style={{ width: "100%" }}>City</Label>
+          </DetailRow>
+          <DetailRow>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {suppliers?.customerName}
+            </Value>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {suppliers?.customerCounrty}
+            </Value>
+            <Value style={{ width: "100%" }}>{suppliers?.customerCity}</Value>
+          </DetailRow>
+          <DetailRow>
+            <Label style={{ width: "100%" }}>State</Label>
+            <Label style={{ width: "100%" }}>Phone Number</Label>
+            <Label style={{ width: "100%" }}>Address</Label>
+          </DetailRow>
+          <DetailRow>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {suppliers?.customerState}
+            </Value>
+            <Value style={{ width: "100%", color: colors.gray800 }}>
+              {suppliers?.phoneNumber}
+            </Value>
+            <Value style={{ width: "100%" }}>
+              {suppliers?.customerAddress}
+            </Value>
+          </DetailRow>
+        </ColumnWrapper>
+      </CustomersHistory>
 
       <CustomersHistory>
         <DetailRow>
           <PageHeader
-            title={"Customer History"}
-            subTitle={
-              "You are viewing customer history below. Please select the history you wish to view"
-            }
+            title={"Supplier History"}
+            subTitle={"You are viewing supply history below."}
           />
-          <div>
-            <ButtonDropdown
-              open={teamOpen}
-              setOpen={setTeamOpen}
-              buttonGroup={buttonGroup}
-              buttonElement={
-                <Flex>
-                  <span>All Teams</span>
-                </Flex>
-              }
-            />
-          </div>
         </DetailRow>
-        <TableTab tabs={supplierDetailsTab} backgroundColor="gray100" />
+        <Border></Border>
+        <TableTab
+          tabs={supplierDetailsTab}
+          backgroundColor="gray100"
+          onTabChange={handleTabChange}
+          onTabClick={handleTabClick}
+          padding="16px 0"
+        />
 
         <SummaryBox>
-          <CustomerRecord />
+          <Outlet />
         </SummaryBox>
       </CustomersHistory>
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={data}
+      />
     </PageContainer>
   );
 };
@@ -119,7 +178,7 @@ const PageContainer = styled.div`
 `;
 
 const ColumnWrapper = styled.div`
-  background-color: ${({ bg }) => bg ?? "#f8f8f8"};
+  background-color: ${({ bg }) => bg ?? "#ffff"};
   border-radius: 8px;
   padding: 20px;
 `;
@@ -143,6 +202,16 @@ const Label = styled.span`
   font-weight: 400;
   line-height: 24px;
   color: ${({ theme }) => theme.colors.gray500};
+
+  & > span {
+    font-size: 14px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.primary300};
+  }
+`;
+
+const Border = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 
 const Value = styled.span`
@@ -169,27 +238,29 @@ const SummaryBox = styled.div`
   margin-bottom: 20px;
 `;
 
-// const ReceiptButton = styled.button`
-//   display: flex;
-//   text-decoration: none;
-//   gap: 8px;
-//   align-items: center;
-//   padding: 4px 12px 4px 12px;
-//   cursor: pointer;
-//   border: 1px solid ${(props) => props.theme.colors.gray200};
-//   background-color: ${(props) => props.theme.colors.white};
-//   border-radius: 1rem;
-//   outline: none;
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
+const Span = styled.span`
+  width: 4px;
+  height: 22px;
+  margin: 0 10px;
+  border-radius: 56px;
+  opacity: 0px;
+  background: ${({ theme }) => theme.colors.gray300};
+`;
 
-// const FlexCol = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: start;
-//   gap: 10px;
-//   width: 100%;
-//   max-width: ${({ minWidth }) => (minWidth ? minWidth : "fit-content")};
-// `;
+const StyledMenuButton = styled.button`
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 16px !important;
+  border: none;
+  color: white;
+  background-color: ${(props) => props.theme.colors.primary300};
+  border-radius: 8px;
+  outline: none;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  width: 150px;
+  height: 44px;
+`;

@@ -5,11 +5,12 @@ import { colors } from "../../../../theme/colors";
 import { ButtonDropdown } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
 import { useEffect, useState } from "react";
-import { ArrowDown } from "../../../../assets/svgs";
 import { customerDetailsTab, customerHistoryHash } from "../components/data";
 import { CustomerRecord } from "../components/customer-history/transaction-history";
 import { RefundRecord } from "../components/customer-history/refund-history";
 import { UpfrontRecord } from "../components/customer-history/upfront-history";
+import { DropdownBlackIcon, DropdownIcon } from "../../../../assets/svgs";
+import { UpdateModal } from "../components/updatePaymentModal";
 
 const customer = {
   date: "June 4,2023",
@@ -21,7 +22,15 @@ const customer = {
   phoneNumber: "08120289349",
 };
 
+const data = {
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+};
+
 export const CustomerDetailsOverview = () => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(customerDetailsTab[0].hash);
@@ -34,15 +43,21 @@ export const CustomerDetailsOverview = () => {
   const exportButtonGroup = [
     {
       name: "Update Payment",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "Initial Refund",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
     {
       name: "initial Upfront",
-      onClick: () => {},
+      onClick: () => {
+        setIsUpdateModalOpen(true);
+      },
     },
   ];
 
@@ -85,7 +100,7 @@ export const CustomerDetailsOverview = () => {
             buttonElement={
               <StyledMenuButton>
                 <span>Actions</span>
-                <ArrowDown />
+                <DropdownIcon />
               </StyledMenuButton>
             }
           />
@@ -150,7 +165,7 @@ export const CustomerDetailsOverview = () => {
               buttonElement={
                 <StyleMenuButton>
                   <span>All Teams</span>
-                  <ArrowDown />
+                  <DropdownBlackIcon />
                 </StyleMenuButton>
               }
             />
@@ -172,6 +187,11 @@ export const CustomerDetailsOverview = () => {
           {currentHash === customerHistoryHash.upfront && <UpfrontRecord />}
         </SummaryBox>
       </CustomersHistory>
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        data={data}
+      />
     </PageContainer>
   );
 };
@@ -242,7 +262,7 @@ const StyledMenuButton = styled.button`
   padding: 10px 16px !important;
   border: none;
   color: white;
-  background-color: ${(props) => props.theme.colors.primaryDefault};
+  background-color: ${(props) => props.theme.colors.primary300};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;
@@ -259,7 +279,7 @@ const StyleMenuButton = styled.button`
   cursor: pointer;
   padding: 10px 16px !important;
   border: none;
-  background-color: ${(props) => props.theme.colors.primary50};
+  background-color: ${(props) => props.theme.colors.primary100};
   border-radius: 8px;
   outline: none;
   box-shadow: 0px 1px 2px 0px #1018280d;

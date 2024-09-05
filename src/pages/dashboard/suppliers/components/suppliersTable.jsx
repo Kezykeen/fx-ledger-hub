@@ -39,7 +39,7 @@ const SuppliersTable = () => {
       Header: "Status",
       accessor: "status",
       Cell: ({ value }) => (
-        <PaymentStatus status={value}>{value}</PaymentStatus>
+        <PaymentStatus $status={value}>{value}</PaymentStatus>
       ),
     },
     {
@@ -169,20 +169,20 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.status === "Complete"
+    props.$status === "Complete"
       ? "#D1FAE5"
-      : props.status === "Refund in progress"
+      : props.$status === "Refund in progress"
       ? "#FEDF89"
-      : props.status === "Supply in progress"
+      : props.$status === "Supply in progress"
       ? "#FFD7BF"
       : "#FEE2E2"}; // light red for default or any other status
 
   color: ${(props) =>
-    props.status === "Complete"
+    props.$status === "Complete"
       ? "#059669"
-      : props.status === "Refund in progress"
+      : props.$status === "Refund in progress"
       ? "#B54708"
-      : props.status === "Supply in progress"
+      : props.$status === "Supply in progress"
       ? "#DB6C27"
       : "#D92D20"}; // dark red for default or any other status
 `;
@@ -196,7 +196,6 @@ const Button = styled.div`
   background-color: ${(props) => props.theme.colors.gray100};
   display: flex;
   justify-content: center;
-  align-item: center;
   transition: background-color 0.1s ease-in-out;
 
   &:hover {

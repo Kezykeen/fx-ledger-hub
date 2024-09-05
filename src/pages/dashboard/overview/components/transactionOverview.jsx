@@ -78,18 +78,18 @@ const TransactionOverviewCard = ({
   iconColor,
 }) => {
   return (
-    <TransactionOverviewCardWrapper variant={variant}>
+    <TransactionOverviewCardWrapper $variant={variant}>
       <div>
         <IconWrapper
-          iconBgColor1={iconBgColor1}
-          iconBgColor2={iconBgColor2}
-          iconColor={iconColor}
+          $iconBgColor1={iconBgColor1}
+          $iconBgColor2={iconBgColor2}
+          $iconColor={iconColor}
         >
           <span>
             <DataBaseIcon />
           </span>
         </IconWrapper>
-        <TrendIconWrapper trend={trend} trendColor={trendColor}>
+        <TrendIconWrapper $trendColor={trendColor}>
           {trend === "fall" ? <TrendFallIcon /> : <TrendRiseIcon />}
         </TrendIconWrapper>
       </div>
@@ -137,13 +137,13 @@ const TransactionOverviewCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: ${({ variant }) => (variant === "primary" ? "17px" : "24px")};
+  padding: ${({ $variant }) => ($variant === "primary" ? "17px" : "24px")};
   border-radius: 8px;
   height: 155px;
   justify-content: space-between;
-  width: ${({ variant }) => (variant === "primary" ? "217px" : "317px")};
-  background: ${({ variant, theme }) =>
-    variant === "secondary"
+  width: ${({ $variant }) => ($variant === "primary" ? "217px" : "317px")};
+  background: ${({ $variant, theme }) =>
+    $variant === "secondary"
       ? "linear-gradient(74.35deg, #FD853A 3.98%, rgba(250, 168, 79, 0) 278.91%)"
       : theme.colors.white};
   & > div:first-of-type {
@@ -158,11 +158,12 @@ const TransactionOverviewCardWrapper = styled.div`
     gap: 0.1rem;
     & > p,
     & > h4 {
-      color: ${({ variant, theme }) =>
-        variant === "secondary" ? theme.colors.white : theme.colors.N900};
+      color: ${({ $variant, theme }) =>
+        $variant === "secondary" ? theme.colors.white : theme.colors.N900};
     }
     & > h4 {
-      font-size: ${({ variant }) => (variant === "primary" ? "24px" : "30px")};
+      font-size: ${({ $variant }) =>
+        $variant === "primary" ? "24px" : "30px"};
       font-weight: 600;
       line-height: 38px;
       text-align: left;
@@ -182,8 +183,8 @@ const IconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${({ iconBgColor1 }) => iconBgColor1};
-    color: ${({ iconColor }) => iconColor};
+    background: ${({ $iconBgColor1 }) => $iconBgColor1};
+    color: ${({ $iconColor }) => $iconColor};
     border-radius: 100%;
     height: 25px;
     width: 25px;
@@ -200,7 +201,7 @@ const IconWrapper = styled.div`
     height: 35px;
     width: 35px;
     border-radius: 100%;
-    background: ${({ iconBgColor2 }) => iconBgColor2};
+    background: ${({ $iconBgColor2 }) => $iconBgColor2};
     z-index: -1;
     top: 50%;
     left: 50%;
@@ -208,6 +209,6 @@ const IconWrapper = styled.div`
   }
 `;
 const TrendIconWrapper = styled.div`
-  color: ${({ trendColor }) => trendColor};
+  color: ${({ $trendColor }) => $trendColor};
   position: relative;
 `;

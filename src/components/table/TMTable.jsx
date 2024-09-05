@@ -5,6 +5,7 @@ import { useSticky } from "react-table-sticky";
 
 import { InfiniteProgressBar } from "../InfiniteProgressBar/InfiniteProgressBar";
 import PaginationElement from "../pagination/paginationElement";
+import { Fragment } from "react";
 
 const TMTable = ({
   columns,
@@ -86,13 +87,13 @@ const TMTable = ({
               ))}
             </thead>
             <TBody style={{ gap: "1rem" }} {...getTableBodyProps()}>
-              <AnimatePresence mode="wait">
-                {rowData.map((row) => {
+              <AnimatePresence mode="sync">
+                {rowData.map((row, idx) => {
                   prepareRow(row);
                   return (
-                    <>
+                    <Fragment key={idx}>
                       <TableRow
-                        onClick={onRowClick ? () => onRowClick(row) : undefined}
+                        onClick={() => (onRowClick ? onRowClick(row) : {})}
                         variants={list}
                         {...row.getRowProps()}
                         key={Math.PI * Math.random()}
@@ -121,7 +122,7 @@ const TMTable = ({
                         className="separator"
                         colspan={`${row?.cells?.length}`}
                       ></TableRow>
-                    </>
+                    </Fragment>
                   );
                 })}
               </AnimatePresence>

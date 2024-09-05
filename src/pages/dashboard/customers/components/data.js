@@ -7,15 +7,15 @@ export const customerHistoryHash = {
 export const customerTab = [
   {
     label: "In Progress",
-    hash: "customer_in-progress",
+    hash: "in-progress",
   },
   {
     label: "Approved",
-    hash: "customer_approved",
+    hash: "approved",
   },
   {
     label: "Cancelled",
-    hash: "customer_cancelled",
+    hash: "cancelled",
   },
 ];
 

@@ -24,10 +24,10 @@ const NavItem = ({ name, icon, path, isActive, children }) => {
       <ContentWrapper>
         <IconWrapper $isActive={isActive}>{icon}</IconWrapper>
         <span>{name}</span>
-        {hasChildren && <ArrowIcon isOpen={isOpen} $isActive={isActive} />}
+        {hasChildren && <ArrowIcon $isOpen={isOpen} $isActive={isActive} />}
       </ContentWrapper>
       {hasChildren && (
-        <Dropdown isOpen={isDropdownOpen}>
+        <Dropdown $isOpen={isDropdownOpen}>
           {children.map(({ name, path }, idx) => (
             <ChildItem
               to={path}
@@ -102,7 +102,7 @@ const ChildItem = styled(Link)`
 const ArrowIcon = styled(DropdownIcon)`
   margin-left: auto;
   transition: transform 0.3s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ $isOpen }) => ($isOpen ? "rotate(180deg)" : "rotate(0deg)")};
 
   & path {
     stroke: ${({ $isActive, theme }) =>
@@ -113,7 +113,7 @@ const ArrowIcon = styled(DropdownIcon)`
 const Dropdown = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: ${({ isOpen }) => (isOpen ? "500px" : "0")};
+  max-height: ${({ $isOpen }) => ($isOpen ? "500px" : "0")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
   padding-left: 35px;

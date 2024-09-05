@@ -5,8 +5,11 @@ import { Button } from "../../../components/button";
 import { PlusIcon } from "../../../assets/svgs";
 import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import SuppliersTable from "./components/suppliersTable";
+import { useState } from "react";
 
 const Suppliers = () => {
+  const [teamOpen, setTeamOpen] = useState(false);
+
   const buttonGroup = [
     {
       name: "View",
@@ -44,6 +47,8 @@ const Suppliers = () => {
 
           <ButtonDropdown
             buttonGroup={buttonGroup}
+            open={teamOpen}
+            setOpen={setTeamOpen}
             buttonElement={
               <Flex>
                 <span>Initiate Refund</span>

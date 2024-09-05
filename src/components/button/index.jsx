@@ -59,7 +59,7 @@ const StyledButton = styled(BackgroundlessButton)`
   border: ${({ $buttonClass }) =>
     $buttonClass === "outline" ? `1px solid #D0D5DD` : `none`};
   border-radius: 8px;
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.8 : 1)};
   background-color: ${({ $buttonClass, theme }) =>
     $buttonClass === "outline"
       ? `#FFFFFF`

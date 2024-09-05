@@ -32,19 +32,19 @@ const TableTab = ({
   };
 
   useEffect(() => {
-    if (!location.hash) {
+    if (!location.hash && !activeStateTab) {
       navigate(`#${tabs[0].hash}`);
     }
-  }, [tabs, location.hash, navigate]);
+  }, [tabs, location.hash, navigate, activeStateTab]);
 
   return (
-    <TabContainer backgroundColor={backgroundColor} padding={padding}>
+    <TabContainer $backgroundColor={backgroundColor} $padding={padding}>
       {tabs.map(({ label, hash }) => (
         <TabButton
           key={hash}
-          active={activeTab === hash}
-          activeColor={activeColor}
-          hoverColor={hoverColor}
+          $active={activeTab === hash}
+          $activeColor={activeColor}
+          $hoverColor={hoverColor}
           onClick={() =>
             activeStateTab ? handleStateTab(hash) : handleTabClick(hash)
           }
@@ -61,16 +61,16 @@ export { TableTab };
 const TabContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.backgroundColor || "#FFF3EBCC"};
+  background-color: ${(props) => props.$backgroundColor || "#FFF3EBCC"};
   border-radius: 8px;
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.$padding};
   gap: 4px;
 `;
 
 const TabButton = styled.button`
   background-color: ${(props) =>
-    props.active ? props.activeColor : "transparent"};
-  color: ${(props) => (props.active ? "white" : props.theme.colors.gray500)};
+    props.$active ? props.$activeColor : "transparent"};
+  color: ${(props) => (props.$active ? "white" : props.theme.colors.gray500)};
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
@@ -81,6 +81,6 @@ const TabButton = styled.button`
 
   &:hover {
     background-color: ${(props) =>
-      props.active ? props.activeColor : props.hoverColor};
+      props.$active ? props.$activeColor : props.$hoverColor};
   }
 `;

@@ -26,7 +26,6 @@ export const CustomerDetailsOverview = () => {
   const [textOpen, setTextOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(customerDetailsTab[0].hash);
   const urlHash = window.location.hash.substring(1);
-  console.log({ urlHash });
 
   useEffect(() => {
     setCurrentHash(urlHash);
@@ -46,6 +45,7 @@ export const CustomerDetailsOverview = () => {
       onClick: () => {},
     },
   ];
+
   const exportTextGroup = [
     {
       name: "CFA",

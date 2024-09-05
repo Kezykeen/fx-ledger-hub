@@ -6,7 +6,7 @@ const TabHeaderless = ({ onClick, items, isActive }) => {
     <TabHeaderWrapper>
       {items.map((str, index) => (
         <Button
-          isActive={isActive === str}
+          $isActive={isActive === str}
           onClick={() => onClick(str)}
           className={`${isActive === str && "active"}`}
           key={index}
@@ -33,10 +33,10 @@ const Button = styled(BackgroundlessButton)`
   transition: border ease-in-out 0.3s;
   padding: 10px 16px;
   border: 1px solid ${({ theme }) => theme.colors.gray300};
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary300 : theme.colors.gray700};
-  background: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primary25 : theme.colors.white};
+  color: ${({ $isActive, theme }) =>
+    $isActive ? theme.colors.primary300 : theme.colors.gray700};
+  background: ${({ $isActive, theme }) =>
+    $isActive ? theme.colors.primary25 : theme.colors.white};
   &:first-of-type {
     border-radius: 8px 0px 0px 8px !important;
   }
@@ -46,8 +46,8 @@ const Button = styled(BackgroundlessButton)`
   &:is(:not(:first-of-type)) {
     border-left: 1px solid transparent;
   }
-  ${({ isActive, theme }) =>
-    isActive &&
+  ${({ $isActive, theme }) =>
+    $isActive &&
     css`
       border: 1px solid ${theme.colors.primary300} !important;
     `}

@@ -32,7 +32,6 @@ const transaction = {
 
 export const CustomerTransactionOverview = () => {
   const [exportOpen, setExportOpen] = useState(false);
-  const [textOpen, setTextOpen] = useState(false);
   const exportButtonGroup = [
     {
       name: "Update Payment",
@@ -47,20 +46,7 @@ export const CustomerTransactionOverview = () => {
       onClick: () => {},
     },
   ];
-  const exportTextGroup = [
-    {
-      name: "Update Payment",
-      onClick: () => {},
-    },
-    {
-      name: "Initial Refund",
-      onClick: () => {},
-    },
-    {
-      name: "initial Upfront",
-      onClick: () => {},
-    },
-  ];
+
   return (
     <PageContainer>
       <DetailRow>
@@ -170,7 +156,7 @@ export const CustomerTransactionOverview = () => {
             <FlexCol minW="300px">
               <Label>Status</Label>
               <Value>
-                <StatusBadge status={transaction?.status}>
+                <StatusBadge $status={transaction?.status}>
                   {transaction?.status}
                 </StatusBadge>
               </Value>
@@ -312,8 +298,8 @@ const PaymentStatusBox = styled.div`
 `;
 const StatusBadge = styled.span`
   background-color: ${(props) =>
-    props.status === "Paid" ? "#d4edda" : "#f8d7da"};
-  color: ${(props) => (props.status === "Paid" ? "#155724" : "#721c24")};
+    props.$status === "Paid" ? "#d4edda" : "#f8d7da"};
+  color: ${(props) => (props.$status === "Paid" ? "#155724" : "#721c24")};
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 14px;

@@ -35,7 +35,7 @@ const Customers = () => {
       Header: "Payment Status",
       accessor: "paymentStatus",
       Cell: ({ value }) => (
-        <PaymentStatus status={value}>{value}</PaymentStatus>
+        <PaymentStatus $status={value}>{value}</PaymentStatus>
       ),
     },
     {
@@ -150,8 +150,8 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.status === "Paid" ? "#059669" : "#DC2626")};
+    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
+  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
 `;
 
 const Button = styled.div`

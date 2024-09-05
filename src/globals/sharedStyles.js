@@ -11,7 +11,7 @@ export const BackgroundlessButton = styled.button`
       transform: scale(1);
     }
 
-    opacity: 0.6;
+    opacity: 0.85;
   }
 `;
 

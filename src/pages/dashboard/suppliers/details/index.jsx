@@ -6,6 +6,7 @@ import { ButtonDropdown, Flex } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
 import { supplierDetailsTab } from "../components/data";
 import { CustomerRecord } from "../../customers/components/customer-history/transaction-history";
+import { useState } from "react";
 
 const suppliers = {
   date: "June 4,2023",
@@ -18,6 +19,8 @@ const suppliers = {
 };
 
 export const SupplierDetails = () => {
+  const [teamOpen, setTeamOpen] = useState(false);
+
   const buttonGroup = [
     {
       name: "View",
@@ -89,6 +92,8 @@ export const SupplierDetails = () => {
           />
           <div>
             <ButtonDropdown
+              open={teamOpen}
+              setOpen={setTeamOpen}
               buttonGroup={buttonGroup}
               buttonElement={
                 <Flex>

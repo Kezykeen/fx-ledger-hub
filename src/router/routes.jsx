@@ -1,4 +1,3 @@
-import LoginPage from "../layouts/authLayout";
 import DashboardLayout from "../layouts/dashboardLayout";
 import { SalesRepOverview, TransactionHistory } from "../pages/dashboard";
 import { InitiateTransaction } from "../pages/dashboard/initiateTransaction";
@@ -14,11 +13,20 @@ import { CustomerRecord } from "../pages/dashboard/customers/components/customer
 import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
 import { PaymentDetails } from "../pages/dashboard/payments/details";
+import AuthLayout from "../layouts/authLayout";
+import { LoginPage } from "../pages/auth/login";
 
 const authRoutes = [
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        element: <LoginPage />,
+        index: true,
+        path: "login",
+      },
+    ],
   },
 ];
 

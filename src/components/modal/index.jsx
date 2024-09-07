@@ -48,8 +48,8 @@ export const Modal = ({
       {isVisible && (
         <>
           <Container
-            isOpen={isOpen}
-            modalHeight={modalHeight}
+            $isOpen={isOpen}
+            $modalHeight={modalHeight}
             ref={ref}
             width={width}
             onAnimationEnd={handleAnimationEnd}
@@ -66,7 +66,7 @@ export const Modal = ({
           <Overlay
             ref={overlayRef}
             $overlayBg={"grey"}
-            isOpen={isOpen}
+            $isOpen={isOpen}
             onAnimationEnd={handleAnimationEnd}
           />
         </>
@@ -107,7 +107,7 @@ const Container = styled.div`
   right: calc(5vh / 2);
   display: flex;
   width: ${({ width }) => (width ? width : "30vw")};
-  height: ${({ modalHeight }) => modalHeight};
+  height: ${({ $modalHeight }) => $modalHeight};
   max-height: 95vh;
   padding: 30px 24px 20px;
   flex-direction: column;
@@ -116,8 +116,8 @@ const Container = styled.div`
   border-radius: 20px;
   z-index: 99;
   cursor: default;
-  animation: ${({ isOpen }) =>
-    isOpen
+  animation: ${({ $isOpen }) =>
+    $isOpen
       ? "slideIn 0.25s cubic-bezier(0.42, 0, 0.58, 1) forwards"
       : "slideOut 0.25s cubic-bezier(0.42, 0, 0.58, 1) forwards"};
 
@@ -208,8 +208,8 @@ const Overlay = styled.div`
   height: 100vh;
   background: ${({ $overlayBg }) => $overlayBg};
   mix-blend-mode: multiply;
-  animation: ${({ isOpen }) =>
-    isOpen
+  animation: ${({ $isOpen }) =>
+    $isOpen
       ? "fadeIn 0.25s ease-in-out forwards"
       : "fadeOut 0.25s ease-in-out forwards"};
 

@@ -212,7 +212,7 @@ const Label = styled.span`
 
 const Border = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
-`
+`;
 
 const Value = styled.span`
   font-size: 16px;

@@ -6,11 +6,12 @@ import { colors } from "../../theme/colors";
 const TableTab = ({
   tabs,
   onTabChange,
-  onTabClick,
   backgroundColor = "#FFF3EBCC",
   activeColor = colors.primary300,
   hoverColor = colors.primary50,
-  padding = "16px 24px", // Add padding as a prop with a default value
+  padding = "16px 24px",
+  handleStateTab,
+  activeStateTab,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,33 +22,32 @@ const TableTab = ({
     return activeTab ? activeTab.hash : tabs[0].hash;
   };
 
-  const activeTab = getActiveTabFromHash();
+  const activeTab = activeStateTab ?? getActiveTabFromHash();
 
   const handleTabClick = (hash) => {
     navigate(`#${hash}`);
     if (onTabChange) {
       onTabChange(hash);
     }
-    if (onTabClick) {
-      onTabClick(hash); // Trigger the onTabClick function to handle routing
-    }
   };
 
   useEffect(() => {
-    if (!location.hash) {
+    if (!location.hash && !activeStateTab) {
       navigate(`#${tabs[0].hash}`);
     }
-  }, [tabs, location.hash, navigate]);
+  }, [tabs, location.hash, navigate, activeStateTab]);
 
   return (
-    <TabContainer backgroundColor={backgroundColor} padding={padding}>
+    <TabContainer $backgroundColor={backgroundColor} $padding={padding}>
       {tabs.map(({ label, hash }) => (
         <TabButton
           key={hash}
-          active={activeTab === hash}
-          activeColor={activeColor}
-          hoverColor={hoverColor}
-          onClick={() => handleTabClick(hash)}
+          $active={activeTab === hash}
+          $activeColor={activeColor}
+          $hoverColor={hoverColor}
+          onClick={() =>
+            activeStateTab ? handleStateTab(hash) : handleTabClick(hash)
+          }
         >
           {label}
         </TabButton>
@@ -61,16 +61,16 @@ export { TableTab };
 const TabContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.backgroundColor || "#FFF3EBCC"};
+  background-color: ${(props) => props.$backgroundColor || "#FFF3EBCC"};
   border-radius: 8px;
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.$padding};
   gap: 4px;
 `;
 
 const TabButton = styled.button`
   background-color: ${(props) =>
-    props.active ? props.activeColor : "transparent"};
-  color: ${(props) => (props.active ? "white" : props.theme.colors.gray500)};
+    props.$active ? props.$activeColor : "transparent"};
+  color: ${(props) => (props.$active ? "white" : props.theme.colors.gray500)};
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
@@ -81,6 +81,6 @@ const TabButton = styled.button`
 
   &:hover {
     background-color: ${(props) =>
-      props.active ? props.activeColor : props.hoverColor};
+      props.$active ? props.$activeColor : props.$hoverColor};
   }
 `;

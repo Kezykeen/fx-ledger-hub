@@ -17,7 +17,6 @@ const datas = {
   ],
 };
 
-
 const SupplyHistory = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);

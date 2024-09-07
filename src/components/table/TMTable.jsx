@@ -5,6 +5,7 @@ import { useSticky } from "react-table-sticky";
 
 import { InfiniteProgressBar } from "../InfiniteProgressBar/InfiniteProgressBar";
 import PaginationElement from "../pagination/paginationElement";
+import { Fragment } from "react";
 
 const TMTable = ({
   columns,
@@ -86,13 +87,13 @@ const TMTable = ({
               ))}
             </thead>
             <TBody style={{ gap: "1rem" }} {...getTableBodyProps()}>
-              <AnimatePresence mode="wait">
-                {rowData.map((row) => {
+              <AnimatePresence mode="sync">
+                {rowData.map((row, idx) => {
                   prepareRow(row);
                   return (
-                    <>
+                    <Fragment key={idx}>
                       <TableRow
-                        onClick={onRowClick ? () => onRowClick(row) : undefined}
+                        onClick={() => (onRowClick ? onRowClick(row) : {})}
                         variants={list}
                         {...row.getRowProps()}
                         key={Math.PI * Math.random()}
@@ -121,7 +122,7 @@ const TMTable = ({
                         className="separator"
                         colspan={`${row?.cells?.length}`}
                       ></TableRow>
-                    </>
+                    </Fragment>
                   );
                 })}
               </AnimatePresence>
@@ -130,11 +131,11 @@ const TMTable = ({
         </div>
         {!loading && rowData.length === 0 && (
           <EmptyState>
-            {hasPerformedQuery ? (
+            {/* {hasPerformedQuery ? (
               <div>search error</div>
             ) : (
               <div>empty state</div>
-            )}
+            )} */}
             <h4>
               {hasPerformedQuery
                 ? `No result found${
@@ -239,7 +240,11 @@ const EmptyState = styled.div`
   align-items: center;
   justify-content: center;
   border-top: 0;
-  padding: 20px;
+  padding: 50px;
+
+  & > h4 {
+    font-size: 15px;
+  }
 `;
 
 const TableFooter = styled.div`

@@ -73,8 +73,11 @@ import { AlertIcon, LogoutIcon } from "../../../assets/svgs";
 import { useLocation } from "react-router-dom";
 import { createBreadcrumbs } from "../../../utils/helpers.utils";
 import { NavIcons } from "../../../constants/data";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/reducers";
 
 const TopNav = () => {
+  const dispatch = useDispatch();
   const loc = useLocation();
   const pathname = loc.pathname;
   const crumbs = createBreadcrumbs(pathname);
@@ -116,7 +119,7 @@ const TopNav = () => {
         <Breadcrumbs crumbs={[activeRoot, ...crumbs.slice(0)]} />
       </span>
       <div>
-        <ButtonWrapper>
+        <ButtonWrapper onClick={() => dispatch(logout(null))}>
           <LogoutIcon />
         </ButtonWrapper>
         <ButtonWrapper>

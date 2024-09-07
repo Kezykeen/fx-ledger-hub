@@ -46,6 +46,7 @@ const CustomerTransactionOverview = () => {
       onClick: () => {},
     },
   ];
+
   return (
     <PageContainer>
       <DetailRow>
@@ -91,7 +92,7 @@ const CustomerTransactionOverview = () => {
           <DetailRow>
             <Label>Incoming Amount</Label>
             <LabelTwo>
-              CFA <span>{transaction?.incomingAmount}</span>
+              XFA <span>{transaction?.incomingAmount}</span>
             </LabelTwo>
           </DetailRow>
           <DetailRow>
@@ -129,7 +130,7 @@ const CustomerTransactionOverview = () => {
           </DetailRow>
           <DetailRow>
             <Value style={{ width: "100%", color: colors.primary300 }}>
-              {transaction?.incomingCurrency} 
+              {transaction?.incomingCurrency}
             </Value>
             <Value style={{ width: "100%", color: colors.primary300 }}>
               {transaction?.rate}
@@ -155,7 +156,7 @@ const CustomerTransactionOverview = () => {
             <FlexCol minW="300px">
               <Label>Status</Label>
               <Value>
-                <StatusBadge status={transaction?.status}>
+                <StatusBadge $status={transaction?.status}>
                   {transaction?.status}
                 </StatusBadge>
               </Value>
@@ -299,8 +300,8 @@ const PaymentStatusBox = styled.div`
 `;
 const StatusBadge = styled.span`
   background-color: ${(props) =>
-    props.status === "Paid" ? "#d4edda" : "#f8d7da"};
-  color: ${(props) => (props.status === "Paid" ? "#155724" : "#721c24")};
+    props.$status === "Paid" ? "#d4edda" : "#f8d7da"};
+  color: ${(props) => (props.$status === "Paid" ? "#155724" : "#721c24")};
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 14px;

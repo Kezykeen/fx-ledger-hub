@@ -61,7 +61,7 @@ export const TransactionDetailsOverview = () => {
             <DetailRow>
               <Label>Incoming Amount</Label>
               <LabelTwo>
-                CFA <span>{transaction?.incomingAmount}</span>
+                XFA <span>{transaction?.incomingAmount}</span>
               </LabelTwo>
             </DetailRow>
             <DetailRow>
@@ -125,7 +125,7 @@ export const TransactionDetailsOverview = () => {
             <FlexCol>
               <Label>Status</Label>
               <Value>
-                <StatusBadge status={transaction?.status}>
+                <StatusBadge $status={transaction?.status}>
                   {transaction?.status}
                 </StatusBadge>
               </Value>
@@ -163,7 +163,7 @@ export const TransactionDetailsOverview = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  CFA <span>{transaction?.outgoingAmount}</span>
+                  XFA <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>
@@ -180,7 +180,7 @@ export const TransactionDetailsOverview = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  CFA <span>{transaction?.outgoingAmount}</span>
+                  XFA <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>
@@ -355,8 +355,8 @@ const PaymentStatusBox = styled.div`
 
 const StatusBadge = styled.span`
   background-color: ${(props) =>
-    props.status === "Paid" ? "#d4edda" : "#f8d7da"};
-  color: ${(props) => (props.status === "Paid" ? "#155724" : "#721c24")};
+    props.$status === "Paid" ? "#d4edda" : "#f8d7da"};
+  color: ${(props) => (props.$status === "Paid" ? "#155724" : "#721c24")};
   padding: 5px 14px;
   border-radius: 20px;
   font-size: 14px;

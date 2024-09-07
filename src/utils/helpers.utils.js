@@ -26,7 +26,7 @@ export function formatCurrency(amount, locale = "en-US") {
 }
 
 export const formatNumberWithCommas = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
 };
 
 export const findValueAndLabel = (
@@ -57,4 +57,34 @@ export const parseSelectFormData = (data) => {
     }
   }
   return parsedData;
+};
+
+export const generateUrlParams = (obj) => {
+  let generatedUrl = ``;
+  const arrayOfObjectKeys = Object.keys(obj);
+  arrayOfObjectKeys.forEach((key) => {
+    if (obj[key]) {
+      generatedUrl += `${key}=${obj[key]}&`;
+    }
+  });
+  return generatedUrl;
+};
+
+export const formatSelectItems = (items, label, value) => {
+  return items?.length > 0
+    ? items.map((data) => {
+        const newObj = {};
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            newObj[item] = data[item];
+          });
+        }
+        return {
+          value: Array.isArray(value) ? newObj : data[value],
+          label: Array.isArray(label)
+            ? `${data[label[0]]} (${data[label[1]]})`
+            : data[label],
+        };
+      })
+    : [];
 };

@@ -3,6 +3,9 @@ import styled from "styled-components";
 import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
 import { ChartWrapper } from "../../../../components/charts/chart";
 import { ChartCards } from "../../../../components/chartCards/chartCards";
+import { graphUrl } from "../../../../urls";
+import { QueryKeys } from "../../../../constants/enums";
+import { useGet } from "../../../../hooks/api";
 
 const TransactionAnalyticsChart = () => {
   const [selectedYear, setSelectedYear] = useState({
@@ -31,6 +34,12 @@ const TransactionAnalyticsChart = () => {
     { label: "Nov", value: 85 },
     { label: "Dec", value: 35 },
   ];
+
+  const { data, isLoading, error } = useGet(
+    [QueryKeys.dashboard.graph, selectedYear?.value],
+    graphUrl(selectedYear?.value)
+  );
+  console.log({ data });
 
   return (
     <Container>

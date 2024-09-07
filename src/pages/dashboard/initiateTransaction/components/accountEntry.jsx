@@ -23,9 +23,9 @@ const AccountEntry = ({
               placeholder={`Select ${label} Account`}
               label={`${label} Account Details ${index + 1}`}
               options={accountDetailsOptions}
-              value={item.account}
+              value={item.accountId}
               onChange={(selectedOption) =>
-                handleChange(name, index, "account", selectedOption)
+                handleChange(name, index, "accountId", selectedOption)
               }
             />
             <InputField

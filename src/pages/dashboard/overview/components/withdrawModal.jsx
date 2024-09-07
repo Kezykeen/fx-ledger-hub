@@ -12,7 +12,10 @@ import { PopUp } from "../../../../components/popUp";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../components/toastComponent";
-import { accountDetailsOptions } from "../../initiateTransaction/components/data";
+import { useGet, usePost } from "../../../../hooks/api";
+import { getAccountByCurrencyUrl, withdrawAccountUrl } from "../../../../urls";
+import { QueryKeys } from "../../../../constants/enums";
+import { formatSelectItems } from "../../../../utils/helpers.utils";
 
 const WithdrawModal = ({ isOpen, handleClose }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -21,11 +24,39 @@ const WithdrawModal = ({ isOpen, handleClose }) => {
     control,
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(withdrawAccountSchema),
   });
+
+  const selectedCurrency = watch("currency");
+  const selectedAccount = watch("account");
+
+  const { mutate: withdrawAccount, isPending } = usePost(
+    withdrawAccountUrl(selectedAccount?.value),
+    (data) => {
+      console.log({ data });
+      toast.success(
+        <ToastComponent
+          title={"Withdraw recorded successfully"}
+          message={"Your withdrawal transaction has been recorded successfully"}
+        />
+      );
+      setIsConfirmOpen(false);
+      onClose();
+    },
+    QueryKeys.account
+  );
+
+  const { data, isLoading: loadingAccounts } = useGet(
+    [QueryKeys.currency, selectedCurrency?.value],
+    getAccountByCurrencyUrl(selectedCurrency?.value),
+    !!selectedCurrency?.value
+  );
+
+  const accounts = formatSelectItems(data?.data?.accounts, "name", "accountId");
 
   const onClose = () => {
     reset();
@@ -33,17 +64,11 @@ const WithdrawModal = ({ isOpen, handleClose }) => {
   };
 
   const onSubmit = (data) => {
-    toast.success(
-      <ToastComponent
-        title={"Withdraw recorded successfully"}
-        message={
-          "Your withdrawal transaction of N200,000 has been recorded successfully"
-        }
-      />
-    );
-    setIsConfirmOpen(false);
-    onClose();
-    console.log({ data });
+    const payload = {
+      amount: data?.amount,
+      reason: data?.reason,
+    };
+    withdrawAccount(payload);
   };
 
   return (
@@ -69,7 +94,8 @@ const WithdrawModal = ({ isOpen, handleClose }) => {
             name="account"
             control={control}
             label={"Account"}
-            options={accountDetailsOptions}
+            options={accounts}
+            loading={loadingAccounts}
             error={!!errors.account}
             errorText={errors.account && errors.account.message}
           />
@@ -119,7 +145,8 @@ const WithdrawModal = ({ isOpen, handleClose }) => {
         open={isConfirmOpen}
         handleClose={() => setIsConfirmOpen(false)}
         onSubmit={handleSubmit(onSubmit)}
-        title={"Confirm  Submission?"}
+        isLoading={isPending}
+        title={"Confirm Submission?"}
         subtitle={
           "Are you sure you want to proceed with submission of this receipt?"
         }

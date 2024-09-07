@@ -3,7 +3,7 @@ import { Table } from "./table/table";
 import { InOutFlowIcon } from "../../../../assets/svgs";
 import { Link } from "react-router-dom";
 
-const RecentTransaction = () => {
+const RecentTransaction = ({ data }) => {
   const columns = [
     {
       Header: "Currency",
@@ -51,7 +51,7 @@ const RecentTransaction = () => {
       Header: "Payment Status",
       accessor: "paymentStatus",
       Cell: ({ value }) => (
-        <PaymentStatus status={value}>{value}</PaymentStatus>
+        <PaymentStatus $status={value}>{value}</PaymentStatus>
       ),
     },
     {
@@ -66,30 +66,30 @@ const RecentTransaction = () => {
       ),
     },
   ];
-  const data = [
-    {
-      currency: "CFA to USDT",
-      rate: "500",
-      incoming: "1000",
-      incomingCurrency: "USDT",
-      outgoing: "55,000",
-      outgoingCurrency: "Naira",
-      date: "Jan 4, 2022",
-      paymentStatus: "Paid",
-      customerDetails: "John Doe",
-    },
-    {
-      currency: "CFA to USDT",
-      rate: "500",
-      incoming: "1000",
-      incomingCurrency: "USDT",
-      outgoing: "55,000",
-      outgoingCurrency: "Naira",
-      date: "Jan 4, 2022",
-      paymentStatus: "Paid",
-      customerDetails: "John Doe",
-    },
-  ];
+  // const data = [
+  //   {
+  //     currency: "XFA to USDT",
+  //     rate: "500",
+  //     incoming: "1000",
+  //     incomingCurrency: "USDT",
+  //     outgoing: "55,000",
+  //     outgoingCurrency: "Naira",
+  //     date: "Jan 4, 2022",
+  //     paymentStatus: "Paid",
+  //     customerDetails: "John Doe",
+  //   },
+  //   {
+  //     currency: "XFA to USDT",
+  //     rate: "500",
+  //     incoming: "1000",
+  //     incomingCurrency: "USDT",
+  //     outgoing: "55,000",
+  //     outgoingCurrency: "Naira",
+  //     date: "Jan 4, 2022",
+  //     paymentStatus: "Paid",
+  //     customerDetails: "John Doe",
+  //   },
+  // ];
 
   return (
     <Container>
@@ -164,8 +164,8 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.status === "Paid" ? "#059669" : "#DC2626")};
+    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
+  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
 `;
 
 const SmallText = styled.small`

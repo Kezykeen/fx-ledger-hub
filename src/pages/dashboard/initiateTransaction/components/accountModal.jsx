@@ -6,8 +6,8 @@ import { useState } from "react";
 import SummaryModal from "./summaryModal";
 
 const initialObj = {
-  debitAccount: [{ account: null, amount: "" }],
-  creditAccount: [{ account: null, amount: "" }],
+  outgoingCurrencyDebitAccounts: [{ accountId: null, amount: "" }],
+  incomingCurrencyCreditAccounts: [{ accountId: null, amount: "" }],
 };
 
 const AccountModal = ({ isOpen, closeHandler, data }) => {
@@ -19,9 +19,7 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
 
   const validateForm = (updatedFormData) => {
     return Object.values(updatedFormData).every((accountArray) =>
-      accountArray.every(
-        (account) => account.account && account.amount.trim() !== ""
-      )
+      accountArray.every((acc) => acc.accountId && acc.amount.trim() !== "")
     );
   };
 
@@ -36,7 +34,7 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
     }
 
     const updatedAccounts = formData[name].map((item, idx) =>
-      idx === index ? { ...item, [field]: value?.value ?? value } : item
+      idx === index ? { ...item, [field]: value } : item
     );
 
     const updatedFormData = { ...formData, [name]: updatedAccounts };
@@ -46,7 +44,7 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
   const handleAdd = (name) => {
     const updatedFormData = {
       ...formData,
-      [name]: [...formData[name], { account: null, amount: "" }],
+      [name]: [...formData[name], { accountId: null, amount: "" }],
     };
     updateFormData(updatedFormData);
   };
@@ -88,19 +86,19 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
       >
         <Container>
           <AccountEntry
-            entryArray={formData.debitAccount}
+            entryArray={formData.outgoingCurrencyDebitAccounts}
             handleChange={handleChange}
             handleAdd={handleAdd}
             handleRemove={handleRemove}
-            name="debitAccount"
+            name="outgoingCurrencyDebitAccounts"
             label="Debit"
           />
           <AccountEntry
-            entryArray={formData.creditAccount}
+            entryArray={formData.incomingCurrencyCreditAccounts}
             handleChange={handleChange}
             handleAdd={handleAdd}
             handleRemove={handleRemove}
-            name="creditAccount"
+            name="incomingCurrencyCreditAccounts"
             label="Credit"
           />
           <BtnWrapper>

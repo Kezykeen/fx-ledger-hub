@@ -11,8 +11,11 @@ import { useState } from "react";
 import { PopUp } from "../../../../components/popUp";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../components/toastComponent";
-import { accountDetailsOptions } from "../../initiateTransaction/components/data";
 import { currencyOptions } from "../../transactionHistory/components/data";
+import { useGet, usePost } from "../../../../hooks/api";
+import { fundAccountUrl, getAccountByCurrencyUrl } from "../../../../urls";
+import { QueryKeys } from "../../../../constants/enums";
+import { formatSelectItems } from "../../../../utils/helpers.utils";
 
 const FundModal = ({ isOpen, handleClose }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -21,11 +24,38 @@ const FundModal = ({ isOpen, handleClose }) => {
     control,
     register,
     reset,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(fundAccountSchema),
   });
+
+  const selectedCurrency = watch("currency");
+  const selectedAccount = watch("account");
+
+  const { mutate: fundAccount, isPending } = usePost(
+    fundAccountUrl(selectedAccount?.value),
+    () => {
+      toast.success(
+        <ToastComponent
+          title={"Account funded successfully"}
+          message={`Your account has been funded successfully`}
+        />
+      );
+      setIsConfirmOpen(false);
+      onClose();
+    },
+    QueryKeys.account
+  );
+
+  const { data, isLoading: loadingAccounts } = useGet(
+    [QueryKeys.currency, selectedCurrency?.value],
+    getAccountByCurrencyUrl(selectedCurrency?.value),
+    !!selectedCurrency?.value
+  );
+
+  const accounts = formatSelectItems(data?.data?.accounts, "name", "accountId");
 
   const onClose = () => {
     reset();
@@ -33,15 +63,10 @@ const FundModal = ({ isOpen, handleClose }) => {
   };
 
   const onSubmit = (data) => {
-    toast.success(
-      <ToastComponent
-        title={"Account funded successfully"}
-        message={"Your account has been funded with N200,000 successfully"}
-      />
-    );
-    setIsConfirmOpen(false);
-    onClose();
-    console.log({ data });
+    const payload = {
+      amount: data?.amount,
+    };
+    fundAccount(payload);
   };
 
   return (
@@ -67,7 +92,8 @@ const FundModal = ({ isOpen, handleClose }) => {
             name="account"
             control={control}
             label={"Account"}
-            options={accountDetailsOptions}
+            options={accounts}
+            loading={loadingAccounts}
             error={!!errors.account}
             errorText={errors.account && errors.account.message}
           />
@@ -108,7 +134,8 @@ const FundModal = ({ isOpen, handleClose }) => {
         open={isConfirmOpen}
         handleClose={() => setIsConfirmOpen(false)}
         onSubmit={handleSubmit(onSubmit)}
-        title={"Confirm  Submission?"}
+        isLoading={isPending}
+        title={"Confirm Submission?"}
         subtitle={
           "Are you sure you want to proceed with submission of this receipt?"
         }

@@ -1,4 +1,3 @@
-import LoginPage from "../layouts/authLayout";
 import DashboardLayout from "../layouts/dashboardLayout";
 import { SalesRepOverview, TransactionHistory } from "../pages/dashboard";
 import { InitiateTransaction } from "../pages/dashboard/initiateTransaction";
@@ -8,18 +7,29 @@ import { CustomersHistory } from "../pages/dashboard/customers";
 import { TransactionDetailsOverview } from "../pages/dashboard/transactionHistory/transaction-detail";
 import { CustomerDetailsOverview } from "../pages/dashboard/customers/customers-detail";
 import { Suppliers } from "../pages/dashboard/suppliers";
+import { Payments } from "../pages/dashboard/payments";
 import { SupplierDetails } from "../pages/dashboard/suppliers/details";
-import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transcation-history";
+import { CustomerRecord } from "../pages/dashboard/customers/components/customer-history/transaction-history";
 import { RefundRecord } from "../pages/dashboard/customers/components/customer-history/refund-history";
 import { UpfrontRecord } from "../pages/dashboard/customers/components/customer-history/upfront-history";
+import { PaymentDetails } from "../pages/dashboard/payments/details";
+import AuthLayout from "../layouts/authLayout";
+import { LoginPage } from "../pages/auth/login";
 import CustomerTransactionOverview from "../pages/dashboard/customers/customers-detail/transaction";
 import SuppliersHistory from "../pages/dashboard/suppliers/supplier-record/supplier-history";
 import RefundHistory from "../pages/dashboard/suppliers/supplier-record/refund-history";
 
 const authRoutes = [
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        element: <LoginPage />,
+        index: true,
+        path: "login",
+      },
+    ],
   },
 ];
 
@@ -91,17 +101,27 @@ const dashboardRoutes = [
             element: <RefundHistory />,
             path: "refund",
           },
-        ]
+        ],
       },
       {
-        element: <div>Payments</div>,
+        element: <Payments />,
         index: true,
         path: "payments",
+      },
+      {
+        element: <PaymentDetails />,
+        index: true,
+        path: "payments/:id",
       },
       {
         element: <SupplyHistory />,
         index: true,
         path: "supply-history",
+      },
+      {
+        element: <div>Refund history</div>,
+        index: true,
+        path: "refund-history",
       },
       {
         element: <div>Ledger</div>,
@@ -112,6 +132,11 @@ const dashboardRoutes = [
         element: <div>Reports</div>,
         index: true,
         path: "report",
+      },
+      {
+        element: <div>User management</div>,
+        index: true,
+        path: "manage-user",
       },
       {
         element: <InitiateTransaction />,

@@ -44,28 +44,28 @@ export const InitiateTransaction = ({ data }) => {
       outgoingCurrency: data?.outgoingCurrency
         ? findValueAndLabel(data?.outgoingCurrency, currencyOptions)
         : null,
-      transactionMeans: data?.transactionMeans
-        ? findValueAndLabel(data?.transactionMeans, transactionMeansOptions)
+      meansOfTrade: data?.meansOfTrade
+        ? findValueAndLabel(data?.meansOfTrade, transactionMeansOptions)
         : null,
-      customer: data?.customer
-        ? findValueAndLabel(data?.customer, allCustomers)
+      customerId: data?.customerId
+        ? findValueAndLabel(data?.customerId, allCustomers)
         : null,
       rate: data?.rate || "",
-      amount: data?.amount || "",
-      amountPaid: data?.amountPaid || "",
-      amountPending: data?.amountPending || "",
-      customerReceipt: data?.customerReceipt || null,
-      supplierReceipt: data?.supplierReceipt || null,
+      incomingCurrencyAmount: data?.incomingCurrencyAmount || "",
+      amountCustomerPaid: data?.amountCustomerPaid || "",
+      amountCustomerIsOwing: data?.amountCustomerIsOwing || "",
+      customerReceipts: data?.customerReceipts || null,
+      supplierReceipts: data?.supplierReceipts || null,
     },
   });
 
-  const amountValue = watch("amount");
+  const amountValue = watch("incomingCurrencyAmount");
   const rateValue = watch("rate");
 
   useEffect(() => {
     !isNaN(amountValue) &&
       !isNaN(rateValue) &&
-      setValue("outgoingAmount", rateValue * amountValue);
+      setValue("outgoingCurrencyAmount", rateValue * amountValue);
   }, [amountValue, rateValue, setValue]);
 
   const handleCheck = (e) => {
@@ -73,24 +73,9 @@ export const InitiateTransaction = ({ data }) => {
   };
 
   const onSubmit = (data) => {
-    console.log({ data });
-    const parsedData = {};
-
-    for (const key in data) {
-      if (
-        typeof data[key] === "object" &&
-        data[key] !== null &&
-        "value" in data[key]
-      ) {
-        parsedData[key] = data[key].value;
-      } else {
-        parsedData[key] = data[key];
-      }
-    }
-    setFormData(parsedData);
+    setFormData(data);
     setIsSummaryModalOpen(true);
   };
-  console.log({ errors });
 
   return (
     <Container>
@@ -143,30 +128,31 @@ export const InitiateTransaction = ({ data }) => {
               <InputField
                 label={`Amount`}
                 register={register}
-                name="amount"
+                name="incomingCurrencyAmount"
                 type="number"
                 placeholder="Enter amount"
-                error={!!errors.amount}
-                errorText={errors.amount && errors.amount.message}
+                error={!!errors.incomingCurrencyAmount}
+                errorText={
+                  errors.incomingCurrencyAmount &&
+                  errors.incomingCurrencyAmount.message
+                }
                 noShift
               />
             </FlexBetween>
             <FlexBetween>
               <SMSelectDropDown
                 placeholder={"Select means of transaction currency"}
-                name="transactionMeans"
+                name="meansOfTrade"
                 control={control}
                 label={"Transaction Means"}
                 options={transactionMeansOptions}
-                error={!!errors.transactionMeans}
-                errorText={
-                  errors.transactionMeans && errors.transactionMeans.message
-                }
+                error={!!errors.meansOfTrade}
+                errorText={errors.meansOfTrade && errors.meansOfTrade.message}
                 noShift
               />
               <InputField
                 label={`Outgoing Amount`}
-                name="outgoingAmount"
+                name="outgoingCurrencyAmount"
                 register={register}
                 disabled
                 placeholder="Enter amount"
@@ -180,12 +166,12 @@ export const InitiateTransaction = ({ data }) => {
           <EntryBox>
             <SMSelectDropDown
               placeholder={"Select customer"}
-              name="customer"
+              name="customerId"
               control={control}
               label={"Customer"}
               options={allCustomers}
-              error={!!errors.customer}
-              errorText={errors.customer && errors.customer.message}
+              error={!!errors.customerId}
+              errorText={errors.customerId && errors.customerId.message}
               noShift
             />
           </EntryBox>
@@ -205,13 +191,13 @@ export const InitiateTransaction = ({ data }) => {
                 <InputField
                   label={`Amount Paid`}
                   register={register}
-                  name="amountPaid"
+                  name="amountCustomerPaid"
                   placeholder="Enter amount paid"
                 />
                 <InputField
                   label={`Amount Pending`}
                   register={register}
-                  name="amountPending"
+                  name="amountCustomerIsOwing"
                   placeholder="Enter amount pending"
                 />
               </FlexBetween>
@@ -224,13 +210,13 @@ export const InitiateTransaction = ({ data }) => {
             <FlexBetween $gap={45}>
               <DocumentUpload
                 control={control}
-                name={"customerReceipt"}
+                name={"customerReceipts"}
                 errors={errors}
                 label={`Upload Customer Receipt (Optional)`}
               />
               <DocumentUpload
                 control={control}
-                name={"supplierReceipt"}
+                name={"supplierReceipts"}
                 errors={errors}
                 label={`Upload Supplier Receipt (Optional)`}
               />

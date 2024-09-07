@@ -58,27 +58,25 @@ const CustomersHistory = () => {
                 </Flex>
               }
             />
-            
+
             <UpdateModal
               closeHandler={() => setIsUpdateModalOpen(false)}
               isOpen={isUpdateModalOpen}
               data={data}
             />
           </ActionWrapper>
-
-          <div>
-            <ButtonDropdown
-              open={exportOpen}
-              setOpen={setExportOpen}
-              buttonGroup={exportButtonGroup}
-              buttonElement={
-                <StyledMenuButton>
-                  <span>Actions</span>
-                  <DropdownIcon />
-                </StyledMenuButton>
-              }
-            />
-          </div>
+          <ButtonDropdown
+            open={exportOpen}
+            setOpen={setExportOpen}
+            buttonGroup={exportButtonGroup}
+            width={`unset`}
+            buttonElement={
+              <StyledMenuButton>
+                <span>Actions</span>
+                <DropdownIcon />
+              </StyledMenuButton>
+            }
+          />
         </DetailRow>
       </DetailRow>
       <WidgetWrapper>
@@ -132,10 +130,12 @@ const ActionWrapper = styled.div`
 `;
 
 const DetailRow = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
   flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
+  z-index: 99;
 `;
 
 export const Divider = styled.div`

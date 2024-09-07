@@ -55,7 +55,7 @@ const Transactions = () => {
       Header: "Payment Status",
       accessor: "paymentStatus",
       Cell: ({ value }) => (
-        <PaymentStatus status={value}>{value}</PaymentStatus>
+        <PaymentStatus $status={value}>{value}</PaymentStatus>
       ),
     },
     {
@@ -71,7 +71,7 @@ const Transactions = () => {
   const data = {
     data: [
       {
-        currency: "CFA to USDT",
+        currency: "XFA to USDT",
         rate: "500",
         incoming: "1000",
         incomingCurrency: "USDT",
@@ -82,7 +82,7 @@ const Transactions = () => {
         customerDetails: "John Doe",
       },
       {
-        currency: "CFA to USDT",
+        currency: "XFA to USDT",
         rate: "500",
         incoming: "1000",
         incomingCurrency: "USDT",
@@ -157,8 +157,8 @@ const PaymentStatus = styled.span`
   font-size: 12px;
   font-weight: 500;
   background-color: ${(props) =>
-    props.status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.status === "Paid" ? "#059669" : "#DC2626")};
+    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
+  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
 `;
 
 const SmallText = styled.small`

@@ -1,19 +1,23 @@
 export const transactionMeansOptions = [
   {
     label: `Cash`,
-    value: `cash`,
+    value: 1,
   },
   {
     label: `Orange`,
-    value: `orange`,
+    value: 2,
   },
   {
-    label: `Deposit`,
-    value: `deposit`,
+    label: `Bank Deposit`,
+    value: 3,
   },
   {
     label: `Float`,
-    value: `float`,
+    value: 4,
+  },
+  {
+    label: `Other`,
+    value: 0,
   },
 ];
 

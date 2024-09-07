@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Provider } from "./layouts/provider";
+import { Providers } from "./layouts/provider";
 import Router from "./router";
-import { Slide, ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,7 +10,7 @@ function App() {
     <>
       <StyledContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={3500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -19,11 +19,11 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
-        transition={Slide}
+        transition={Bounce}
       />
-      <Provider>
+      <Providers>
         <Router />
-      </Provider>
+      </Providers>
     </>
   );
 }

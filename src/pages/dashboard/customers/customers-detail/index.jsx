@@ -4,11 +4,12 @@ import { Divider } from "..";
 import { colors } from "../../../../theme/colors";
 import { ButtonDropdown } from "../../../../components/buttonDropdown";
 import { TableTab } from "../../../../components/tableTab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { customerDetailsTab, customerHistoryHash } from "../components/data";
+import { CustomerRecord } from "../components/customer-history/transaction-history";
+import { RefundRecord } from "../components/customer-history/refund-history";
+import { UpfrontRecord } from "../components/customer-history/upfront-history";
 import { DropdownBlackIcon, DropdownIcon } from "../../../../assets/svgs";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { customerDetailsTab } from "../components/data";
 import { UpdateModal } from "../components/updatePaymentModal";
 
 const customer = {
@@ -32,7 +33,12 @@ export const CustomerDetailsOverview = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
-  const navigate = useNavigate();
+  const [currentHash, setCurrentHash] = useState(customerDetailsTab[0].hash);
+  const urlHash = window.location.hash.substring(1);
+
+  useEffect(() => {
+    setCurrentHash(urlHash);
+  }, [urlHash]);
 
   const exportButtonGroup = [
     {
@@ -54,9 +60,10 @@ export const CustomerDetailsOverview = () => {
       },
     },
   ];
+
   const exportTextGroup = [
     {
-      name: "CFA",
+      name: "XFA",
       onClick: () => {},
     },
     {
@@ -73,27 +80,10 @@ export const CustomerDetailsOverview = () => {
     },
   ];
 
-  // Function to handle tab changes
-  const handleTabChange = (tab) => {
-    // Handle the active tab change logic if needed
-    console.log(`Active tab changed to: ${tab}`);
+  const handleTabChange = (selectedTab) => {
+    setCurrentHash(selectedTab);
   };
-  const handleTabClick = (hash) => {
-    switch (hash) {
-      case "transaction-history":
-        navigate("");
-        break;
-      case "refund-history":
-        navigate("refund");
-        break;
-      case "upfront-history":
-        navigate("upfront");
-        break;
-      default:
-        navigate(`#${hash}`);
-        break;
-    }
-  };
+
   return (
     <PageContainer>
       <DetailRow>
@@ -106,6 +96,7 @@ export const CustomerDetailsOverview = () => {
             open={exportOpen}
             setOpen={setExportOpen}
             buttonGroup={exportButtonGroup}
+            width={`unset`}
             buttonElement={
               <StyledMenuButton>
                 <span>Actions</span>
@@ -180,17 +171,20 @@ export const CustomerDetailsOverview = () => {
             />
           </div>
         </FlexRow>
-        <Line></Line>
+        <Line />
         <TableTab
           tabs={customerDetailsTab}
           backgroundColor="gray100"
           onTabChange={handleTabChange}
-          onTabClick={handleTabClick}
           padding="16px 0"
         />
 
         <SummaryBox>
-          <Outlet />
+          {currentHash === customerHistoryHash.transaction && (
+            <CustomerRecord />
+          )}
+          {currentHash === customerHistoryHash.refund && <RefundRecord />}
+          {currentHash === customerHistoryHash.upfront && <UpfrontRecord />}
         </SummaryBox>
       </CustomersHistory>
       <UpdateModal

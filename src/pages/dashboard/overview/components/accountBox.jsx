@@ -3,18 +3,20 @@ import { ArrowRightDuo } from "../../../../assets/svgs";
 import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
 import AmountModal from "./amountModal";
 import { useState } from "react";
+import CreateAccountModal from "./createAccountModal";
 
-const AccountBox = ({ icon: Icon, amount, count, asset }) => {
+const AccountBox = ({ icon: Icon, asset, data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
 
   return (
     <Container>
       <Icon />
       <TextWrapper>
         <AmountWrapper>
-          <Amount>{formatNumberWithCommas(amount)}</Amount>
+          <Amount>{formatNumberWithCommas(data?.totalBalance || 0)}</Amount>
           <CountBox onClick={() => setIsModalOpen(true)}>
-            <Count>{count}</Count>
+            <Count>{data?.totalAccounts || 0}</Count>
             <ArrowRightDuo />
           </CountBox>
         </AmountWrapper>
@@ -25,6 +27,15 @@ const AccountBox = ({ icon: Icon, amount, count, asset }) => {
         isOpen={isModalOpen}
         asset={asset}
         icon={Icon}
+        createModalHandler={setIsOpenCreateModal}
+        data={data}
+      />
+      <CreateAccountModal
+        asset={asset}
+        currencyId={data?.currencyId}
+        currencyType={data?.type}
+        handleClose={() => setIsOpenCreateModal(false)}
+        isOpen={isOpenCreateModal}
       />
     </Container>
   );

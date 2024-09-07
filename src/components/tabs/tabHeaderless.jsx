@@ -2,16 +2,17 @@ import { BackgroundlessButton } from "../../globals/sharedStyles";
 import styled, { css } from "styled-components";
 
 const TabHeaderless = ({ onClick, items, isActive }) => {
+  console.log({ isActive });
   return (
     <TabHeaderWrapper>
       {items.map((str, index) => (
         <Button
-          $isActive={isActive === str}
+          $isActive={isActive.value === str.value}
           onClick={() => onClick(str)}
           className={`${isActive === str && "active"}`}
           key={index}
         >
-          {str}
+          {str.label}
         </Button>
       ))}
     </TabHeaderWrapper>

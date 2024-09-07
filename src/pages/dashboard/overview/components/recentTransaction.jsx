@@ -3,7 +3,7 @@ import { Table } from "./table/table";
 import { InOutFlowIcon } from "../../../../assets/svgs";
 import { Link } from "react-router-dom";
 
-const RecentTransaction = () => {
+const RecentTransaction = ({ data }) => {
   const columns = [
     {
       Header: "Currency",
@@ -66,30 +66,30 @@ const RecentTransaction = () => {
       ),
     },
   ];
-  const data = [
-    {
-      currency: "CFA to USDT",
-      rate: "500",
-      incoming: "1000",
-      incomingCurrency: "USDT",
-      outgoing: "55,000",
-      outgoingCurrency: "Naira",
-      date: "Jan 4, 2022",
-      paymentStatus: "Paid",
-      customerDetails: "John Doe",
-    },
-    {
-      currency: "CFA to USDT",
-      rate: "500",
-      incoming: "1000",
-      incomingCurrency: "USDT",
-      outgoing: "55,000",
-      outgoingCurrency: "Naira",
-      date: "Jan 4, 2022",
-      paymentStatus: "Paid",
-      customerDetails: "John Doe",
-    },
-  ];
+  // const data = [
+  //   {
+  //     currency: "XFA to USDT",
+  //     rate: "500",
+  //     incoming: "1000",
+  //     incomingCurrency: "USDT",
+  //     outgoing: "55,000",
+  //     outgoingCurrency: "Naira",
+  //     date: "Jan 4, 2022",
+  //     paymentStatus: "Paid",
+  //     customerDetails: "John Doe",
+  //   },
+  //   {
+  //     currency: "XFA to USDT",
+  //     rate: "500",
+  //     incoming: "1000",
+  //     incomingCurrency: "USDT",
+  //     outgoing: "55,000",
+  //     outgoingCurrency: "Naira",
+  //     date: "Jan 4, 2022",
+  //     paymentStatus: "Paid",
+  //     customerDetails: "John Doe",
+  //   },
+  // ];
 
   return (
     <Container>

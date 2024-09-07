@@ -3,9 +3,24 @@ import { Modal } from "../../../../components/modal";
 import { Button } from "../../../../components/button";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../components/toastComponent";
+import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
 
 const SummaryModal = ({ isOpen, closeHandler, data }) => {
   const handleSubmit = () => {
+    const parsedData = {};
+
+    for (const key in data) {
+      if (
+        typeof data[key] === "object" &&
+        data[key] !== null &&
+        "value" in data[key]
+      ) {
+        parsedData[key] = data[key].value;
+      } else {
+        parsedData[key] = data[key];
+      }
+    }
+    console.log({ parsedData });
     toast.success(
       <ToastComponent
         title={"Exchange Transaction sent"}
@@ -30,7 +45,7 @@ const SummaryModal = ({ isOpen, closeHandler, data }) => {
           <EntryTitle>Summary</EntryTitle>
           <Entry>
             <EntryLabel>Incoming currency</EntryLabel>
-            <EntryValue $primary>{data?.incomingCurrency}</EntryValue>
+            <EntryValue $primary>{data?.incomingCurrency?.label}</EntryValue>
           </Entry>
           <Entry>
             <EntryLabel>Rate</EntryLabel>
@@ -38,21 +53,25 @@ const SummaryModal = ({ isOpen, closeHandler, data }) => {
           </Entry>
           <Entry>
             <EntryLabel>Customer Name</EntryLabel>
-            <EntryValue>{data?.customer}</EntryValue>
+            <EntryValue>{data?.customerId?.label}</EntryValue>
           </Entry>
-          {data?.amountPaid && (
+          {data?.amountCustomerPaid && (
             <Entry>
               <EntryLabel>Amount Paid</EntryLabel>
               <AmountValue>
-                N <span>{data?.amountPaid}</span>
+                {data?.incomingCurrency?.label}{" "}
+                <span>{formatNumberWithCommas(data?.amountCustomerPaid)}</span>
               </AmountValue>
             </Entry>
           )}
-          {data?.amountPending && (
+          {data?.amountCustomerIsOwing && (
             <Entry>
               <EntryLabel>Amount Owed</EntryLabel>
               <AmountValue>
-                N <span>{data?.amountPending}</span>
+                {data?.incomingCurrency?.label}{" "}
+                <span>
+                  {formatNumberWithCommas(data?.amountCustomerIsOwing)}
+                </span>
               </AmountValue>
             </Entry>
           )}
@@ -62,13 +81,19 @@ const SummaryModal = ({ isOpen, closeHandler, data }) => {
           <Entry>
             <EntryLabel>Incoming Amount</EntryLabel>
             <AmountValue>
-              CFA <span>{data?.amount}</span>
+              {data?.incomingCurrency?.label}{" "}
+              <span>
+                {formatNumberWithCommas(data?.incomingCurrencyAmount)}
+              </span>
             </AmountValue>
           </Entry>
           <Entry>
             <EntryLabel>Outgoing Amount</EntryLabel>
             <AmountValue>
-              N <span>{data?.outgoingAmount}</span>
+              {data?.outgoingCurrency?.label}{" "}
+              <span>
+                {formatNumberWithCommas(data?.outgoingCurrencyAmount)}
+              </span>
             </AmountValue>
           </Entry>
         </EntryBox>

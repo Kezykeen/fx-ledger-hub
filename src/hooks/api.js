@@ -23,10 +23,14 @@ const useApiMutation = (
   });
 };
 
-export const useGet = (key, endpoint, config) => {
-  return useQuery(key, async () => {
-    const { data } = await request.get(endpoint, config);
-    return data;
+export const useGet = (key, endpoint, enabled, config) => {
+  return useQuery({
+    queryKey: key,
+    queryFn: async () => {
+      const { data } = await request.get(endpoint, config);
+      return data;
+    },
+    enabled: enabled,
   });
 };
 

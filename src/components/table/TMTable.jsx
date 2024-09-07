@@ -131,11 +131,11 @@ const TMTable = ({
         </div>
         {!loading && rowData.length === 0 && (
           <EmptyState>
-            {hasPerformedQuery ? (
+            {/* {hasPerformedQuery ? (
               <div>search error</div>
             ) : (
               <div>empty state</div>
-            )}
+            )} */}
             <h4>
               {hasPerformedQuery
                 ? `No result found${
@@ -240,7 +240,11 @@ const EmptyState = styled.div`
   align-items: center;
   justify-content: center;
   border-top: 0;
-  padding: 20px;
+  padding: 50px;
+
+  & > h4 {
+    font-size: 15px;
+  }
 `;
 
 const TableFooter = styled.div`

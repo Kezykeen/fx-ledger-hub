@@ -2,7 +2,7 @@ import { TMTable } from "../../../../../components/table/TMTable";
 
 export const Table = ({
   columns = [],
-  data,
+  data = [],
   isLoading,
   availablePages,
   pageNumber,

@@ -3,11 +3,17 @@ import { Modal } from "../../../../components/modal";
 import { Button } from "../../../../components/button";
 import { ArrowRightUpIcon } from "../../../../assets/svgs";
 import { useNavigate } from "react-router-dom";
+import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
 
-const AmountModal = ({ isOpen, handleClose, asset, icon: Icon }) => {
+const AmountModal = ({
+  isOpen,
+  handleClose,
+  asset,
+  icon: Icon,
+  data,
+  createModalHandler,
+}) => {
   const navigate = useNavigate();
-
-  const handleSubmit = () => {};
 
   return (
     <Modal
@@ -20,30 +26,36 @@ const AmountModal = ({ isOpen, handleClose, asset, icon: Icon }) => {
         <TotalBox>
           <Icon />
           <TotalTxtWrapper>
-            <Total>100,000</Total>
+            <Total>{formatNumberWithCommas(data?.totalBalance || 0)}</Total>
             <Asset>{asset}</Asset>
           </TotalTxtWrapper>
         </TotalBox>
         <BreakdownBox>
           <BreakdownTitle>Account Breakdown</BreakdownTitle>
-          <AccountEntry>
-            <AccountTxtWrapper>
-              <FlexGap>
-                <AccountTotal>1000</AccountTotal>
-                <AccountAsset>{asset}</AccountAsset>
-              </FlexGap>
-              <FlexGap>
-                <AccountDeets>0089098080</AccountDeets>
-                <Divider />
-                <AccountDeets>Amara Jude</AccountDeets>
-                <Divider />
-                <AccountDeets>Access Bank</AccountDeets>
-              </FlexGap>
-            </AccountTxtWrapper>
-            <ArrowRightUpIcon
-              onClick={() => navigate(`/ledger/${asset.toLowerCase()}`)}
-            />
-          </AccountEntry>
+          {data?.accounts?.map((account, idx) => (
+            <AccountEntry key={idx}>
+              <AccountTxtWrapper>
+                <FlexGap>
+                  <AccountTotal>
+                    {formatNumberWithCommas(account?.balance || 0)}
+                  </AccountTotal>
+                  <AccountAsset>{asset}</AccountAsset>
+                </FlexGap>
+                <FlexGap>
+                  {account?.number && (
+                    <>
+                      <AccountDeets>{account?.number}</AccountDeets>
+                      <Divider />
+                    </>
+                  )}
+                  <AccountDeets>{account?.name}</AccountDeets>
+                </FlexGap>
+              </AccountTxtWrapper>
+              <ArrowRightUpIcon
+                onClick={() => navigate(`/ledger/${asset.toLowerCase()}`)}
+              />
+            </AccountEntry>
+          ))}
         </BreakdownBox>
         <BtnWrapper>
           <Button
@@ -56,7 +68,7 @@ const AmountModal = ({ isOpen, handleClose, asset, icon: Icon }) => {
             buttonClass={"primary"}
             label={"Add New Account"}
             width={`48%`}
-            onClick={handleSubmit}
+            onClick={() => createModalHandler(true)}
           />
         </BtnWrapper>
       </Container>

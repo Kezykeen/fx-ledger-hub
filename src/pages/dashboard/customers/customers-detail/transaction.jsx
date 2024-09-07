@@ -92,7 +92,7 @@ const CustomerTransactionOverview = () => {
           <DetailRow>
             <Label>Incoming Amount</Label>
             <LabelTwo>
-              CFA <span>{transaction?.incomingAmount}</span>
+              XFA <span>{transaction?.incomingAmount}</span>
             </LabelTwo>
           </DetailRow>
           <DetailRow>

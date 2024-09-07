@@ -61,7 +61,7 @@ export const TransactionDetailsOverview = () => {
             <DetailRow>
               <Label>Incoming Amount</Label>
               <LabelTwo>
-                CFA <span>{transaction?.incomingAmount}</span>
+                XFA <span>{transaction?.incomingAmount}</span>
               </LabelTwo>
             </DetailRow>
             <DetailRow>
@@ -163,7 +163,7 @@ export const TransactionDetailsOverview = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  CFA <span>{transaction?.outgoingAmount}</span>
+                  XFA <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>
@@ -180,7 +180,7 @@ export const TransactionDetailsOverview = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  CFA <span>{transaction?.outgoingAmount}</span>
+                  XFA <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>

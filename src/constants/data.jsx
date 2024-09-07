@@ -26,7 +26,7 @@ export const navs = [
     path: "/ledger",
     icon: <LedgerIcon />,
     children: [
-      { name: "CFA", path: "/ledger/cfa" },
+      { name: "XFA", path: "/ledger/XFA" },
       { name: "USDT", path: "/ledger/usdt" },
       { name: "RMB", path: "/ledger/rmb" },
       { name: "Dollar", path: "/ledger/dollar" },
@@ -53,3 +53,34 @@ export const NavIcons = {
   "initiate transaction": <HomeIcon />,
   ledger: <LedgerIcon />,
 };
+
+export const teamsOptions = [
+  {
+    label: `All Teams`,
+    value: 0,
+  },
+  {
+    label: `USDT`,
+    value: 1,
+  },
+  {
+    label: `Dollar`,
+    value: 2,
+  },
+  {
+    label: `XFA`,
+    value: 3,
+  },
+  {
+    label: `RMB`,
+    value: 4,
+  },
+  {
+    label: `Naira`,
+    value: 5,
+  },
+  {
+    label: `ZELLE`,
+    value: 6,
+  },
+];

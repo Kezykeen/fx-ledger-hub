@@ -10,22 +10,18 @@ const request = axios.create({
   timeout: 10000,
 });
 
-let token;
-let refreshToken;
-const state = store.getState();
-const userState = state?.user;
-if (userState === null) {
-  token = "";
-} else {
-  const { token, refreshToken } = userState;
-  token;
-  refreshToken;
-}
-
 request.interceptors.request.use(
   (config) => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    let accessToken;
+    const { user } = store.getState();
+    if (user === null) {
+      accessToken = "";
+    } else {
+      const { token } = user;
+      accessToken = token;
+    }
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -36,6 +32,16 @@ request.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    let accessToken;
+    let refresh;
+    const { user } = store.getState();
+    if (user === null) {
+      accessToken = "";
+    } else {
+      const { token, refreshToken } = user;
+      accessToken = token;
+      refresh = refreshToken;
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -44,7 +50,7 @@ request.interceptors.response.use(
         // Make a request to refresh the token
         const { data } = await axios.post(
           `${BASE_URL}/authentication/refresh-token`,
-          { accessToken: token, refreshToken }
+          { accessToken, refreshToken: refresh }
         );
 
         // update user object
@@ -54,7 +60,6 @@ request.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${data.token}`;
         return request(originalRequest);
       } catch (refreshError) {
-        // Handle refresh token error (e.g., logout the user)
         store.dispatch(logout(null));
         toast.error("Session expired. Please log in again.");
         return Promise.reject(refreshError);
@@ -67,23 +72,23 @@ request.interceptors.response.use(
     }
 
     if (error.response?.status === 400) {
-      if (typeof error.response?.data?.errors === "object") {
-        const errArray = error.response?.data?.errors;
+      if (typeof error.response?.data?.responseMessage === "object") {
+        const errArray = error.response?.data?.responseMessage;
         errArray.map((x) => toast.error(x));
       } else {
-        toast.error(error.response?.data?.errors);
+        toast.error(error.response?.data?.responseMessage);
       }
-      return Promise.reject(error.response?.data?.errors);
+      return Promise.reject(error.response?.data?.responseMessage);
     }
 
     if (error.response?.status === 403) {
-      if (typeof error.response?.data?.errors === "object") {
-        const errArray = error.response?.data?.errors;
+      if (typeof error.response?.data?.responseMessage === "object") {
+        const errArray = error.response?.data?.responseMessage;
         errArray.map((x) => toast.error(x));
       } else {
-        toast.error(error.response?.data?.errors);
+        toast.error(error.response?.data?.responseMessage);
       }
-      return Promise.reject(error.response?.data?.errors);
+      return Promise.reject(error.response?.data?.responseMessage);
     }
     return Promise.reject(error?.response);
   }

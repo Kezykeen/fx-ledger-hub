@@ -12,10 +12,18 @@ import AccountBox from "./accountBox";
 import FundModal from "./fundModal";
 import { useState } from "react";
 import WithdrawModal from "./withdrawModal";
+import { useGet } from "../../../../hooks/api";
+import { getAccountUrl } from "../../../../urls";
+import { CurrencyType, QueryKeys } from "../../../../constants/enums";
 
 const AccountBalance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+
+  const { data } = useGet([QueryKeys.account], getAccountUrl());
+
+  const getAccountbyCurrency = (currencyType) =>
+    data?.data?.find((x) => x?.type === currencyType);
 
   return (
     <Container>
@@ -37,28 +45,28 @@ const AccountBalance = () => {
       </TopWrapper>
       <BottomWrapper>
         <AccountBox
-          amount={"100000"}
           asset={"USDT"}
-          count={`1`}
+          data={getAccountbyCurrency(CurrencyType.USDT)}
           icon={USDTIcon}
         />
         <AccountBox
-          amount={"2000000"}
           asset={"RMB"}
-          count={`1`}
+          data={getAccountbyCurrency(CurrencyType.RMB)}
           icon={RMBIcon}
         />
         <AccountBox
-          amount={"1500000"}
           asset={"NAIRA"}
-          count={`5`}
+          data={getAccountbyCurrency(CurrencyType.Naira)}
           icon={NairaIcon}
         />
-        <AccountBox amount={"3000"} asset={"CFA"} count={`1`} icon={CFAIcon} />
         <AccountBox
-          amount={"750000"}
+          asset={"XFA"}
+          data={getAccountbyCurrency(CurrencyType.XFA)}
+          icon={CFAIcon}
+        />
+        <AccountBox
           asset={"DOLLAR"}
-          count={`1`}
+          data={getAccountbyCurrency(CurrencyType.Dollar)}
           icon={DollarIcon}
         />
       </BottomWrapper>

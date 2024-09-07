@@ -13,6 +13,7 @@ export const PopUp = ({
   subtitle,
   width,
   onSubmit,
+  isLoading,
 }) => {
   return (
     <Modal
@@ -51,6 +52,7 @@ export const PopUp = ({
               label={"Confirm"}
               width={`48%`}
               onClick={onSubmit}
+              loading={isLoading}
             />
           </ButtonWrapper>
         </Container>

@@ -15,24 +15,39 @@ export const paymentStatus = [
 
 export const currencyOptions = [
   {
-    label: `Naira`,
-    value: `naira`,
-  },
-  {
-    label: `XFA`,
-    value: `xfa`,
-  },
-  {
     label: `USDT`,
-    value: `usdt`,
+    value: 1,
   },
   {
     label: `Dollar`,
-    value: `dollar`,
+    value: 2,
+  },
+  {
+    label: `XFA`,
+    value: 3,
   },
   {
     label: `RMB`,
-    value: `rmb`,
+    value: 4,
+  },
+  {
+    label: `Naira`,
+    value: 5,
+  },
+  {
+    label: `Zelle`,
+    value: 6,
+  },
+];
+
+export const currencyTypeOptions = [
+  {
+    label: `XAF_Mbabid`,
+    value: 0,
+  },
+  {
+    label: `XAF_Solomon`,
+    value: 1,
   },
 ];
 

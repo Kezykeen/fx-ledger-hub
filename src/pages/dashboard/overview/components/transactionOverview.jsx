@@ -7,11 +7,11 @@ import {
 import { colors } from "../../../../theme/colors";
 import { formatCurrency } from "../../../../utils/helpers.utils";
 
-const TransactionOverview = () => {
+const TransactionOverview = ({ data }) => {
   const transactionSummary = [
     {
       transactionDetail: "Total Transactions",
-      transactionAmount: 5000,
+      transactionAmount: data?.total || 0,
       trendColor: colors.white,
       trend: "rise",
       iconBgColor1: "#F24A20F0",
@@ -20,7 +20,7 @@ const TransactionOverview = () => {
     },
     {
       transactionDetail: "In - Progress",
-      transactionAmount: 1500,
+      transactionAmount: data?.inProgress || 0,
       trendColor: "#30B895",
       trend: "rise",
       iconBgColor1: colors.primary50,
@@ -29,7 +29,7 @@ const TransactionOverview = () => {
     },
     {
       transactionDetail: "Approved",
-      transactionAmount: 3000,
+      transactionAmount: data?.approved || 0,
       trendColor: "#30B895",
       trend: "rise",
       iconBgColor1: colors.success50,
@@ -38,7 +38,7 @@ const TransactionOverview = () => {
     },
     {
       transactionDetail: "Declined",
-      transactionAmount: 500,
+      transactionAmount: data?.declined || 0,
       trendColor: colors.error600,
       trend: "fall",
       iconBgColor1: colors.error100,

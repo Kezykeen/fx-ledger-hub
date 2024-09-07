@@ -24,102 +24,115 @@ import { Controller } from "react-hook-form";
  * @param {React.Ref} [ref] - Reference to the select component.
  * @returns {React.Component} React component.
  */
-export const selectStyles = ({ error }) => ({
-  input: (styles) => ({
-    ...styles,
-    "&:not(.aui-no-focusvisible) :focus-visible": {
-      boxShadow: "none",
-      border: "none",
-    },
-  }),
-  menu: (provided) => ({
-    ...provided,
-    overflowY: "auto",
-    scrollbarColor: "transparent",
-    scrollbarWidth: "thin",
-    "&::-webkit-scrollbar": {
-      width: "7px",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "transparent !important",
-      borderRadius: "2.5px",
-      height: "50px",
-    },
-    "&::-webkit-scrollbar-track": {
-      background: "transparent !important",
-      borderBottomRightRadius: "16px",
-    },
-    "&::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track": {
-      background: "transparent",
-    },
-  }),
-  control: (styles, { isDisabled, isFocused }) => ({
-    ...styles,
-    borderRadius: "4px",
-    outline: "none",
-    cursor: "pointer",
-    border: `1px solid ${
-      error ? colors.red100 : isFocused ? `#f4a261` : colors.N30
-    }`,
-    minHeight: "44px",
-    width: `100%`,
-    color: isDisabled ? "#97a0af" : "#97a0af",
-    backgroundColor: isDisabled ? "#f4f5f7" : colors.white,
-    boxShadow: isFocused && `0 0 0 1px #f4a261`,
-    "&:hover": {
-      border: isFocused
-        ? `1px solid #f4a261`
-        : error
-        ? "1px solid red"
-        : "1px solid #dfe1e6",
-    },
-  }),
-  option: (styles, { isDisabled, isSelected }) => ({
-    ...styles,
-    fontSize: "14px",
-    fontWeight: 400,
-    lineHeight: "20px",
-    cursor: "pointer",
-    color: isDisabled ? "#97a0af" : colors.N700,
-    backgroundColor: isDisabled
-      ? "#f4f5f7"
-      : isSelected
-      ? colors.N30
-      : colors.white,
-    "&:hover": {
-      backgroundColor: isSelected ? colors.N30 : colors.N20,
-    },
-  }),
-  placeholder: (styles) => ({
-    ...styles,
-    fontSize: "14px",
-    fontWeight: 400,
-    lineHeight: "20px",
-    color: "#97a0af",
-  }),
-  valueContainer: (styles) => ({
-    ...styles,
-    borderLeft: "none",
-    fontSize: "14px",
-    minHeight: "40px",
-  }),
-  indicatorSeparator: (styles) => ({
-    ...styles,
-    display: "none",
-    fontSize: "14px",
-  }),
-  dropdownIndicator: (styles) => ({
-    ...styles,
-    color: "#42526E",
-    fontSize: "14px",
-  }),
-  autosizeInput: (styles) => ({
-    ...styles,
-    "&:not(.aui-no-focusvisible) :focus-visible": {
-      boxShadow: "none",
-    },
-  }),
-});
+
+export const selectStyles = ({ error, hasBg }) => {
+  return {
+    input: (styles) => ({
+      ...styles,
+      "&:not(.aui-no-focusvisible) :focus-visible": {
+        boxShadow: "none",
+        border: "none",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      overflowY: "auto",
+      scrollbarColor: "transparent",
+      scrollbarWidth: "thin",
+      "&::-webkit-scrollbar": {
+        width: "7px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "transparent !important",
+        borderRadius: "2.5px",
+        height: "50px",
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "transparent !important",
+        borderBottomRightRadius: "16px",
+      },
+      "&::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track": {
+        background: "transparent",
+      },
+    }),
+    control: (styles, { isDisabled, isFocused }) => ({
+      ...styles,
+      borderRadius: "4px",
+      outline: "none",
+      cursor: "pointer",
+      border: `1px solid ${
+        error
+          ? colors.red100
+          : isFocused
+          ? `#f4a261`
+          : hasBg
+          ? `#ffbb93`
+          : colors.N30
+      }`,
+      minHeight: "44px",
+      width: `100%`,
+      color: hasBg ? colors.gray600 : isDisabled ? "#97a0af" : "#97a0af",
+      backgroundColor: hasBg
+        ? colors.primary50
+        : isDisabled
+        ? "#f4f5f7"
+        : colors.white,
+      boxShadow: isFocused && `0 0 0 1px #f4a261`,
+      "&:hover": {
+        border: isFocused
+          ? `1px solid #f4a261`
+          : error
+          ? `1px solid ${colors.red100}`
+          : "1px solid #dfe1e6",
+      },
+    }),
+    option: (styles, { isDisabled, isSelected }) => ({
+      ...styles,
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "20px",
+      cursor: "pointer",
+      color: isDisabled ? "#97a0af" : colors.N700,
+      backgroundColor: isDisabled
+        ? "#f4f5f7"
+        : isSelected
+        ? colors.N30
+        : colors.white,
+      "&:hover": {
+        backgroundColor: isSelected ? colors.N30 : colors.N20,
+      },
+    }),
+    placeholder: (styles) => ({
+      ...styles,
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "20px",
+      color: "#97a0af",
+    }),
+    valueContainer: (styles) => ({
+      ...styles,
+      borderLeft: "none",
+      fontSize: "14px",
+      minHeight: "40px",
+    }),
+    indicatorSeparator: (styles) => ({
+      ...styles,
+      display: "none",
+      fontSize: "14px",
+    }),
+    dropdownIndicator: (styles) => ({
+      ...styles,
+      color: "#42526E",
+      fontSize: "14px",
+    }),
+    autosizeInput: (styles) => ({
+      ...styles,
+      "&:not(.aui-no-focusvisible) :focus-visible": {
+        boxShadow: "none",
+      },
+    }),
+  };
+};
 
 // eslint-disable-next-line react/display-name
 const SMSelectDropDown = forwardRef(
@@ -143,6 +156,7 @@ const SMSelectDropDown = forwardRef(
       name,
       field,
       noShift = false,
+      hasBg = false,
     },
     ref
   ) => {
@@ -205,10 +219,11 @@ const SMSelectDropDown = forwardRef(
                 isDisabled={disabled}
                 isLoading={loading}
                 value={value}
+                className="react-select"
                 defaultValue={defaultInputValue}
                 isSearchable={searchable}
                 id={id}
-                styles={selectStyles({ error })}
+                styles={selectStyles({ error, hasBg })}
                 components={
                   variant === "simple"
                     ? {}
@@ -231,7 +246,7 @@ const SMSelectDropDown = forwardRef(
             defaultValue={defaultInputValue}
             isSearchable={searchable}
             id={id}
-            styles={selectStyles({ error })}
+            styles={selectStyles({ error, hasBg })}
             components={
               variant === "simple"
                 ? {}

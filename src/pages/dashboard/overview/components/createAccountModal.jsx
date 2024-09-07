@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Modal } from "../../../../components/modal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
-import { fundAccountSchema } from "./validation";
+import { createAccountSchema } from "./validation";
 import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
 import { InputField } from "../../../../components/inputField";
 import { DocumentUpload } from "../../../../components/documentUpload";
@@ -11,36 +11,37 @@ import { useState } from "react";
 import { PopUp } from "../../../../components/popUp";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../components/toastComponent";
-import { currencyOptions } from "../../transactionHistory/components/data";
-import { useGet, usePost } from "../../../../hooks/api";
-import { fundAccountUrl, getAccountByCurrencyUrl } from "../../../../urls";
-import { QueryKeys } from "../../../../constants/enums";
-import { formatSelectItems } from "../../../../utils/helpers.utils";
+import { currencyTypeOptions } from "../../transactionHistory/components/data";
+import { usePost } from "../../../../hooks/api";
+import { createAccountUrl } from "../../../../urls";
+import { CurrencyType, QueryKeys } from "../../../../constants/enums";
 
-const FundModal = ({ isOpen, handleClose }) => {
+const CreateAccountModal = ({
+  isOpen,
+  handleClose,
+  currencyId,
+  asset,
+  currencyType,
+}) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const {
     control,
     register,
     reset,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(fundAccountSchema),
+    resolver: yupResolver(createAccountSchema),
   });
 
-  const selectedCurrency = watch("currency");
-  const selectedAccount = watch("account");
-
-  const { mutate: fundAccount, isPending } = usePost(
-    fundAccountUrl(selectedAccount?.value),
+  const { mutate: createAccount, isPending } = usePost(
+    createAccountUrl(currencyId),
     () => {
       toast.success(
         <ToastComponent
-          title={"Account funded successfully"}
-          message={`Your account has been funded successfully`}
+          title={"Account created successfully"}
+          message={`Your account has been created successfully`}
         />
       );
       setIsConfirmOpen(false);
@@ -49,14 +50,6 @@ const FundModal = ({ isOpen, handleClose }) => {
     QueryKeys.account
   );
 
-  const { data, isLoading: loadingAccounts } = useGet(
-    [QueryKeys.currency, selectedCurrency?.value],
-    getAccountByCurrencyUrl(selectedCurrency?.value),
-    !!selectedCurrency?.value
-  );
-
-  const accounts = formatSelectItems(data?.data?.accounts, "name", "accountId");
-
   const onClose = () => {
     reset();
     handleClose();
@@ -64,48 +57,58 @@ const FundModal = ({ isOpen, handleClose }) => {
 
   const onSubmit = (data) => {
     const payload = {
-      amount: data?.amount,
+      ...data,
+      currencyAccountType: data?.currencyAccountType?.value,
     };
-    fundAccount(payload);
+    createAccount(payload);
   };
 
   return (
     <Modal
       closeHandler={onClose}
       isOpen={isOpen}
-      headerText={`Fund Account`}
-      subText={`You can record your credit transaction below`}
+      headerText={`Add New Account`}
+      subText={`You can add new ${asset} account`}
     >
       <Container onSubmit={handleSubmit(() => setIsConfirmOpen(true))}>
         <InputWrapper>
-          <SMSelectDropDown
-            placeholder={"Select currency"}
-            name="currency"
-            label={"Currency"}
-            control={control}
-            options={currencyOptions}
-            error={!!errors.currency}
-            errorText={errors.currency && errors.currency.message}
-          />
-          <SMSelectDropDown
-            placeholder={"Select account"}
-            name="account"
-            control={control}
-            label={"Account"}
-            options={accounts}
-            loading={loadingAccounts}
-            error={!!errors.account}
-            errorText={errors.account && errors.account.message}
+          <InputField
+            label={`Account Name`}
+            register={register}
+            name="name"
+            placeholder="Enter account name"
+            error={!!errors.name}
+            errorText={errors.name && errors.name.message}
           />
           <InputField
-            label={`Amount`}
+            label={`Account Number`}
             register={register}
-            name="amount"
-            type="number"
-            placeholder="Enter amount"
-            error={!!errors.amount}
-            errorText={errors.amount && errors.amount.message}
+            name="number"
+            placeholder="Enter account number"
+            error={!!errors.number}
+            errorText={errors.number && errors.number.message}
           />
+          <InputField
+            label={`Account Balance`}
+            register={register}
+            name="balance"
+            placeholder="Enter account balance"
+            error={!!errors.balance}
+            errorText={errors.balance && errors.balance.message}
+          />
+          {currencyType === CurrencyType.XFA && (
+            <SMSelectDropDown
+              placeholder={"Select currency account type"}
+              name="currencyAccountType"
+              label={"Currency Account Type"}
+              control={control}
+              options={currencyTypeOptions}
+              error={!!errors.currencyAccountType}
+              errorText={
+                errors.currencyAccountType && errors.currencyAccountType.message
+              }
+            />
+          )}
         </InputWrapper>
         <DocumentUpload
           control={control}
@@ -144,7 +147,7 @@ const FundModal = ({ isOpen, handleClose }) => {
   );
 };
 
-export default FundModal;
+export default CreateAccountModal;
 
 const Container = styled.form`
   display: flex;

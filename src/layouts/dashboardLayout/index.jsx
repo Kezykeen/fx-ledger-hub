@@ -3,10 +3,14 @@ import styled from "styled-components";
 import SideBar from "./components/sideBar";
 import TopNav from "./components/topNav";
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const DashboardLayout = () => {
   const { pathname } = useLocation();
   const outletRef = useRef();
+  const user = useSelector((state) => state.user);
+
+  console.log({ user });
 
   useEffect(() => {
     outletRef.current.scrollTo(0, 0);

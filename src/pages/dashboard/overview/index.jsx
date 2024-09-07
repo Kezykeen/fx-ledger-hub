@@ -9,11 +9,30 @@ import TransactionAnalyticsChart from "./components/transactionAnalyticsChart";
 import RecentTransaction from "./components/recentTransaction";
 import { AnalyticsCard } from "./components/analyticsCard";
 import AccountBalance from "./components/accountBalance";
-
-const tabItems = ["Today", "7 days", "30 days", "12 Months"];
+import { useGet } from "../../../hooks/api";
+import { QueryKeys } from "../../../constants/enums";
+import { overviewUrl, recentTransactionUrl } from "../../../urls";
+import SMSelectDropDown from "../../../components/smSelect/selectDropdown";
+import { teamsOptions } from "../../../constants/data";
+import { tabItems } from "./components/data";
+import { LineLoader } from "../../../components/lineLoader";
 
 const SalesRepOverview = () => {
   const [sortBy, setSortBy] = useState(tabItems[0]);
+  const [selectedTeam, setSelectedTeam] = useState(teamsOptions[0]);
+
+  const { data, isLoading } = useGet(
+    [QueryKeys.dashboard.overview, sortBy.value, selectedTeam.value],
+    overviewUrl({ range: sortBy.value, teams: selectedTeam.value })
+  );
+
+  const { data: recentData } = useGet(
+    [QueryKeys.dashboard.recent],
+    recentTransactionUrl()
+  );
+
+  console.log({ recentData });
+
   return (
     <Container>
       <PageHeader
@@ -21,12 +40,22 @@ const SalesRepOverview = () => {
         subTitle={"Here is an overview of all your transactions "}
       />
       <AccountBalance />
-      <TabHeaderless
-        isActive={sortBy}
-        items={tabItems}
-        onClick={(str) => setSortBy(str)}
-      />
-      <TransactionOverview />
+      <TabWrapper>
+        <TabHeaderless
+          isActive={sortBy}
+          items={tabItems}
+          onClick={(str) => setSortBy(str)}
+        />
+        <SMSelectDropDown
+          options={teamsOptions}
+          value={selectedTeam}
+          onChange={setSelectedTeam}
+          width="125px"
+          searchable={false}
+          hasBg
+        />
+      </TabWrapper>
+      <TransactionOverview data={data?.getTransactionOverviewDTO} />
       <CardsWrapper>
         <AnalyticsCard />
         <Wrapper>
@@ -37,7 +66,7 @@ const SalesRepOverview = () => {
                 <TransactionAnalyticsCard
                   icon={<CameraIcon />}
                   title={"Pending Payments"}
-                  amount={120000}
+                  amount={data?.getTransactionOverviewDTO?.pendingPayment || 0}
                   link={"/payments"}
                   main
                 />
@@ -53,13 +82,13 @@ const SalesRepOverview = () => {
                   <Flex>
                     <TransactionAnalyticsCard
                       title={"Customer Refunds"}
-                      amount={500}
+                      amount={data?.getPaymentAnalyticsDTO?.customerRefund || 0}
                       link={"/refund-history"}
                       bgColor={"#E4E7EC66"}
                     />
                     <TransactionAnalyticsCard
                       title={"Supplier Refunds"}
-                      amount={500}
+                      amount={data?.getPaymentAnalyticsDTO?.supplierRefund || 0}
                       link={"/refund-history"}
                       bgColor={"#E4E7EC66"}
                     />
@@ -78,13 +107,14 @@ const SalesRepOverview = () => {
             icon={<MoneyIcon />}
             scale={false}
             title={"Total Upfronts"}
-            amount={1200}
+            amount={data?.getPaymentAnalyticsDTO?.upfronts || 0}
             link={"/payments"}
             bgColor={"#FFD7BF80"}
           />
         </UpFrontWrapper>
       </TransactionAnalyticsWrapper>
-      <RecentTransaction />
+      <RecentTransaction data={recentData?.data} />
+      <LineLoader loading={isLoading} />
     </Container>
   );
 };
@@ -102,6 +132,12 @@ const Container = styled.div`
 const CardsWrapper = styled.div`
   display: flex;
   gap: 24px;
+`;
+
+const TabWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Wrapper = styled.div`

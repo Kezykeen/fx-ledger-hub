@@ -63,7 +63,7 @@ export const CustomerDetailsOverview = () => {
 
   const exportTextGroup = [
     {
-      name: "CFA",
+      name: "XFA",
       onClick: () => {},
     },
     {

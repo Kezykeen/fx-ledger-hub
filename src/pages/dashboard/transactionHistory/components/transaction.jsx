@@ -73,7 +73,7 @@ const Transactions = () => {
   const data = {
     data: [
       {
-        currency: "CFA to USDT",
+        currency: "XFA to USDT",
         rate: "500",
         incoming: "1000",
         incomingCurrency: "USDT",
@@ -84,7 +84,7 @@ const Transactions = () => {
         customerDetails: "John Doe",
       },
       {
-        currency: "CFA to USDT",
+        currency: "XFA to USDT",
         rate: "500",
         incoming: "1000",
         incomingCurrency: "USDT",

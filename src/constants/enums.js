@@ -11,7 +11,7 @@ export const DateRangeQueryType = {
 export const CurrencyType = {
   USDT: 1,
   Dollar: 2,
-  XFA: 3,
+  XAF: 3,
   RMB: 4,
   Naira: 5,
   Zelle: 6,
@@ -26,7 +26,7 @@ export const CurrencyAccountType = {
 export const Department = {
   USDT: 1,
   Dollar: 2,
-  XFA: 3,
+  XAF: 3,
   RMB: 4,
   Naira: 5,
   Zelle: 6,
@@ -43,4 +43,42 @@ export const QueryKeys = {
   account: "account",
   currency: "currency",
   customer: "customer",
+  trade: {
+    getAll: "trades",
+    getById: "trade",
+    adminActions: "trade-admin-actions",
+  },
+};
+
+export const TradeStatus = {
+  Pending: 1,
+  Approved: 2,
+  Declined: 3,
+};
+
+export const CurrencyTradeStatus = {
+  Cancelled: 0,
+  PendingCOO: 1,
+  PendingCFO: 2,
+  Approved: 3,
+  Rejected: 4,
+};
+
+export const ApprovalStatus = {
+  NOT_STARTED: 0,
+  PENDING: 1,
+  APPROVED: 2,
+  REJECTED: 3,
+};
+
+export const ApprovalType = {
+  APPROVED: 1,
+  REJECTED: 2,
+};
+
+export const userRoles = {
+  CFO: `CFO`,
+  COO: `COO`,
+  SUPERADMIN: `SUPERADMIN`,
+  SalesRep: `SalesRep`,
 };

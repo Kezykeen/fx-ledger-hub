@@ -7,26 +7,32 @@ import { InitiateTransactionSchema } from "./components/validation";
 import SMSelectDropDown from "../../../components/smSelect/selectDropdown";
 import { currencyOptions } from "../transactionHistory/components/data";
 import { InputField } from "../../../components/inputField";
-import { customerData, transactionMeansOptions } from "./components/data";
+import { transactionMeansOptions } from "./components/data";
 import { CheckBox } from "../../../components/checkbox";
 import { useEffect, useState } from "react";
 import { DocumentUpload } from "../../../components/documentUpload";
 import { Button } from "../../../components/button";
 import AccountModal from "./components/accountModal";
-import { findValueAndLabel } from "../../../utils/helpers.utils";
+import {
+  rateCurrencyConversion,
+  findValueAndLabel,
+  formatSelectItems,
+} from "../../../utils/helpers.utils";
+import { useGet } from "../../../hooks/api";
+import { QueryKeys } from "../../../constants/enums";
+import { getCustomerDropdownUrl } from "../../../urls";
 
 export const InitiateTransaction = ({ data }) => {
   const [isFullPayment, setIsFullPayment] = useState(false);
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
   const [formData, setFormData] = useState();
 
-  const parseCustomers = () =>
-    customerData.map((x) => ({
-      label: x,
-      value: x,
-    }));
+  const { data: customerData } = useGet(
+    [QueryKeys.customer],
+    getCustomerDropdownUrl()
+  );
 
-  const allCustomers = parseCustomers();
+  const allCustomers = formatSelectItems(customerData?.data, "fullName", "id");
 
   const {
     control,
@@ -54,22 +60,55 @@ export const InitiateTransaction = ({ data }) => {
       incomingCurrencyAmount: data?.incomingCurrencyAmount || "",
       amountCustomerPaid: data?.amountCustomerPaid || "",
       amountCustomerIsOwing: data?.amountCustomerIsOwing || "",
+      customerIsOwing: true,
       customerReceipts: data?.customerReceipts || null,
       supplierReceipts: data?.supplierReceipts || null,
     },
   });
 
+  const outgoingCurrency = watch("outgoingCurrency");
+  const incomingCurrency = watch("incomingCurrency");
   const amountValue = watch("incomingCurrencyAmount");
+  const amountCustomerPaid = watch("amountCustomerPaid");
   const rateValue = watch("rate");
 
   useEffect(() => {
-    !isNaN(amountValue) &&
-      !isNaN(rateValue) &&
-      setValue("outgoingCurrencyAmount", rateValue * amountValue);
-  }, [amountValue, rateValue, setValue]);
+    if (!isNaN(amountValue) && !isNaN(rateValue)) {
+      const outgoingAmount = rateCurrencyConversion(
+        rateValue,
+        amountValue,
+        outgoingCurrency?.label,
+        incomingCurrency?.label
+      );
+
+      setValue("outgoingCurrencyAmount", outgoingAmount);
+    }
+  }, [
+    amountValue,
+    rateValue,
+    setValue,
+    incomingCurrency?.label,
+    outgoingCurrency?.label,
+  ]);
+
+  useEffect(() => {
+    if (!isNaN(amountValue) && !isNaN(amountCustomerPaid)) {
+      setValue(
+        "amountCustomerIsOwing",
+        Number(amountValue) > Number(amountCustomerPaid)
+          ? amountValue - amountCustomerPaid
+          : 0
+      );
+    }
+  }, [amountValue, amountCustomerPaid, setValue]);
 
   const handleCheck = (e) => {
     setIsFullPayment(e.target.checked);
+    setValue("customerIsOwing", !e.target.checked);
+    if (e.target.checked) {
+      setValue("amountCustomerIsOwing", "");
+      setValue("amountCustomerPaid", "");
+    }
   };
 
   const onSubmit = (data) => {
@@ -90,18 +129,6 @@ export const InitiateTransaction = ({ data }) => {
           <EntryBox>
             <FlexBetween>
               <SMSelectDropDown
-                placeholder={"Select incoming currency"}
-                name="incomingCurrency"
-                label={"Incoming Currency"}
-                control={control}
-                options={currencyOptions}
-                error={!!errors.incomingCurrency}
-                errorText={
-                  errors.incomingCurrency && errors.incomingCurrency.message
-                }
-                noShift
-              />
-              <SMSelectDropDown
                 placeholder={"Select outgoing currency"}
                 name="outgoingCurrency"
                 control={control}
@@ -113,11 +140,24 @@ export const InitiateTransaction = ({ data }) => {
                 }
                 noShift
               />
+              <SMSelectDropDown
+                placeholder={"Select incoming currency"}
+                name="incomingCurrency"
+                label={"Incoming Currency"}
+                control={control}
+                options={currencyOptions}
+                error={!!errors.incomingCurrency}
+                errorText={
+                  errors.incomingCurrency && errors.incomingCurrency.message
+                }
+                noShift
+              />
             </FlexBetween>
             <FlexBetween>
               <InputField
                 label={`Rate`}
                 register={register}
+                step="any"
                 type="number"
                 name="rate"
                 placeholder="Enter rate"
@@ -199,6 +239,7 @@ export const InitiateTransaction = ({ data }) => {
                   register={register}
                   name="amountCustomerIsOwing"
                   placeholder="Enter amount pending"
+                  disabled
                 />
               </FlexBetween>
             )}

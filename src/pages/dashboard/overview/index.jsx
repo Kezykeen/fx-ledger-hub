@@ -10,14 +10,21 @@ import RecentTransaction from "./components/recentTransaction";
 import { AnalyticsCard } from "./components/analyticsCard";
 import AccountBalance from "./components/accountBalance";
 import { useGet } from "../../../hooks/api";
-import { QueryKeys } from "../../../constants/enums";
+import { QueryKeys, userRoles } from "../../../constants/enums";
 import { overviewUrl, recentTransactionUrl } from "../../../urls";
 import SMSelectDropDown from "../../../components/smSelect/selectDropdown";
 import { teamsOptions } from "../../../constants/data";
 import { tabItems } from "./components/data";
 import { LineLoader } from "../../../components/lineLoader";
+import { useSelector } from "react-redux";
+import { ApprovalCard } from "./components/approvalCard";
 
 const SalesRepOverview = () => {
+  const user = useSelector((state) => state?.user);
+  const userRole = user?.roles[0];
+  const isSalesRep =
+    userRole?.toLowerCase() === userRoles.SalesRep?.toLowerCase();
+
   const [sortBy, setSortBy] = useState(tabItems[0]);
   const [selectedTeam, setSelectedTeam] = useState(teamsOptions[0]);
 
@@ -39,25 +46,31 @@ const SalesRepOverview = () => {
         title={"Welcome back, Amara"}
         subTitle={"Here is an overview of all your transactions "}
       />
-      <AccountBalance />
+      {!isSalesRep && <AccountBalance />}
       <TabWrapper>
         <TabHeaderless
           isActive={sortBy}
           items={tabItems}
           onClick={(str) => setSortBy(str)}
         />
-        <SMSelectDropDown
-          options={teamsOptions}
-          value={selectedTeam}
-          onChange={setSelectedTeam}
-          width="125px"
-          searchable={false}
-          hasBg
-        />
+        {!isSalesRep && (
+          <SMSelectDropDown
+            options={teamsOptions}
+            value={selectedTeam}
+            onChange={setSelectedTeam}
+            width="125px"
+            searchable={false}
+            hasBg
+          />
+        )}
       </TabWrapper>
       <TransactionOverview data={data?.getTransactionOverviewDTO} />
       <CardsWrapper>
-        <AnalyticsCard />
+        {isSalesRep ? (
+          <AnalyticsCard department={user?.department} />
+        ) : (
+          <ApprovalCard />
+        )}
         <Wrapper>
           <p>Payment Analytics</p>
           <div>

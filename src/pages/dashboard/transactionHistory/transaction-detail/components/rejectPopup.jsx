@@ -6,12 +6,18 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../../components/toastComponent";
+import { ApprovalType, QueryKeys } from "../../../../../constants/enums";
+import { usePut } from "../../../../../hooks/api";
+import { adminActionTradeUrl } from "../../../../../urls";
+import { useNavigate } from "react-router-dom";
 
 const rejectSchema = yup.object().shape({
   reason: yup.string().required("please input reason"),
 });
 
-const RejectPopup = ({ isOpen, closeModal }) => {
+const RejectPopup = ({ isOpen, closeModal, id }) => {
+  const navigate = useNavigate();
+
   const {
     register,
     reset,
@@ -21,20 +27,32 @@ const RejectPopup = ({ isOpen, closeModal }) => {
     resolver: yupResolver(rejectSchema),
   });
 
+  const { mutate: adminAction, isPending } = usePut(
+    adminActionTradeUrl(id),
+    () => {
+      toast.success(
+        <ToastComponent
+          title={"Transaction Declined!"}
+          message={"You have successfully declined this transaction"}
+        />
+      );
+      handleClose();
+      navigate("/transactions");
+    },
+    [QueryKeys.trade.getById]
+  );
+
   const handleClose = () => {
     reset();
     closeModal();
   };
 
   const onSubmit = (values) => {
-    toast.success(
-      <ToastComponent
-        title={"Transaction Declined!"}
-        message={"You have successfully declined this transaction"}
-      />
-    );
-    console.log({ values });
-    handleClose();
+    const payload = {
+      approvalType: ApprovalType.REJECTED,
+      comment: values?.reason,
+    };
+    adminAction(payload);
   };
 
   return (
@@ -42,6 +60,7 @@ const RejectPopup = ({ isOpen, closeModal }) => {
       open={isOpen}
       handleClose={handleClose}
       onSubmit={handleSubmit(onSubmit)}
+      isLoading={isPending}
       title={"Decline Transaction?"}
       subtitle={"Are you sure you want to decline this transaction?"}
     >

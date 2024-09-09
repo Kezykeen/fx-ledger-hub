@@ -9,7 +9,7 @@ import {
 import { InitiateTransactionSchema } from "../../initiateTransaction/components/validation";
 import {
   findValueAndLabel,
-  parseSelectFormData,
+  // parseSelectFormData,
 } from "../../../../utils/helpers.utils";
 import { currencyOptions } from "../components/data";
 import { PageHeader } from "../../../../components/pageHeader";
@@ -19,12 +19,21 @@ import { InputField } from "../../../../components/inputField";
 import { CheckBox } from "../../../../components/checkbox";
 import { DocumentUpload } from "../../../../components/documentUpload";
 import { Button } from "../../../../components/button";
-import { PopUp } from "../../../../components/popUp";
 import { useLocation, useNavigate } from "react-router-dom";
+import AccountModal from "./components/accountModal";
+
+const accountData = {
+  debitAccount: [
+    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
+  ],
+  creditAccount: [
+    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
+  ],
+};
 
 export const EditTransaction = ({ data }) => {
   const [isFullPayment, setIsFullPayment] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const backPath = pathname.split("/").slice(0, 3).join("/");
@@ -85,11 +94,11 @@ export const EditTransaction = ({ data }) => {
     setIsFullPayment(e.target.checked);
   };
 
-  const onSubmit = (data) => {
-    const parsedData = parseSelectFormData(data);
-    setIsConfirmOpen(false);
-    console.log({ parsedData });
-  };
+  // const onSubmit = (data) => {
+  //   const parsedData = parseSelectFormData(data);
+  //   setIsAccountModalOpen(false);
+  //   console.log({ parsedData });
+  // };
 
   return (
     <Container>
@@ -98,7 +107,7 @@ export const EditTransaction = ({ data }) => {
         subTitle={"You can initiate a new exchange transaction below"}
       />
       <Divider />
-      <Form onSubmit={handleSubmit(() => setIsConfirmOpen(true))}>
+      <Form onSubmit={handleSubmit(() => setIsAccountModalOpen(true))}>
         <EntryWrapper>
           <EntryTitle>Exchange Details</EntryTitle>
           <EntryBox>
@@ -252,12 +261,10 @@ export const EditTransaction = ({ data }) => {
           />
         </BtnWrapper>
       </Form>
-      <PopUp
-        open={isConfirmOpen}
-        handleClose={() => setIsConfirmOpen(false)}
-        onSubmit={handleSubmit(onSubmit)}
-        title={"Confirm Changes?"}
-        subtitle={"Are you sure you want to proceed to save this changes?"}
+      <AccountModal
+        closeHandler={() => setIsAccountModalOpen(false)}
+        isOpen={isAccountModalOpen}
+        data={accountData}
       />
     </Container>
   );

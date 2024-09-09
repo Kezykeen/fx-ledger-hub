@@ -1,5 +1,4 @@
 import SMSelectDropDown from "../../../../components/smSelect/selectDropdown";
-import { accountDetailsOptions } from "./data";
 import { InputField } from "../../../../components/inputField";
 import { AddIcon, DeleteIcon } from "../../../../assets/svgs";
 import styled from "styled-components";
@@ -9,10 +8,11 @@ const AccountEntry = ({
   handleChange,
   handleAdd,
   handleRemove,
+  options = [],
+  loading,
   name,
   label,
 }) => {
-  console.log({ entryArray });
   return (
     <Container>
       <EntryTitle>{`${label} Account Details`}</EntryTitle>
@@ -22,11 +22,12 @@ const AccountEntry = ({
             <SMSelectDropDown
               placeholder={`Select ${label} Account`}
               label={`${label} Account Details ${index + 1}`}
-              options={accountDetailsOptions}
+              options={options}
               value={item.accountId}
               onChange={(selectedOption) =>
                 handleChange(name, index, "accountId", selectedOption)
               }
+              loading={loading}
             />
             <InputField
               label={`Amount ${index + 1}`}

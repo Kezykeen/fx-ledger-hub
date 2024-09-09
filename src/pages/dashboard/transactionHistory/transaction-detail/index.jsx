@@ -4,38 +4,36 @@ import { Divider } from "..";
 import { colors } from "../../../../theme/colors";
 import { DownloadMini } from "../../../../assets/svgs";
 import ActionButtons from "./components/actionButtons";
-
-const transaction = {
-  initiatorId: "1234RTY",
-  salesRepName: "John Doe",
-  incomingAmount: 1200,
-  outgoingAmount: 12000,
-  date: "June 4, 2023",
-  incomingCurrency: "Naira",
-  rate: 550,
-  customerName: "John Doe",
-  status: "Paid",
-  debitAccount: "82378237832",
-  debitAmount: 1200,
-  creditAccount: "82378237832",
-  creditAmount: 1200,
-  cooId: "12334",
-  bookKeeperName: "John Doe",
-  cooApprovalDate: "John Doe",
-  cooRejectReason: "Any Reason for rejecting can be found here",
-  cfoId: "12334",
-  cfoName: "John Doe",
-  cfoApprovalDate: "John Doe",
-  cfoRejectReason: "Any Reason for rejecting can be found here",
-};
+import { useLocation } from "react-router-dom";
+import { useGet } from "../../../../hooks/api";
+import { getSingleTradeUrl } from "../../../../urls";
+import { ApprovalStatus, QueryKeys } from "../../../../constants/enums";
+import { LineLoader } from "../../../../components/lineLoader";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
+dayjs.extend(localizedFormat);
 
 export const TransactionDetailsOverview = () => {
+  const { pathname, hash } = useLocation();
+  const id = pathname?.split("/").pop();
+  const urlHash = hash.substring(1);
+
+  const { data: transaction, isLoading } = useGet(
+    [QueryKeys.trade.getById, id],
+    getSingleTradeUrl(id)
+  );
+  console.log({ transaction });
+  const sortBySortOrder = (data = []) => {
+    return data.sort((a, b) => a.sortOrder - b.sortOrder);
+  };
+  const sortedApprovals = sortBySortOrder(transaction?.data?.approvals);
   return (
     <PageContainer>
       <PageHeader
         title={"Transaction Details"}
         subTitle={"You are viewing transaction details below."}
-        endComponent={<ActionButtons />}
+        endComponent={urlHash === "pending-approval" && <ActionButtons />}
       />
       <Divider />
       <TransactionInitiatorGrid>
@@ -44,12 +42,12 @@ export const TransactionDetailsOverview = () => {
           <Divider $margin="8px 0 16px" />
           <FlexCol $gap={"0.3rem"}>
             <DetailRow>
-              <Label>ID</Label>
-              <Value>{transaction?.initiatorId}</Value>
+              <Label>Sales Rep Name</Label>
+              <Value>{transaction?.data?.createdByName}</Value>
             </DetailRow>
             <DetailRow>
-              <Label>Sales Rep Name</Label>
-              <Value>{transaction?.salesRepName}</Value>
+              <Label>Date Created</Label>
+              <Value>{dayjs(transaction?.data?.createdOn).format("LL")}</Value>
             </DetailRow>
           </FlexCol>
         </ColumnWrapper>
@@ -61,13 +59,19 @@ export const TransactionDetailsOverview = () => {
             <DetailRow>
               <Label>Incoming Amount</Label>
               <LabelTwo>
-                XFA <span>{transaction?.incomingAmount}</span>
+                {transaction?.data?.incomingCurrencyTypeName}{" "}
+                <span>
+                  {formatNumberWithCommas(transaction?.data?.incomingAmount)}
+                </span>
               </LabelTwo>
             </DetailRow>
             <DetailRow>
               <Label>Outgoing Amount</Label>
               <LabelTwo>
-                N <span>{transaction?.outgoingAmount}</span>
+                {transaction?.data?.outgoingCurrencyTypeName}{" "}
+                <span>
+                  {formatNumberWithCommas(transaction?.data?.outgoingAmount)}
+                </span>
               </LabelTwo>
             </DetailRow>
           </FlexCol>
@@ -84,7 +88,8 @@ export const TransactionDetailsOverview = () => {
           <DetailRow>
             <Value>Summary</Value>
             <Value>
-              <Label>Date</Label>: {transaction?.date}
+              <Label>Date</Label>:{" "}
+              {dayjs(transaction?.data?.createdOn).format("LL")}
             </Value>
           </DetailRow>
           <Divider $margin="12px 0 16px" />
@@ -96,13 +101,13 @@ export const TransactionDetailsOverview = () => {
             </DetailRow>
             <DetailRow>
               <Value style={{ width: "100%", color: colors.primary300 }}>
-                {transaction?.incomingCurrency}
+                {transaction?.data?.incomingCurrencyTypeName}
               </Value>
               <Value style={{ width: "100%", color: colors.primary300 }}>
-                {transaction?.rate}
+                {transaction?.data?.rate}
               </Value>
               <Value style={{ width: "100%" }}>
-                {transaction?.customerName}
+                {transaction?.data?.customerName}
               </Value>
             </DetailRow>
           </FlexCol>
@@ -114,19 +119,24 @@ export const TransactionDetailsOverview = () => {
           </DetailRow>
           <Divider $margin="12px 0 16px" />
           <DetailRow flexWrap>
-            <FlexCol>
-              <Label>Amount Paid</Label>
-              <Value>$1200</Value>
-            </FlexCol>
-            <FlexCol>
-              <Label>Amount Owned</Label>
-              <Value>$1200</Value>
-            </FlexCol>
+            {transaction?.data?.customerIsOwing && (
+              <>
+                <FlexCol>
+                  <Label>Amount Paid</Label>
+                  <Value>{transaction?.data?.amountCustomerPaid}</Value>
+                </FlexCol>
+                <FlexCol>
+                  <Label>Amount Owed</Label>
+                  <Value>{transaction?.data?.amountCustomerIsOwing}</Value>
+                </FlexCol>
+              </>
+            )}
+
             <FlexCol>
               <Label>Status</Label>
               <Value>
-                <StatusBadge $status={transaction?.status}>
-                  {transaction?.status}
+                <StatusBadge $status={transaction?.data?.customerIsOwing}>
+                  {transaction?.data?.customerIsOwing ? `Owing` : `Paid`}
                 </StatusBadge>
               </Value>
             </FlexCol>
@@ -139,7 +149,7 @@ export const TransactionDetailsOverview = () => {
                 </ReceiptButton>
               </Value>
             </FlexCol>
-            <FlexCol>
+            {/* <FlexCol>
               <Label>Supplier Receipt</Label>
               <Value>
                 <ReceiptButton href="#">
@@ -147,104 +157,141 @@ export const TransactionDetailsOverview = () => {
                   <span>Receipt</span>
                 </ReceiptButton>
               </Value>
-            </FlexCol>
+            </FlexCol> */}
           </DetailRow>
         </PaymentStatusBox>
 
         <TransactionAccountDetails>
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>Debit Account Details</SectionTitle>
             <Divider $margin="12px 0 16px" />
-            <FlexCol $gap={"0.8rem"}>
-              <DetailRow>
-                <Label>Debit Account</Label>
-                <Value>{transaction?.debitAccount}</Value>
-              </DetailRow>
-              <DetailRow>
-                <Label>Amount</Label>
-                <LabelTwo>
-                  XFA <span>{transaction?.outgoingAmount}</span>
-                </LabelTwo>
-              </DetailRow>
+            <FlexCol $gap={"1rem"}>
+              {transaction?.data?.accountsToDebit?.map((x, idx) => (
+                <FlexCol $gap={"0.3rem"} key={idx}>
+                  <DetailRow>
+                    <Label>Debit Account</Label>
+                    <Value>{x?.accountName}</Value>
+                  </DetailRow>
+                  <DetailRow>
+                    <Label>Amount</Label>
+                    <LabelTwo>
+                      {transaction?.data?.outgoingCurrencyTypeName}{" "}
+                      <span>{x?.amount}</span>
+                    </LabelTwo>
+                  </DetailRow>
+                </FlexCol>
+              ))}
             </FlexCol>
           </ColumnWrapper>
 
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>Credit Account Details</SectionTitle>
             <Divider $margin="12px 0 16px" />
-            <FlexCol $gap={"0.8rem"}>
-              <DetailRow>
-                <Label>Debit Account</Label>
-                <Value>{transaction?.debitAccount}</Value>
-              </DetailRow>
-              <DetailRow>
-                <Label>Amount</Label>
-                <LabelTwo>
-                  XFA <span>{transaction?.outgoingAmount}</span>
-                </LabelTwo>
-              </DetailRow>
+            <FlexCol $gap={"1rem"}>
+              {transaction?.data?.accountsToCredit?.map((x, idx) => (
+                <FlexCol $gap={"0.3rem"} key={idx}>
+                  <DetailRow>
+                    <Label>Credit Account</Label>
+                    <Value>{x?.accountName}</Value>
+                  </DetailRow>
+                  <DetailRow>
+                    <Label>Amount</Label>
+                    <LabelTwo>
+                      {transaction?.data?.incomingCurrencyTypeName}{" "}
+                      <span>{x?.amount}</span>
+                    </LabelTwo>
+                  </DetailRow>
+                </FlexCol>
+              ))}
             </FlexCol>
           </ColumnWrapper>
         </TransactionAccountDetails>
 
         <CommentWrapper>
-          <ColumnWrapper bg={colors.white}>
-            <SectionTitle>COO Comments</SectionTitle>
+          <ColumnWrapper $bg={colors.white}>
+            <ColumnTitleSection>
+              <SectionTitle>C0O Comments</SectionTitle>
+              <ApprovalStatusBadge $status={sortedApprovals[0]?.approvalStatus}>
+                {sortedApprovals[0]?.approvalStatusName}
+              </ApprovalStatusBadge>
+            </ColumnTitleSection>
             <Divider $margin="12px 0 16px" />
             <FlexCol $gap={"0.8rem"}>
               <DetailRow
                 style={{ justifyContent: "space-between", width: "100%" }}
               >
                 <FlexCol $gap={"0.3rem"}>
-                  <Label>ID</Label>
-                  <Value>{transaction?.cooId}</Value>
+                  <Label>COO Name</Label>
+                  <Value>{sortedApprovals[0]?.fullName}</Value>
                 </FlexCol>
                 <FlexCol $gap={"0.3rem"}>
-                  <Label>Book Keeper Name</Label>
-                  <Value>{transaction?.bookKeeperName}</Value>
+                  <Label>COO Email</Label>
+                  <Value>{sortedApprovals[0]?.userName}</Value>
                 </FlexCol>
-                <FlexCol $gap={"0.3rem"}>
-                  <Label>Date Approved</Label>
-                  <Value>{transaction?.date}</Value>
-                </FlexCol>
+                {sortedApprovals[0]?.dateApproved && (
+                  <FlexCol $gap={"0.3rem"}>
+                    <Label>Date Approved</Label>
+                    <Value>
+                      {dayjs(sortedApprovals[0]?.dateApproved).format("LL")}
+                    </Value>
+                  </FlexCol>
+                )}
               </DetailRow>
-              <FlexCol $gap={"0.3rem"}>
-                <Label>Reason For Rejecting</Label>
-                <Value>Any Reason for rejecting can be found here</Value>
-              </FlexCol>
+              {sortedApprovals[0]?.comment && (
+                <FlexCol $gap={"0.3rem"}>
+                  <Label>Reason For Rejecting</Label>
+                  <Value>{sortedApprovals[0]?.comment}</Value>
+                </FlexCol>
+              )}
             </FlexCol>
           </ColumnWrapper>
         </CommentWrapper>
 
-        <CommentWrapper>
-          <ColumnWrapper bg={colors.white}>
-            <SectionTitle>CFO Comments</SectionTitle>
-            <Divider $margin="12px 0 16px" />
-            <FlexCol $gap={"0.8rem"}>
-              <DetailRow
-                style={{ justifyContent: "space-between", width: "100%" }}
-              >
-                <FlexCol $gap={"0.3rem"}>
-                  <Label>ID</Label>
-                  <Value>{transaction?.cfoId}</Value>
-                </FlexCol>
-                <FlexCol $gap={"0.3rem"}>
-                  <Label>CFO Name</Label>
-                  <Value>{transaction.cfoName}</Value>
-                </FlexCol>{" "}
-                <FlexCol $gap={"0.3rem"}>
-                  <Label>Date Approved</Label>
-                  <Value>{transaction?.date}</Value>
-                </FlexCol>
-              </DetailRow>
-              <FlexCol $gap={"0.3rem"}>
-                <Label>Reason For Rejecting</Label>
-                <Value>Any Reason for rejecting can be found here</Value>
+        {sortedApprovals[1]?.approvalStatus !== ApprovalStatus.NOT_STARTED && (
+          <CommentWrapper>
+            <ColumnWrapper $bg={colors.white}>
+              <ColumnTitleSection>
+                <SectionTitle>CFO Comments</SectionTitle>
+                <ApprovalStatusBadge
+                  $status={sortedApprovals[1]?.approvalStatus}
+                >
+                  {sortedApprovals[1]?.approvalStatusName}
+                </ApprovalStatusBadge>
+              </ColumnTitleSection>
+              <Divider $margin="12px 0 16px" />
+              <FlexCol $gap={"0.8rem"}>
+                <DetailRow
+                  style={{ justifyContent: "space-between", width: "100%" }}
+                >
+                  <FlexCol $gap={"0.3rem"}>
+                    <Label>CFO Name</Label>
+                    <Value>{sortedApprovals[1]?.fullName}</Value>
+                  </FlexCol>
+                  <FlexCol $gap={"0.3rem"}>
+                    <Label>CFO Email</Label>
+                    <Value>{sortedApprovals[1]?.userName}</Value>
+                  </FlexCol>{" "}
+                  {sortedApprovals[1]?.dateApproved && (
+                    <FlexCol $gap={"0.3rem"}>
+                      <Label>Date Approved</Label>
+                      <Value>
+                        {dayjs(sortedApprovals[1]?.dateApproved).format("LL")}
+                      </Value>
+                    </FlexCol>
+                  )}
+                </DetailRow>
+                {sortedApprovals[1]?.comment && (
+                  <FlexCol $gap={"0.3rem"}>
+                    <Label>Reason For Rejecting</Label>
+                    <Value>{sortedApprovals[1]?.comment}</Value>
+                  </FlexCol>
+                )}
               </FlexCol>
-            </FlexCol>
-          </ColumnWrapper>
-        </CommentWrapper>
+            </ColumnWrapper>
+          </CommentWrapper>
+        )}
       </TransactionSummary>
+      <LineLoader loading={isLoading} />
     </PageContainer>
   );
 };
@@ -255,9 +302,15 @@ const PageContainer = styled.div`
 `;
 
 const ColumnWrapper = styled.div`
-  background-color: ${({ bg }) => bg ?? "#f8f8f8"};
+  background-color: ${({ $bg }) => $bg ?? "#f8f8f8"};
   border-radius: 8px;
   padding: 20px 16px 19px;
+`;
+
+const ColumnTitleSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const TransactionInitiatorGrid = styled.div`
@@ -354,10 +407,27 @@ const PaymentStatusBox = styled.div`
 `;
 
 const StatusBadge = styled.span`
-  background-color: ${(props) =>
-    props.$status === "Paid" ? "#d4edda" : "#f8d7da"};
-  color: ${(props) => (props.$status === "Paid" ? "#155724" : "#721c24")};
+  background-color: ${(props) => (!props.$status ? "#D1FADF" : "#FEE4E2")};
+  color: ${(props) => (!props.$status ? "#027A48" : "#D92D20")};
   padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+`;
+
+const ApprovalStatusBadge = styled.span`
+  background-color: ${(props) =>
+    props.$status === ApprovalStatus.PENDING
+      ? `#fd853a33`
+      : props.$status === ApprovalStatus.APPROVED
+      ? "#D1FADF"
+      : "#FEE4E2"};
+  color: ${(props) =>
+    props.$status === ApprovalStatus.PENDING
+      ? `#000000`
+      : props.$status === ApprovalStatus.APPROVED
+      ? "#027A48"
+      : "#D92D20"};
+  padding: 5px 20px;
   border-radius: 20px;
   font-size: 14px;
 `;

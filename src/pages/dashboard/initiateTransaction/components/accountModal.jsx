@@ -4,6 +4,10 @@ import styled from "styled-components";
 import AccountEntry from "./accountEntry";
 import { useState } from "react";
 import SummaryModal from "./summaryModal";
+import { getAccountByCurrencyUrl } from "../../../../urls";
+import { useGet } from "../../../../hooks/api";
+import { QueryKeys } from "../../../../constants/enums";
+import { formatSelectItems } from "../../../../utils/helpers.utils";
 
 const initialObj = {
   outgoingCurrencyDebitAccounts: [{ accountId: null, amount: "" }],
@@ -14,8 +18,30 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [formData, setFormData] = useState(initialObj);
   const [summaryData, setSummaryData] = useState();
-
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const { data: incomingData, isLoading: loadingIncoming } = useGet(
+    [QueryKeys.currency, data?.incomingCurrency?.value],
+    getAccountByCurrencyUrl(data?.incomingCurrency?.value),
+    !!data?.incomingCurrency?.value
+  );
+
+  const { data: outgoingData, isLoading: loadingOutgoing } = useGet(
+    [QueryKeys.currency, data?.outgoingCurrency?.value],
+    getAccountByCurrencyUrl(data?.outgoingCurrency?.value),
+    !!data?.outgoingCurrency?.value
+  );
+
+  const incomingAccounts = formatSelectItems(
+    incomingData?.data?.accounts,
+    "name",
+    "accountId"
+  );
+  const outgoingAccounts = formatSelectItems(
+    outgoingData?.data?.accounts,
+    "name",
+    "accountId"
+  );
 
   const validateForm = (updatedFormData) => {
     return Object.values(updatedFormData).every((accountArray) =>
@@ -90,6 +116,8 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
             handleChange={handleChange}
             handleAdd={handleAdd}
             handleRemove={handleRemove}
+            loading={loadingOutgoing}
+            options={outgoingAccounts}
             name="outgoingCurrencyDebitAccounts"
             label="Debit"
           />
@@ -98,6 +126,8 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
             handleChange={handleChange}
             handleAdd={handleAdd}
             handleRemove={handleRemove}
+            loading={loadingIncoming}
+            options={incomingAccounts}
             name="incomingCurrencyCreditAccounts"
             label="Credit"
           />
@@ -105,13 +135,13 @@ const AccountModal = ({ isOpen, closeHandler, data }) => {
             <Button
               buttonClass={"outline"}
               label={"Go Back"}
-              width={`47%`}
+              width={`48%`}
               onClick={handleClose}
             />
             <Button
               buttonClass={"primary"}
               label={"Continue"}
-              width={`47%`}
+              width={`48%`}
               onClick={onSubmit}
               disabled={!isFormValid}
             />

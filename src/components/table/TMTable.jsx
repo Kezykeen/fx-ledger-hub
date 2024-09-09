@@ -12,7 +12,8 @@ const TMTable = ({
   data,
   title,
   additionalTitleData,
-  availablePages,
+  totalCount,
+  pageSize = 20,
   setPageNumber,
   pageNumber,
   loading,
@@ -45,6 +46,12 @@ const TMTable = ({
     useSticky,
     isStickyColumn && useBlockLayout
   );
+
+  let availablePages = totalCount / pageSize;
+  availablePages =
+    Math.floor(availablePages) < availablePages
+      ? Math.floor(availablePages) + 1
+      : Math.floor(availablePages);
 
   const list = { hidden: { opacity: loading ? 0 : 1 } };
 
@@ -141,8 +148,7 @@ const TMTable = ({
                 ? `No result found${
                     searchParams && ` for  "${searchParams}"`
                   }, check your selection and try again`
-                : customEmptyStateMessage ||
-                  "Your request results will be displayed here"}
+                : customEmptyStateMessage || "No entry found"}
             </h4>
           </EmptyState>
         )}

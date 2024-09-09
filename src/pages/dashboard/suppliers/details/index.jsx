@@ -12,7 +12,7 @@ import { UpdateModal } from "../../customers/components/updatePaymentModal";
 
 const suppliers = {
   date: "June 4,2023",
-  currency: "XFA",
+  currency: "XAF",
   customerName: "John Doe",
   customerCounrty: "Nigeria",
   customerAddress: "51 Value Waters, Ago Palaceway",

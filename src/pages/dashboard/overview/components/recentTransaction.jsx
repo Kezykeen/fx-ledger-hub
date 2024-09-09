@@ -2,18 +2,22 @@ import styled from "styled-components";
 import { Table } from "./table/table";
 import { InOutFlowIcon } from "../../../../assets/svgs";
 import { Link } from "react-router-dom";
+import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedFormat);
 
 const RecentTransaction = ({ data }) => {
   const columns = [
     {
       Header: "Currency",
-      accessor: "currency",
-      Cell: ({ value }) => (
+      accessor: "outgoingCurrencyTypeName",
+      Cell: ({ value, row }) => (
         <Flex>
           <span>
             <InOutFlowIcon />
           </span>
-          <span>{value}</span>
+          <span>{`${value} to ${row.original.incomingCurrencyTypeName}`}</span>
         </Flex>
       ),
     },
@@ -23,52 +27,55 @@ const RecentTransaction = ({ data }) => {
     },
     {
       Header: "Incoming",
-      accessor: "incoming",
+      accessor: "incomingAmount",
       Cell: ({ value, row }) => (
         <TextWrapper>
-          <p>{value}</p>
-          <SmallText>{row.original.incomingCurrency}</SmallText>
+          <p>{formatNumberWithCommas(value)}</p>
+          <SmallText>{row.original.incomingCurrencyTypeName}</SmallText>
         </TextWrapper>
       ),
     },
     {
       Header: "Outgoing",
-      accessor: "outgoing",
+      accessor: "outgoingAmount",
       Cell: ({ value, row }) => (
         <TextWrapper>
-          <p>{value}</p>
+          <p>{formatNumberWithCommas(value)}</p>
           <SmallText style={{ color: "#6B7280" }}>
-            {row.original.outgoingCurrency}
+            {row.original.outgoingCurrencyTypeName}
           </SmallText>
         </TextWrapper>
       ),
     },
     {
       Header: "Date",
-      accessor: "date",
+      accessor: "createdOn",
+      Cell: ({ value }) => <>{dayjs(value).format("L")}</>,
     },
     {
       Header: "Payment Status",
-      accessor: "paymentStatus",
+      accessor: "customerIsOwing",
       Cell: ({ value }) => (
-        <PaymentStatus $status={value}>{value}</PaymentStatus>
+        <PaymentStatus $status={value}>
+          {value ? `Owing` : `Paid`}
+        </PaymentStatus>
       ),
     },
     {
       Header: "Customer Details",
-      accessor: "customerDetails",
+      accessor: "customerName",
     },
     {
       Header: "",
       id: "action",
-      Cell: () => (
-        <ViewDetails to={"/transactions/1"}>View Details</ViewDetails>
+      accessor: "id",
+      Cell: ({ value }) => (
+        <ViewDetails to={`/transactions/${value}`}>View Details</ViewDetails>
       ),
     },
   ];
-  // const data = [
   //   {
-  //     currency: "XFA to USDT",
+  //     currency: "XAF to USDT",
   //     rate: "500",
   //     incoming: "1000",
   //     incomingCurrency: "USDT",
@@ -79,7 +86,7 @@ const RecentTransaction = ({ data }) => {
   //     customerDetails: "John Doe",
   //   },
   //   {
-  //     currency: "XFA to USDT",
+  //     currency: "XAF to USDT",
   //     rate: "500",
   //     incoming: "1000",
   //     incomingCurrency: "USDT",
@@ -163,9 +170,8 @@ const PaymentStatus = styled.span`
   border-radius: 16px;
   font-size: 12px;
   font-weight: 500;
-  background-color: ${(props) =>
-    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
+  background-color: ${(props) => (!props.$status ? "#D1FAE5" : "#FEE2E2")};
+  color: ${(props) => (!props.$status ? "#059669" : "#DC2626")};
 `;
 
 const SmallText = styled.small`

@@ -7,7 +7,7 @@ import { PopUp } from "../../../../../components/popUp";
 import ToastComponent from "../../../../../components/toastComponent";
 import { toast } from "react-toastify";
 
-const ApprovalModal = ({ isOpen, closeHandler, data }) => {
+const AccountModal = ({ isOpen, closeHandler, data }) => {
   const initialObj = {
     debitAccount: [{ account: null, amount: "" }],
     creditAccount: [{ account: null, amount: "" }],
@@ -168,7 +168,7 @@ const ApprovalModal = ({ isOpen, closeHandler, data }) => {
   );
 };
 
-export default ApprovalModal;
+export default AccountModal;
 
 const Container = styled.div`
   display: flex;

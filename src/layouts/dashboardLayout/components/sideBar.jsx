@@ -5,15 +5,18 @@ import { Button } from "../../../components/button";
 import ActiveUser from "./activeUser";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./navItem";
-import { PlusIcon } from "../../../assets/svgs";
 import { navs } from "../../../constants/data";
 import AdminActions from "./adminActions";
+import { useSelector } from "react-redux";
+import { userRoles } from "../../../constants/enums";
 
 const SideBar = () => {
   const loc = useLocation();
+  const user = useSelector((state) => state?.user);
+  const userRole = user?.roles[0];
   const navigate = useNavigate();
-  // const isSalesRep = loc.pathname.startsWith("/s");
-  const isSalesRep = false;
+  const isSalesRep =
+    userRole?.toLowerCase() === userRoles.SalesRep?.toLowerCase();
   const isActive = (path) => loc.pathname.includes(path);
 
   return (
@@ -27,11 +30,7 @@ const SideBar = () => {
             <Button
               buttonClass={"primary"}
               onClick={() => navigate("initiate-transaction")}
-              label={
-                <Flex>
-                  <span>{<PlusIcon />}</span> <span>Initiate Transaction</span>
-                </Flex>
-              }
+              label={<Flex>Initiate Transaction</Flex>}
             />
           ) : (
             <AdminActions />
@@ -75,7 +74,14 @@ const Flex = styled.div`
   align-items: center;
   gap: 6px;
   width: 100%;
+  font-size: 15px;
   justify-content: center;
+
+  svg {
+    path: {
+      stroke: #fff;
+    }
+  }
 `;
 
 const SideBarContainer = styled.div`

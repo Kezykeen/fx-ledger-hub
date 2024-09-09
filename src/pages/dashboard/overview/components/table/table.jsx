@@ -4,7 +4,7 @@ export const Table = ({
   columns = [],
   data = [],
   isLoading,
-  availablePages,
+  totalCount,
   pageNumber,
   setPageNumber,
   metaData,
@@ -16,7 +16,7 @@ export const Table = ({
       columns={columns}
       loading={isLoading}
       onRowClick={onRowClick}
-      availablePages={availablePages}
+      totalCount={totalCount}
       pageNumber={pageNumber}
       setPageNumber={setPageNumber}
       metaData={metaData}

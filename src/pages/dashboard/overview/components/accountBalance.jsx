@@ -60,8 +60,8 @@ const AccountBalance = () => {
           icon={NairaIcon}
         />
         <AccountBox
-          asset={"XFA"}
-          data={getAccountbyCurrency(CurrencyType.XFA)}
+          asset={"XAF"}
+          data={getAccountbyCurrency(CurrencyType.XAF)}
           icon={CFAIcon}
         />
         <AccountBox

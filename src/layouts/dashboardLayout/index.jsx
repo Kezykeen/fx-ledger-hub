@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SideBar from "./components/sideBar";
 import TopNav from "./components/topNav";
@@ -6,9 +6,15 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const outletRef = useRef();
   const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    !user && navigate("/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   console.log({ user });
 

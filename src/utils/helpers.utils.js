@@ -26,7 +26,12 @@ export function formatCurrency(amount, locale = "en-US") {
 }
 
 export const formatNumberWithCommas = (number) => {
-  return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
+  if (!number) return "0";
+
+  const [wholePart, decimalPart] = number.toString().split(".");
+  const formattedWholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const formattedDecimalPart = decimalPart ? `.${decimalPart.slice(0, 2)}` : "";
+  return `${formattedWholePart}${formattedDecimalPart}`;
 };
 
 export const findValueAndLabel = (
@@ -59,6 +64,27 @@ export const parseSelectFormData = (data) => {
   return parsedData;
 };
 
+export const parseSelectFormArrayData = (data) => {
+  const parsedData = {};
+
+  for (const key in data) {
+    if (Array.isArray(data[key])) {
+      // If the value is an array, iterate over its items
+      parsedData[key] = data[key].map((item) => parseSelectFormData(item));
+    } else if (
+      typeof data[key] === "object" &&
+      data[key] !== null &&
+      "value" in data[key]
+    ) {
+      parsedData[key] = data[key].value;
+    } else {
+      parsedData[key] = data[key];
+    }
+  }
+
+  return parsedData;
+};
+
 export const generateUrlParams = (obj) => {
   let generatedUrl = ``;
   const arrayOfObjectKeys = Object.keys(obj);
@@ -87,4 +113,137 @@ export const formatSelectItems = (items, label, value) => {
         };
       })
     : [];
+};
+
+export const convertCurrency = (rate, amount, currencyA, currencyB) => {
+  const multiplicationCurrencies = [
+    ["RMB", "NAIRA"],
+    ["RMB", "XAF"],
+    ["RMB", "IVORY"],
+    ["USDT", "RMB"],
+    ["USDT", "NAIRA"],
+    ["USDT", "XAF"],
+    ["USDT", "IVORY"],
+    ["ZELLE", "NAIRA"],
+    ["ZELLE", "RMB"],
+    ["ZELLE", "XAF"],
+    ["ZELLE", "IVORY"],
+    ["XAF", "NAIRA"],
+  ];
+
+  const divisionCurrencies = [
+    ["RMB", "USDT"],
+    ["RMB", "DOLLAR"],
+    ["NAIRA", "XAF"],
+    ["NAIRA", "IVORY"],
+    ["NAIRA", "RMB"],
+    ["NAIRA", "ZELLE"],
+    ["NAIRA", "DOLLAR"],
+    ["XAF", "USDT"],
+    ["XAF", "DOLLAR"],
+    ["XAF", "RMB"],
+    ["XAF", "ZELLE"],
+  ];
+
+  const percentageCurrencies = [["USDT", "DOLLAR"]];
+
+  if (
+    multiplicationCurrencies.some(
+      (pair) =>
+        pair[0]?.toLowerCase() === currencyA?.toLowerCase() &&
+        pair[1]?.toLowerCase() === currencyB?.toLowerCase()
+    )
+  ) {
+    console.log("1");
+    return amount * rate;
+  } else if (
+    divisionCurrencies.some(
+      (pair) =>
+        pair[0]?.toLowerCase() === currencyA?.toLowerCase() &&
+        pair[1]?.toLowerCase() === currencyB?.toLowerCase()
+    )
+  ) {
+    console.log("2");
+    return amount / rate;
+  } else if (
+    percentageCurrencies.some(
+      (pair) =>
+        pair[0]?.toLowerCase() === currencyA?.toLowerCase() &&
+        pair[1]?.toLowerCase() === currencyB?.toLowerCase()
+    )
+  ) {
+    console.log("3");
+    return amount * (rate / 100);
+  } else {
+    console.log("none");
+    return 0;
+  }
+};
+
+export const rateCurrencyConversion = (
+  rate,
+  amount,
+  outgoingCurrency,
+  incomingCurrency
+) => {
+  const outgoing = outgoingCurrency?.toLowerCase();
+  const incoming = incomingCurrency?.toLowerCase();
+
+  const formulaMapping = {
+    // SELLING FORMULAS
+    rmb: {
+      naira: (amount, rate) => amount * rate,
+      usdt: (amount, rate) => amount / rate,
+      dollar: (amount, rate) => amount / rate,
+      xaf: (amount, rate) => amount * rate,
+      ivory: (amount, rate) => amount * rate,
+    },
+    usdt: {
+      rmb: (amount, rate) => amount * rate,
+      naira: (amount, rate) => amount * rate,
+      xaf: (amount, rate) => amount * rate,
+      ivory: (amount, rate) => amount * rate,
+      dollar: (amount, rate) => amount * rate,
+    },
+    zelle: {
+      naira: (amount, rate) => amount * rate,
+      rmb: (amount, rate) => amount * rate,
+      xaf: (amount, rate) => amount * rate,
+      ivory: (amount, rate) => amount * rate,
+    },
+    naira: {
+      xaf: (amount, rate) => amount / rate,
+      ivory: (amount, rate) => amount / rate,
+      rmb: (amount, rate) => amount / rate,
+      zelle: (amount, rate) => amount / rate,
+      dollar: (amount, rate) => amount / rate,
+    },
+    xaf: {
+      naira: (amount, rate) => amount * rate,
+      usdt: (amount, rate) => amount / rate,
+      dollar: (amount, rate) => amount / rate,
+      rmb: (amount, rate) => amount / rate,
+      zelle: (amount, rate) => amount / rate,
+    },
+  };
+
+  // Determine if the operation is reversed
+  const isReversed = formulaMapping[outgoing]?.[incoming] === undefined;
+  console.log(isReversed);
+
+  if (isReversed) {
+    // Reverse the currencies for the opposite operation (buying scenario)
+    const conversionFunction = formulaMapping[incoming]?.[outgoing];
+    if (!conversionFunction) {
+      return amount;
+    }
+    return conversionFunction(amount, rate);
+  } else {
+    // Apply the normal selling formula
+    const conversionFunction = formulaMapping[outgoing]?.[incoming];
+    if (!conversionFunction) {
+      return amount;
+    }
+    return conversionFunction(amount, rate);
+  }
 };

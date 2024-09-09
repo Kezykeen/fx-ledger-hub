@@ -96,7 +96,7 @@ const CreateAccountModal = ({
             error={!!errors.balance}
             errorText={errors.balance && errors.balance.message}
           />
-          {currencyType === CurrencyType.XFA && (
+          {currencyType === CurrencyType.XAF && (
             <SMSelectDropDown
               placeholder={"Select currency account type"}
               name="currencyAccountType"

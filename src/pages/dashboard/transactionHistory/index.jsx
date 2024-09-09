@@ -4,15 +4,77 @@ import Transactions from "./components/transaction";
 import { TableWidget } from "../../../components/tableWidget";
 import { TableTab } from "../../../components/tableTab";
 import FilterComponent from "./components/filterComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { transactionTabs } from "./components/data";
+import { getTradeUrl } from "../../../urls";
+import {
+  CurrencyTradeStatus,
+  QueryKeys,
+  userRoles,
+} from "../../../constants/enums";
+import { useGet } from "../../../hooks/api";
+import { useSelector } from "react-redux";
+import { LineLoader } from "../../../components/lineLoader";
+import { useLocation } from "react-router-dom";
 
 const TransactionHistory = () => {
+  const user = useSelector((state) => state?.user);
+  const userRole = user?.roles[0];
   const [filterOpen, setFilterOpen] = useState(false);
+  const [currentHashId, setCurrentHashId] = useState(transactionTabs[0].value);
+  const [currentHash, setCurrentHash] = useState(transactionTabs[0].hash);
+  const [currencyStatus, setCurrencyStatus] = useState();
+  const [pageNumber, setPageNumber] = useState(1);
+  const { hash } = useLocation();
+  const urlHash = hash.substring(1);
+
+  const statusSetter = (hash) => {
+    console.log({ hash });
+    if (hash === "pending-approval") {
+      setCurrencyStatus(
+        userRole?.toLowerCase() === userRoles.COO?.toLowerCase()
+          ? CurrencyTradeStatus.PendingCOO
+          : CurrencyTradeStatus.PendingCFO
+      );
+      setCurrentHashId(null);
+      setCurrentHash(hash);
+    } else {
+      const hashValue = transactionTabs.find((x) => x.hash === hash);
+      setCurrentHashId(hashValue?.value);
+      setCurrencyStatus(null);
+      setCurrentHash(hash);
+    }
+  };
+
+  useEffect(() => {
+    if (urlHash) {
+      statusSetter(urlHash);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlHash]);
+
+  const getTabs = () => {
+    if (
+      userRole?.toLowerCase() === userRoles.CFO?.toLowerCase() ||
+      userRole?.toLowerCase() === userRoles.COO?.toLowerCase()
+    ) {
+      return transactionTabs;
+    } else {
+      return transactionTabs.slice(1);
+    }
+  };
+
+  const { data: transactions, isLoading } = useGet(
+    [QueryKeys.trade.getAll, currentHashId, currencyStatus, pageNumber],
+    getTradeUrl({
+      tradeStatus: currentHashId,
+      currencyTradeStatus: currencyStatus,
+      pageIndex: pageNumber,
+    })
+  );
 
   const handleTabChange = (selectedTab) => {
-    console.log("Selected tab:", selectedTab);
-    // Perform actions based on the selected tab
+    statusSetter(selectedTab);
   };
 
   return (
@@ -28,9 +90,16 @@ const TransactionHistory = () => {
           setFilterOpen={setFilterOpen}
         />
         <Divider />
-        <TableTab tabs={transactionTabs} onTabChange={handleTabChange} />
+        <TableTab tabs={getTabs()} onTabChange={handleTabChange} />
       </WidgetWrapper>
-      <Transactions />
+      <Transactions
+        data={transactions?.data}
+        totalCount={transactions?.totalCount}
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        hash={currentHash}
+      />
+      <LineLoader loading={isLoading} />
     </Container>
   );
 };

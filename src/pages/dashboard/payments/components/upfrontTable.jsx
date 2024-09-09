@@ -56,7 +56,7 @@ const UpfrontTable = () => {
   const data = {
     data: [
       {
-        currency: "XFA to USDT",
+        currency: "XAF to USDT",
         rate: "500",
         amount: "1000",
         incomingCurrency: "USDT",
@@ -68,7 +68,7 @@ const UpfrontTable = () => {
         receivedBy: "Bola Ahmed",
       },
       {
-        currency: "XFA to USDT",
+        currency: "XAF to USDT",
         rate: "500",
         amount: "1000",
         incomingCurrency: "USDT",

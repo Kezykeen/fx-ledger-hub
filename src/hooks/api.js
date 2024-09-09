@@ -23,7 +23,7 @@ const useApiMutation = (
   });
 };
 
-export const useGet = (key, endpoint, enabled, config) => {
+export const useGet = (key, endpoint, enabled, retry, config) => {
   return useQuery({
     queryKey: key,
     queryFn: async () => {
@@ -31,6 +31,7 @@ export const useGet = (key, endpoint, enabled, config) => {
       return data;
     },
     enabled: enabled,
+    retry,
   });
 };
 

@@ -1,3 +1,5 @@
+import { TradeStatus } from "../../../../constants/enums";
+
 export const paymentStatus = [
   {
     label: `All`,
@@ -23,7 +25,7 @@ export const currencyOptions = [
     value: 2,
   },
   {
-    label: `XFA`,
+    label: `XAF`,
     value: 3,
   },
   {
@@ -59,13 +61,16 @@ export const transactionTabs = [
   {
     label: "In Progress",
     hash: `in-progress`,
+    value: TradeStatus.Pending,
   },
   {
     label: "Approved",
     hash: `approved`,
+    value: TradeStatus.Approved,
   },
   {
     label: "Declined",
     hash: `declined`,
+    value: TradeStatus.Declined,
   },
 ];

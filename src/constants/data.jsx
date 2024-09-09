@@ -26,7 +26,7 @@ export const navs = [
     path: "/ledger",
     icon: <LedgerIcon />,
     children: [
-      { name: "XFA", path: "/ledger/XFA" },
+      { name: "XAF", path: "/ledger/XAF" },
       { name: "USDT", path: "/ledger/usdt" },
       { name: "RMB", path: "/ledger/rmb" },
       { name: "Dollar", path: "/ledger/dollar" },
@@ -68,7 +68,7 @@ export const teamsOptions = [
     value: 2,
   },
   {
-    label: `XFA`,
+    label: `XAF`,
     value: 3,
   },
   {

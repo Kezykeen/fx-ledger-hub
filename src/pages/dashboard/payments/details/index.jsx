@@ -66,7 +66,7 @@ export const PaymentDetails = () => {
             <DetailRow>
               <Label>Incoming Amount</Label>
               <LabelTwo>
-                XFA <span>{transaction?.incomingAmount}</span>
+                XAF <span>{transaction?.incomingAmount}</span>
               </LabelTwo>
             </DetailRow>
             <DetailRow>
@@ -157,7 +157,7 @@ export const PaymentDetails = () => {
         </PaymentStatusBox>
 
         <TransactionAccountDetails>
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>Debit Account Details</SectionTitle>
             <Divider $margin="12px 0 16px" />
             <FlexCol $gap={"0.8rem"}>
@@ -168,13 +168,13 @@ export const PaymentDetails = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  XFA <span>{transaction?.outgoingAmount}</span>
+                  XAF <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>
           </ColumnWrapper>
 
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>Credit Account Details</SectionTitle>
             <Divider $margin="12px 0 16px" />
             <FlexCol $gap={"0.8rem"}>
@@ -185,7 +185,7 @@ export const PaymentDetails = () => {
               <DetailRow>
                 <Label>Amount</Label>
                 <LabelTwo>
-                  XFA <span>{transaction?.outgoingAmount}</span>
+                  XAF <span>{transaction?.outgoingAmount}</span>
                 </LabelTwo>
               </DetailRow>
             </FlexCol>
@@ -193,7 +193,7 @@ export const PaymentDetails = () => {
         </TransactionAccountDetails>
 
         <CommentWrapper>
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>COO Comments</SectionTitle>
             <Divider $margin="12px 0 16px" />
             <FlexCol $gap={"0.8rem"}>
@@ -222,7 +222,7 @@ export const PaymentDetails = () => {
         </CommentWrapper>
 
         <CommentWrapper>
-          <ColumnWrapper bg={colors.white}>
+          <ColumnWrapper $bg={colors.white}>
             <SectionTitle>CFO Comments</SectionTitle>
             <Divider $margin="12px 0 16px" />
             <FlexCol $gap={"0.8rem"}>
@@ -260,7 +260,7 @@ const PageContainer = styled.div`
 `;
 
 const ColumnWrapper = styled.div`
-  background-color: ${({ bg }) => bg ?? "#f8f8f8"};
+  background-color: ${({ $bg }) => $bg ?? "#f8f8f8"};
   border-radius: 8px;
   padding: 20px 16px 19px;
 `;

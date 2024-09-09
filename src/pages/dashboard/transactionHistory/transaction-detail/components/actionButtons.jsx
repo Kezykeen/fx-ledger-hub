@@ -1,23 +1,43 @@
 import styled from "styled-components";
 import { Button } from "../../../../../components/button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RejectPopup from "./rejectPopup";
 import { useState } from "react";
-import ApprovalModal from "./approvalModal";
-
-const data = {
-  debitAccount: [
-    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
-  ],
-  creditAccount: [
-    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
-  ],
-};
+import { PopUp } from "../../../../../components/popUp";
+import { usePut } from "../../../../../hooks/api";
+import { adminActionTradeUrl } from "../../../../../urls";
+import { ApprovalType, QueryKeys } from "../../../../../constants/enums";
+import { toast } from "react-toastify";
+import ToastComponent from "../../../../../components/toastComponent";
 
 const ActionButtons = () => {
+  const { pathname } = useLocation();
+  const id = pathname.split("/").pop();
   const navigate = useNavigate();
   const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+
+  const { mutate: adminAction, isPending } = usePut(
+    adminActionTradeUrl(id),
+    () => {
+      toast.success(
+        <ToastComponent
+          title={"Transaction Approved!"}
+          message={"You have successfully approved this transaction"}
+        />
+      );
+      setIsApprovalModalOpen(false);
+      navigate("/transactions");
+    },
+    [QueryKeys.trade.getById]
+  );
+
+  const handleSubmit = () => {
+    const payload = {
+      approvalType: ApprovalType.APPROVED,
+    };
+    adminAction(payload);
+  };
 
   return (
     <Container>
@@ -42,11 +62,17 @@ const ActionButtons = () => {
       <RejectPopup
         closeModal={() => setIsRejectModalOpen(false)}
         isOpen={isRejectModalOpen}
+        id={id}
       />
-      <ApprovalModal
-        closeHandler={() => setIsApprovalModalOpen(false)}
-        isOpen={isApprovalModalOpen}
-        data={data}
+      <PopUp
+        open={isApprovalModalOpen}
+        handleClose={() => setIsApprovalModalOpen(false)}
+        onSubmit={handleSubmit}
+        isLoading={isPending}
+        title={"Approve Transaction?"}
+        subtitle={
+          "Are you sure you want to proceed to approve this transaction?"
+        }
       />
     </Container>
   );

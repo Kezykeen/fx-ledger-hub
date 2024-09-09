@@ -11,6 +11,7 @@ import { RefundRecord } from "../components/customer-history/refund-history";
 import { UpfrontRecord } from "../components/customer-history/upfront-history";
 import { DropdownBlackIcon, DropdownIcon } from "../../../../assets/svgs";
 import { UpdateModal } from "../components/updatePaymentModal";
+import { useLocation } from "react-router-dom";
 
 const customer = {
   date: "June 4,2023",
@@ -34,7 +35,8 @@ export const CustomerDetailsOverview = () => {
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(customerDetailsTab[0].hash);
-  const urlHash = window.location.hash.substring(1);
+  const { hash } = useLocation();
+  const urlHash = hash.substring(1);
 
   useEffect(() => {
     setCurrentHash(urlHash);
@@ -63,7 +65,7 @@ export const CustomerDetailsOverview = () => {
 
   const exportTextGroup = [
     {
-      name: "XFA",
+      name: "XAF",
       onClick: () => {},
     },
     {

@@ -3,24 +3,18 @@ import { Modal } from "../../../../components/modal";
 import { Button } from "../../../../components/button";
 import { toast } from "react-toastify";
 import ToastComponent from "../../../../components/toastComponent";
-import { formatNumberWithCommas } from "../../../../utils/helpers.utils";
+import {
+  formatNumberWithCommas,
+  parseSelectFormArrayData,
+} from "../../../../utils/helpers.utils";
+import { usePost } from "../../../../hooks/api";
+import { createTradeUrl } from "../../../../urls";
+import { useNavigate } from "react-router-dom";
 
 const SummaryModal = ({ isOpen, closeHandler, data }) => {
-  const handleSubmit = () => {
-    const parsedData = {};
-
-    for (const key in data) {
-      if (
-        typeof data[key] === "object" &&
-        data[key] !== null &&
-        "value" in data[key]
-      ) {
-        parsedData[key] = data[key].value;
-      } else {
-        parsedData[key] = data[key];
-      }
-    }
-    console.log({ parsedData });
+  const navigate = useNavigate();
+  const { mutate: createTrade, isPending } = usePost(createTradeUrl(), () => {
+    closeHandler();
     toast.success(
       <ToastComponent
         title={"Exchange Transaction sent"}
@@ -29,9 +23,61 @@ const SummaryModal = ({ isOpen, closeHandler, data }) => {
         }
       />
     );
-    // closeHandler();
+    navigate("/transactions");
+  });
+
+  const handleSubmit = () => {
+    const parsedData = parseSelectFormArrayData(data);
+
+    const formData = new FormData();
+    parsedData.amountCustomerIsOwing &&
+      formData.append(
+        "amountCustomerIsOwing",
+        parsedData.amountCustomerIsOwing
+      );
+    parsedData.amountCustomerPaid &&
+      formData.append("amountCustomerPaid", parsedData.amountCustomerPaid);
+    formData.append(
+      "incomingCurrencyAmount",
+      parsedData.incomingCurrencyAmount
+    );
+    formData.append("rate", parsedData.rate);
+    formData.append("customerId", parsedData.customerId);
+    formData.append("meansOfTrade", parsedData.meansOfTrade);
+    formData.append("outgoingCurrency", parsedData.outgoingCurrency);
+    formData.append("incomingCurrency", parsedData.incomingCurrency);
+    formData.append("customerReceipts", parsedData.customerReceipts);
+    formData.append("supplierReceipts", parsedData.supplierReceipts);
+    formData.append(
+      "outgoingCurrencyAmount",
+      parsedData.outgoingCurrencyAmount
+    );
+    formData.append("customerIsOwing", parsedData.customerIsOwing);
+
+    parsedData.outgoingCurrencyDebitAccounts.forEach((account, index) => {
+      formData.append(
+        `outgoingCurrencyDebitAccounts[${index}][accountId]`,
+        account.accountId
+      );
+      formData.append(
+        `outgoingCurrencyDebitAccounts[${index}][amount]`,
+        account.amount
+      );
+    });
+
+    parsedData.incomingCurrencyCreditAccounts.forEach((account, index) => {
+      formData.append(
+        `incomingCurrencyCreditAccounts[${index}][accountId]`,
+        account.accountId
+      );
+      formData.append(
+        `incomingCurrencyCreditAccounts[${index}][amount]`,
+        account.amount
+      );
+    });
+
+    createTrade(formData);
   };
-  console.log({ data });
 
   return (
     <Modal
@@ -109,6 +155,7 @@ const SummaryModal = ({ isOpen, closeHandler, data }) => {
             label={"Confirm"}
             width={`47%`}
             onClick={handleSubmit}
+            loading={isPending}
           />
         </BtnWrapper>
       </Container>

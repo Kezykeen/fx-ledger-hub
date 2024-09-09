@@ -2,18 +2,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ArrowCircleIcon, WalletBalanceIcon } from "../../../../assets/svgs";
 
-const AnalyticsCard = () => {
+const ApprovalCard = () => {
   return (
     <Container>
-      <Title>Account Analytics</Title>
+      <Title>Approval Analytics</Title>
       <CardWrapper>
         <Icon>
           <WalletBalanceIcon />
         </Icon>
-        <Text>Account Balance</Text>
-        <TotalAmount>
-          <span>XAF</span> 1,200
-        </TotalAmount>
+        <Text>Pending My Approval</Text>
+        <TotalAmount>1,200</TotalAmount>
         <LinkWrapper to={"/transactions"}>
           <span>View Transactions</span>
           <ArrowCircleIcon />
@@ -23,7 +21,7 @@ const AnalyticsCard = () => {
   );
 };
 
-export { AnalyticsCard };
+export { ApprovalCard };
 
 const Container = styled.div`
   display: flex;

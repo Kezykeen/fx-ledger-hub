@@ -11,12 +11,14 @@ import UpfrontTable from "./components/upfrontTable";
 import { AddIcon } from "../../../assets/svgs";
 import { Button } from "../../../components/button";
 import InitiatePaymentModal from "./components/initiatePaymentModal";
+import { useLocation } from "react-router-dom";
 
 const Payments = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(paymentTabs[0].hash);
-  const urlHash = window.location.hash.substring(1);
+  const { hash } = useLocation();
+  const urlHash = hash.substring(1);
 
   useEffect(() => {
     setCurrentHash(urlHash);

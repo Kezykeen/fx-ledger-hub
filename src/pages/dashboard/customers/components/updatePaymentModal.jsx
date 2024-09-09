@@ -6,6 +6,7 @@ import { Button } from "../../../../components/button";
 import { PopUp } from "../../../../components/popUp";
 import ToastComponent from "../../../../components/toastComponent";
 import { toast } from "react-toastify";
+import { parseSelectFormArrayData } from "../../../../utils/helpers.utils";
 
 export const UpdateModal = ({ isOpen, closeHandler, data }) => {
   const initialObj = {
@@ -70,38 +71,8 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
     closeHandler();
   };
 
-  const parseAccountData = (data) => {
-    const parsedData = {};
-
-    for (const key in data) {
-      if (Array.isArray(data[key])) {
-        // If the value is an array, iterate over its items
-        parsedData[key] = data[key].map((item) => {
-          const parsedItem = {};
-          for (const itemKey in item) {
-            if (
-              typeof item[itemKey] === "object" &&
-              item[itemKey] !== null &&
-              "value" in item[itemKey]
-            ) {
-              // Extract the "value" key from the object
-              parsedItem[itemKey] = item[itemKey].value;
-            } else {
-              parsedItem[itemKey] = item[itemKey];
-            }
-          }
-          return parsedItem;
-        });
-      } else {
-        parsedData[key] = data[key];
-      }
-    }
-
-    return parsedData;
-  };
-
   const onSubmit = () => {
-    const parsedData = parseAccountData(formData);
+    const parsedData = parseSelectFormArrayData(formData);
     console.log({ parsedData });
     toast.success(
       <ToastComponent
@@ -159,7 +130,6 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
     </>
   );
 };
-
 
 const Container = styled.div`
   display: flex;

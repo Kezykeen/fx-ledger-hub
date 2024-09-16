@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Table } from "../table/table";
 import { DownloadMini, InOutFlowIcon } from "../../../../../assets/svgs";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Upfront = () => {
@@ -44,17 +43,10 @@ const Upfront = () => {
       Header: "",
       id: "action",
       Cell: () => (
-        <ViewDetails to={""}>
-          <DownloadMini
-            style={{
-              fill: "#FD853A",
-              marginRight: "10px",
-              cursor: "pointer",
-              fontSize: "14px",
-            }}
-          />
+        <DownlaodReceipt >
+          <DownloadMini />
           Download Receipt
-        </ViewDetails>
+        </DownlaodReceipt>
       ),
     },
   ];
@@ -123,17 +115,18 @@ const SmallText = styled.small`
   line-height: 20px;
 `;
 
-const ViewDetails = styled(Link)`
-  color: #f97316;
-  font-weight: 500;
+const DownlaodReceipt = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
+  color: #f97316;
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.gray100};
-    cursor: pointer;
-    color: black;
-    padding: 7px;
-    border-radius: 5px;
+  & > svg {
+    path {
+      stroke: #fd853a;
+    }
   }
 `;
+

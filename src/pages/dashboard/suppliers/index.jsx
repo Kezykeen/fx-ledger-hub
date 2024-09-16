@@ -6,17 +6,13 @@ import SuppliersTable from "./components/suppliersTable";
 import { Button } from "../../../components/button";
 import { useState } from "react";
 import { Flex } from "../../../components/buttonDropdown";
-import { UpdateModal } from "../customers/components/updatePaymentModal";
-
-const data = {
-  creditAccount: [
-    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
-    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
-  ],
-};
+import AddSupplierAccountModal from "./components/supplier-popup/addSupplierModal";
+import RefundModal from "./components/supplier-popup/refundModal";
 
 const Suppliers = () => {
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isAddSupplier, setIsAddSupplier] = useState(false);
+  const [isRefundOpen, setIsRefundOpen] = useState(false);
+
   return (
     <Container>
       <DetailRow>
@@ -28,13 +24,11 @@ const Suppliers = () => {
         <DetailRow>
           <ActionWrapper>
             <Button
-              onClick={() => {
-                setIsUpdateModalOpen(true);
-              }}
               buttonClass={"outline"}
+              onClick={() => setIsAddSupplier(true)}
               label={
                 <Flex>
-                  <span>{<PlusIcon />}</span> <span>Add Customer</span>
+                  <span>{<PlusIcon />}</span> <span>Add Supplier</span>
                 </Flex>
               }
             />
@@ -43,9 +37,10 @@ const Suppliers = () => {
           <div>
             <Button
               onClick={() => {
-                setIsUpdateModalOpen(true);
+                setIsRefundOpen(true);
               }}
               buttonClass={"primary"}
+              width={"186px"}
               label={
                 <Flex>
                   <span>Intiate Refund</span>
@@ -53,17 +48,22 @@ const Suppliers = () => {
               }
             />
           </div>
-          <UpdateModal
-            closeHandler={() => setIsUpdateModalOpen(false)}
-            isOpen={isUpdateModalOpen}
-            data={data}
-          />
         </DetailRow>
       </DetailRow>
       <WidgetWrapper>
         <TableWidget />
       </WidgetWrapper>
       <SuppliersTable />
+
+      <AddSupplierAccountModal
+        handleClose={() => setIsAddSupplier(false)}
+        isOpen={isAddSupplier}
+      />
+
+      <RefundModal
+        handleClose={() => setIsRefundOpen(false)}
+        isOpen={isRefundOpen} 
+        />
     </Container>
   );
 };

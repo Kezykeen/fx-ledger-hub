@@ -60,6 +60,24 @@ const GlobalStyle = createGlobalStyle`
 
   }
 
+  .react-tel-input .form-control {
+    width: 100%;
+    height: 50px;
+
+    &:focus {
+    outline: none;
+    border: 1px solid #f4a261;
+    box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.2);
+    }
+  }
+  .react-tel-input .flag-dropdown {
+    background: #fff;
+  }
+
+  .react-tel-input .selected-flag {
+    padding: 0 5px; 
+  }
+
   svg {
     flex-shrink: 0;
   }

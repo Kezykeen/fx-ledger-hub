@@ -8,7 +8,8 @@ import { supplierDetailsTab } from "../components/data";
 import { ButtonDropdown } from "../../../../components/buttonDropdown";
 import { DropdownIcon } from "../../../../assets/svgs";
 import { Outlet, useNavigate } from "react-router-dom";
-import { UpdateModal } from "../../customers/components/updatePaymentModal";
+import RefundModal from "../components/supplier-popup/refundModal";
+import EditSupplierAccountModal from "../components/supplier-popup/editSupplierModal";
 
 const suppliers = {
   date: "June 4,2023",
@@ -21,15 +22,9 @@ const suppliers = {
   phoneNumber: "08120289349",
 };
 
-const data = {
-  creditAccount: [
-    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
-    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
-  ],
-};
-
 export const SupplierDetails = () => {
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -37,19 +32,17 @@ export const SupplierDetails = () => {
     {
       name: "Initial Refund",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsRefundModalOpen(true);
       },
     },
     {
       name: "Initial Supply",
-      onClick: () => {
-        setIsUpdateModalOpen(true);
-      },
+      onClick: () => {},
     },
     {
       name: "Edit",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsEditOpen(true);
       },
     },
   ];
@@ -163,10 +156,13 @@ export const SupplierDetails = () => {
           <Outlet />
         </SummaryBox>
       </CustomersHistory>
-      <UpdateModal
-        closeHandler={() => setIsUpdateModalOpen(false)}
-        isOpen={isUpdateModalOpen}
-        data={data}
+      <RefundModal
+        handleClose={() => setIsRefundModalOpen(false)}
+        isOpen={isRefundModalOpen}
+      />
+      <EditSupplierAccountModal
+        handleClose={() => setIsEditOpen(false)}
+        isOpen={isEditOpen}
       />
     </PageContainer>
   );

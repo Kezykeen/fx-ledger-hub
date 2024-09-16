@@ -124,7 +124,7 @@ const Span = styled.span`
   background: ${({ theme }) => theme.colors.gray300};
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled(Link)`
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;

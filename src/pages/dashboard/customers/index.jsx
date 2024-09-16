@@ -8,15 +8,15 @@ import { UpdateModal } from "./components/updatePaymentModal";
 import { ButtonDropdown, Flex } from "../../../components/buttonDropdown";
 import { useState } from "react";
 import FilterComponent from "./components/fiterComponent";
+import InitiateCustomerPaymentModal from "./components/customer-popup/initiatePaymentModal";
+import FundModal from "./components/customer-popup/fundModal";
+import AddCustomerAccountModal from "./components/customer-popup/addCustomerModal";
 
-const data = {
-  creditAccount: [
-    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
-    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
-  ],
-};
 
 const CustomersHistory = () => {
+  const [isUpfrontModalOpen, setIsUpfrontModalOpen] = useState(false);
+  const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false);
+  const [isRefundMoadlOpen, setIsRefundModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -30,13 +30,13 @@ const CustomersHistory = () => {
     {
       name: "Initial Refund",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsRefundModalOpen(true);
       },
     },
     {
       name: "initial Upfront",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsUpfrontModalOpen(true);
       },
     },
   ];
@@ -51,18 +51,15 @@ const CustomersHistory = () => {
         <DetailRow>
           <ActionWrapper>
             <Button
+              onClick={() => {
+                setIsAddCustomerModalOpen(true);
+              }}
               buttonClass={"outline"}
               label={
                 <Flex>
                   <span>{<PlusIcon />}</span> <span>Add Customer</span>
                 </Flex>
               }
-            />
-
-            <UpdateModal
-              closeHandler={() => setIsUpdateModalOpen(false)}
-              isOpen={isUpdateModalOpen}
-              data={data}
             />
           </ActionWrapper>
           <ButtonDropdown
@@ -87,6 +84,23 @@ const CustomersHistory = () => {
         />
       </WidgetWrapper>
       <Customers />
+      <UpdateModal
+        closeHandler={() => setIsUpdateModalOpen(false)}
+        isOpen={isUpdateModalOpen}
+        
+      />
+      <InitiateCustomerPaymentModal
+        closeHandler={() => setIsUpfrontModalOpen(false)}
+        isOpen={isUpfrontModalOpen}
+      />
+      <FundModal
+        handleClose={() => setIsRefundModalOpen(false)}
+        isOpen={isRefundMoadlOpen}  
+      />
+      <AddCustomerAccountModal
+        handleClose={() => setIsAddCustomerModalOpen(false)}
+        isOpen={isAddCustomerModalOpen}
+      />
     </Container>
   );
 };
@@ -135,7 +149,7 @@ const DetailRow = styled.div`
   justify-content: space-between;
   margin-bottom: 20px;
   flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
-  z-index: 99;
+  z-index: 9;
 `;
 
 export const Divider = styled.div`

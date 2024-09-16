@@ -212,13 +212,6 @@ const TableRow = styled(motion.tr)`
   &.separator {
     height: 13px;
   }
-
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.primary50};
-    cursor: pointer;
-  }
 `;
 
 const TableCell = styled(motion.td)`

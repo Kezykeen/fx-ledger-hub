@@ -3,17 +3,10 @@ import { Table } from "./table/table";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { UpdateModal } from "./updatePaymentModal";
-
-const datas = {
-  creditAccount: [
-    { account: { label: "Solomon", value: "solomon" }, amount: "2000" },
-    { account: { label: "Mbadid", value: "mbadid" }, amount: "1000" },
-  ],
-};
+import EditCustomerAccountModal from "./customer-popup/editCustomerModal";
 
 const Customers = () => {
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   
   const columns = [
@@ -42,13 +35,6 @@ const Customers = () => {
       accessor: "phoneNumber",
     },
     {
-      Header: "Payment Status",
-      accessor: "paymentStatus",
-      Cell: ({ value }) => (
-        <PaymentStatus $status={value}>{value}</PaymentStatus>
-      ),
-    },
-    {
       Header: "Date",
       accessor: "dateAdded",
     },
@@ -58,7 +44,7 @@ const Customers = () => {
       Cell: () => (
         <Button>
           <Flex>
-            <SubTitle onClick={() => setIsUpdateModalOpen(true)}>
+            <SubTitle onClick={() => setIsEditModalOpen(true)}>
               Edit Details
             </SubTitle>
             <Span></Span>
@@ -76,31 +62,26 @@ const Customers = () => {
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
-        paymentStatus: "Paid",
         dateAdded: "Jan 4, 2022",
       },
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
-        paymentStatus: "Owing",
         dateAdded: "Jan 4, 2022",
       },
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
-        paymentStatus: "Paid",
         dateAdded: "Jan 4, 2022",
       },
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
-        paymentStatus: "Owing",
         dateAdded: "Jan 4, 2022",
       },
       {
         customerName: "John Doe",
         phoneNumber: "+234 8120 1234",
-        paymentStatus: "Paid",
         dateAdded: "Jan 4, 2022",
       },
     ],
@@ -119,10 +100,9 @@ const Customers = () => {
         availablePages={data?.metaData?.totalPages}
         pageNumber={data?.metaData?.page}
       />
-      <UpdateModal
-        closeHandler={() => setIsUpdateModalOpen(false)}
-        isOpen={isUpdateModalOpen}
-        data={datas}
+      <EditCustomerAccountModal
+        handleClose={() => setIsEditModalOpen(false)}
+        isOpen={isEditModalOpen}
       />
     </>
   );
@@ -156,16 +136,6 @@ const SubTitle = styled.p`
   &:hover {
     color: ${({ theme }) => theme.colors.primary300};
   }
-`;
-
-const PaymentStatus = styled.span`
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
-  background-color: ${(props) =>
-    props.$status === "Paid" ? "#D1FAE5" : "#FEE2E2"};
-  color: ${(props) => (props.$status === "Paid" ? "#059669" : "#DC2626")};
 `;
 
 const Button = styled.div`

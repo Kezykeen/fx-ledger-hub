@@ -1,20 +1,17 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { Modal } from "../../../../components/modal";
-import AccountEntry from "../../initiateTransaction/components/accountEntry";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
-import { Button } from "../../../../components/button";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createAccountSchema } from "./validation";
-import { PopUp } from "../../../../components/popUp";
-import ToastComponent from "../../../../components/toastComponent";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
+import { Modal } from "../../../../../components/modal";
+import AccountEntry from "../../../initiateTransaction/components/accountEntry";
+import { Button } from "../../../../../components/button";
+import { initiatePaymentSchema } from "../validation";
+import { PopUp } from "../../../../../components/popUp";
+import ToastComponent from "../../../../../components/toastComponent";
 import { toast } from "react-toastify";
-import { DocumentUpload } from "../../../../components/documentUpload";
-import { usePost } from "../../../../hooks/api";
-import { updateTransactionUrl } from "../../../../urls/customer";
-import { QueryKeys } from "../../../../constants/enums";
+import { DocumentUpload } from "../../../../../components/documentUpload";
 
-export const UpdateModal = ({ isOpen, closeHandler, data }) => {
+export const UpdateModal = ({ isOpen, closeHandler }) => {
   const initialObj = {
     debitAccount: [{ account: null, amount: "" }],
     creditAccount: [{ account: null, amount: "" }],
@@ -24,11 +21,14 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isFormValid, setIsFormValid] = useState(true);
 
-  useEffect(() => {
-    if (data) {
-      setFormData(data);
-    }
-  }, [data, isOpen]);
+  const {
+    control,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(initiatePaymentSchema),
+  });
 
   const validateForm = (updatedFormData) => {
     return Object.values(updatedFormData).every((accountArray) =>
@@ -37,14 +37,6 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
       )
     );
   };
-
-  const {
-    control,
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(createAccountSchema),
-  });
 
   const updateFormData = (updatedData) => {
     setFormData(updatedData);
@@ -81,7 +73,7 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
   };
 
   const handleClose = () => {
-    setFormData(initialObj);
+    reset,
     closeHandler();
   };
 
@@ -90,6 +82,7 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
 
     for (const key in data) {
       if (Array.isArray(data[key])) {
+        // If the value is an array, iterate over its items
         parsedData[key] = data[key].map((item) => {
           const parsedItem = {};
           for (const itemKey in item) {
@@ -98,6 +91,7 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
               item[itemKey] !== null &&
               "value" in item[itemKey]
             ) {
+              // Extract the "value" key from the object
               parsedItem[itemKey] = item[itemKey].value;
             } else {
               parsedItem[itemKey] = item[itemKey];
@@ -113,24 +107,17 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
     return parsedData;
   };
 
-  const { mutate: updateTransaction, isPending } = usePost(
-    updateTransactionUrl(formData?.creditAccount[0]?.account?.value),
-    () => {
-      toast.success(
-        <ToastComponent
-          title={"Transaction Updated!"}
-          message={"You have successfully updated this transaction"}
-        />
-      );
-      setIsConfirmOpen(false);
-      handleClose();
-    },
-    QueryKeys.transaction
-  );
-
   const onSubmit = () => {
     const parsedData = parseAccountData(formData);
-    updateTransaction(parsedData);
+    console.log({ parsedData });
+    toast.success(
+      <ToastComponent
+        title={"Transaction Approved!"}
+        message={"You have successfully approved this transaction"}
+      />
+    );
+    setIsConfirmOpen(false);
+    closeHandler();
   };
 
   return (
@@ -142,16 +129,16 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
         subText={"Update this transaction receipt below to proceed"}
       >
         <Container>
-          <InputWrapper>
-            <SectionTitle>Exchange Summary</SectionTitle>
-            <Line></Line>
+          <SummaryBox>
+            <Text>Exchange Summary</Text>
+            <Line />
             <DetailRow>
               <Label>Total Amount Owed</Label>
               <LabelTwo>
-                XAF <span>1200</span>
+                CFA <span>1200</span>
               </LabelTwo>
             </DetailRow>
-          </InputWrapper>
+          </SummaryBox>
           <AccountEntry
             entryArray={formData.creditAccount}
             handleChange={handleChange}
@@ -160,14 +147,15 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
             name="creditAccount"
             label="Credit"
           />
-          <DocumentUpload
-            control={control}
-            register={register}
-            name={"receipt"}
-            errors={errors}
-            label={`Upload Receipt (Optional)`}
-            width={`98%`}
-          />
+          <InputWrapper>
+            <DocumentUpload
+              control={control}
+              name={"receipt"}
+              errors={errors}
+              label={`Upload Receipt (Optional)`}
+              width={`98%`}
+            />
+          </InputWrapper>
           <BtnWrapper>
             <Button
               buttonClass={"outline"}
@@ -187,11 +175,10 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
         <PopUp
           open={isConfirmOpen}
           handleClose={() => setIsConfirmOpen(false)}
-          onSubmit={onSubmit}
-          isLoading={isPending}
-          title={"Confirm Transaction Update?"}
+          onSubmit={handleSubmit(onSubmit)}
+          title={"Confirm Transaction Approval?"}
           subtitle={
-            "Are you sure you want to proceed to update this transaction?"
+            "Are you sure you want to proceed to approve this transaction?"
           }
         />
       </Modal>
@@ -199,7 +186,7 @@ export const UpdateModal = ({ isOpen, closeHandler, data }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -207,34 +194,35 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-const BtnWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: auto 0 10px;
+const Line = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.primary300};
+  margin: 10px 0;
 `;
 
-const SectionTitle = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 28px;
-  color: ${({ theme }) => theme.colors.gray800};
+const SummaryBox = styled.div`
+  dispaly: flex;
+  background: #fff3eb;
+  padding: 24px 16px 24px 16px;
+  fleex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid ${({ theme }) => theme.colors.primary300};
+  border-radius: 8px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  border: 1px solid ${(props) => props.theme.colors.primary300};
   gap: 8px;
-  border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.primary25};
+  border-radius: 12px;
+  background: #f9fafb;
 `;
 
-const DetailRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
+const Text = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
 `;
 
 const Label = styled.span`
@@ -254,6 +242,15 @@ const LabelTwo = styled.span`
   }
 `;
 
-const Line = styled.div`
-  border: 1px solid ${(props) => props.theme.colors.primary100} !important;
+const DetailRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : "unset")};
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto 0 10px;
 `;

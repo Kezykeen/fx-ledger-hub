@@ -11,6 +11,8 @@ import { RefundRecord } from "../components/customer-history/refund-history";
 import { UpfrontRecord } from "../components/customer-history/upfront-history";
 import { DropdownBlackIcon, DropdownIcon } from "../../../../assets/svgs";
 import { UpdateModal } from "../components/updatePaymentModal";
+import InitiateCustomerPaymentModal from "../components/customer-popup/initiatePaymentModal";
+import FundModal from "../components/customer-popup/fundModal";
 
 const customer = {
   date: "June 4,2023",
@@ -31,6 +33,8 @@ const data = {
 
 export const CustomerDetailsOverview = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isUpfrontModalOpen, setIsUpfrontModalOpen] = useState(false);
+  const [isRefundMoadlOpen, setIsRefundModalOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(customerDetailsTab[0].hash);
@@ -50,13 +54,13 @@ export const CustomerDetailsOverview = () => {
     {
       name: "Initial Refund",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsRefundModalOpen(true);
       },
     },
     {
       name: "initial Upfront",
       onClick: () => {
-        setIsUpdateModalOpen(true);
+        setIsUpfrontModalOpen(true);
       },
     },
   ];
@@ -191,6 +195,14 @@ export const CustomerDetailsOverview = () => {
         closeHandler={() => setIsUpdateModalOpen(false)}
         isOpen={isUpdateModalOpen}
         data={data}
+      />
+      <InitiateCustomerPaymentModal
+        closeHandler={() => setIsUpfrontModalOpen(false)}
+        isOpen={isUpfrontModalOpen}
+      />
+      <FundModal
+        handleClose={() => setIsRefundModalOpen(false)}
+        isOpen={isRefundMoadlOpen}  
       />
     </PageContainer>
   );
